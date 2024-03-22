@@ -1,0 +1,16 @@
+#Needs a port mapping in AddKubernetesToDocker.ps1 when creating the cluster
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+#Setting it as a loadbalancer will give it a temporary ip in Docker and fix the port forwarding
+  type: LoadBalancer
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: 6379
+  selector:
+    app: redis

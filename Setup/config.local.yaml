@@ -1,0 +1,71 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+
+metadata:
+  name: local
+
+servers: 1
+
+kubeAPI: 
+  hostIP: "127.0.0.1"
+  hostPort: "6443"
+
+subnet: "172.28.0.0/16"
+
+volumes:
+  - volume: C:\data\k8s:/tmp/shared 
+    nodeFilters:
+      - server:0
+      - agent:*
+
+ports:
+  - port: 8080:80
+    nodeFilters:
+      - loadbalancer
+  - port: 8443:443
+    nodeFilters:
+      - loadbalancer
+  - port: 3333:3307
+    nodeFilters:
+      - server:0
+  - port: 4222:4222
+    nodeFilters:
+      - server:0
+  - port: 8222:8222
+    nodeFilters:
+      - server:0
+  - port: 6379:6379
+    nodeFilters:
+      - server:0
+  - port: 9092:9092
+    nodeFilters:
+      - server:0
+  - port: 9093:9093
+    nodeFilters:
+      - server:0
+  - port: 9094:9094
+    nodeFilters:
+      - server:0
+  - port: 9095:9095
+    nodeFilters:
+      - server:0
+
+registries:
+  create:
+    name: registry
+    host: "0.0.0.0"
+    hostPort: "5000"
+    volumes:
+      - C:\data\registry:/var/lib/registry
+  mirrors:
+    "registry":
+       endpoint:
+         - http://registry:5000
+
+options:
+  k3d:
+    wait: true
+    timeout: "60s"
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true
