@@ -76,6 +76,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi", "BuildVersionsApi\BuildVersionsApi.csproj", "{F9B4D77D-9393-4A61-86BD-B7A68968323A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{372FF357-AD65-445C-A406-44486F345162}"
+	ProjectSection(SolutionItems) = preProject
+		BuildVersions\BuildVersions.esproj = BuildVersions\BuildVersions.esproj
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Features", "BuildVersionsApi.Features\BuildVersionsApi.Features.csproj", "{4014652D-A863-44FA-8B81-21FB9E75F34E}"
 EndProject
