@@ -13,9 +13,8 @@ public sealed class IncrementBuildVersionMediator(IPersistanceService service, I
 {
   public async Task<IncrementBuildVersionResponse> Handle(IncrementBuildVersionRequest request, CancellationToken cancellationToken)
   {
-    BuildVersion? person = mapper.Map<BuildVersion>(request);
-    person = await service.UpdateProject(person);
+    var version = await service.IncreaseVersion(request.ProjectName,request.VersionElement);
 
-    return mapper.Map<IncrementBuildVersionResponse>(person);
+    return mapper.Map<IncrementBuildVersionResponse>(version);
   }
 }

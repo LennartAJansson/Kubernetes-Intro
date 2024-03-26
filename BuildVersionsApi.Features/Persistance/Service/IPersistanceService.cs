@@ -7,7 +7,7 @@ public interface IPersistanceService
 {
   Task<BuildVersion?> AddProject(BuildVersion buildVersion);
   Task<BuildVersion?> UpdateProject(BuildVersion buildVersion);
-  Task<BuildVersion?> IncreaseVersion(string projectName, VersionNumber version);
+  Task<BuildVersion?> IncreaseVersion(string projectName, VersionElements version);
   Task<BuildVersion?> GetById(int id);
   Task<BuildVersion?> GetByName(string projectName);
   Task<IEnumerable<BuildVersion>> GetAll();

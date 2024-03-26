@@ -8,7 +8,6 @@ public class IncrementBuildVersionMapper : Profile
 {
   public IncrementBuildVersionMapper()
   {
-    _ = CreateMap<IncrementBuildVersionRequest, BuildVersion>();
     _ = CreateMap<BuildVersion, IncrementBuildVersionResponse>();
   }
 }

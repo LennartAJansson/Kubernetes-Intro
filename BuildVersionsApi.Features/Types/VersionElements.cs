@@ -1,5 +1,5 @@
 ﻿namespace BuildVersionsApi.Features.Types;
-public enum VersionNumber
+public enum VersionElements
 {
     Major, Minor, Build, Revision
 }

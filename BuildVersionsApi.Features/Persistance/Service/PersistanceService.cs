@@ -30,7 +30,7 @@ public sealed class PersistanceService(BuildVersionsDbContext context) : IPersis
     return buildVersion;
   }
 
-  public async Task<BuildVersion?> IncreaseVersion(string projectName, VersionNumber version)
+  public async Task<BuildVersion?> IncreaseVersion(string projectName, VersionElements version)
   {
     if (!await context.BuildVersions.AnyAsync(b => b.ProjectName == projectName))
     {
@@ -41,22 +41,22 @@ public sealed class PersistanceService(BuildVersionsDbContext context) : IPersis
 
     switch (version)
     {
-      case VersionNumber.Major:
+      case VersionElements.Major:
         model.Major ++;
         model.Minor = 0;
         model.Build = 0;
         model.Revision = 0;
         break;
-      case VersionNumber.Minor:
+      case VersionElements.Minor:
         model.Minor ++;
         model.Build = 0;
         model.Revision = 0;
         break;
-      case VersionNumber.Build:
+      case VersionElements.Build:
         model.Build ++;
         model.Revision = 0;
         break;
-      case VersionNumber.Revision:
+      case VersionElements.Revision:
         model.Revision ++;
         break;
     }

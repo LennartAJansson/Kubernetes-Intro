@@ -13,9 +13,9 @@ public sealed class CreateBuildVersionMediator(IPersistanceService service, IMap
 {
   public async Task<CreateBuildVersionResponse> Handle(CreateBuildVersionRequest request, CancellationToken cancellationToken)
   {
-    BuildVersion? person = mapper.Map<BuildVersion>(request);
-    person = await service.AddProject(person);
+    BuildVersion? version = mapper.Map<BuildVersion>(request);
+    version = await service.AddProject(version);
 
-    return mapper.Map<CreateBuildVersionResponse>(person);
+    return mapper.Map<CreateBuildVersionResponse>(version);
   }
 }
