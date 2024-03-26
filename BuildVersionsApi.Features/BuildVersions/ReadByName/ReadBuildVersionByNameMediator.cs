@@ -2,13 +2,12 @@
 
 using AutoMapper;
 
-using BuildVersionsApi.Features.BuildVersions.Create;
 using BuildVersionsApi.Features.Model;
 using BuildVersionsApi.Features.Persistance.Service;
 
 using MediatR;
 
-public sealed class ReadBuildVersionMediator(IPersistanceService service, IMapper mapper)
+public sealed class ReadBuildVersionByNameMediator(IPersistanceService service, IMapper mapper)
   : IRequestHandler<ReadBuildVersionByNameRequest, ReadBuildVersionByNameResponse>
 {
   public async Task<ReadBuildVersionByNameResponse> Handle(ReadBuildVersionByNameRequest request, CancellationToken cancellationToken)

@@ -4,9 +4,9 @@ using AutoMapper;
 
 using BuildVersionsApi.Features.Model;
 
-public class ReadBuildVersionMapper : Profile
+public class DeleteBuildVersionMapper : Profile
 {
-  public ReadBuildVersionMapper()
+  public DeleteBuildVersionMapper()
   {
     _ = CreateMap<BuildVersion, DeleteBuildVersionResponse>();
   }
