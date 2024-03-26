@@ -4,6 +4,7 @@ using MediatR;
 
 public class UpdateBuildVersionRequest : IRequest<UpdateBuildVersionResponse>
 {
+  public int Id { get; set; }
   public required string ProjectName { get; set; }
   public int Major { get; set; }
   public int Minor { get; set; }

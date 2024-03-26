@@ -15,7 +15,7 @@ if($env:Path -notmatch "chocolatey")
 	choco install -force k3d
 	choco install -force gh
 	choco install -force openssl
-      	choco install -force rancher-desktop
+  	choco install -force rancher-desktop
 }
 else
 {
@@ -30,5 +30,5 @@ else
 	choco upgrade -force k9s
 	choco upgrade -force gh
 	choco upgrade -force openssl
-      	choco upgrade -force rancher-desktop
+   	choco upgrade -force rancher-desktop
 }

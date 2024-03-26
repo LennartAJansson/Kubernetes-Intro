@@ -1,7 +1,5 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Update;
 
-using BuildVersionsApi.Features.BuildVersions.Create;
-
 using FastEndpoints;
 
 using MediatR;
@@ -10,13 +8,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-public sealed class DeleteBuildVersionEndpoint(ISender sender)
+public sealed class UpdateBuildVersionEndpoint(ISender sender)
   : Endpoint<UpdateBuildVersionRequest, UpdateBuildVersionResponse>
 {
   public override void Configure()
   {
-    Version(1);
-    Post("BuildVersion/Update");
+    //Version(1);
+    Put("BuildVersion/Update");
     AllowAnonymous();
     Description(b => b
       .WithGroupName("BuildVersion")

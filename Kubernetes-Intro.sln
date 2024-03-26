@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{76031E55-2F2D-4976-AAFD-E3C06BB9C6DC}"
 	ProjectSection(SolutionItems) = preProject
 		Setup\config.yaml = Setup\config.yaml
+		Setup\ContainerTools.ps1 = Setup\ContainerTools.ps1
 		Setup\CreateCluster.ps1 = Setup\CreateCluster.ps1
 		Setup\DeleteCluster.ps1 = Setup\DeleteCluster.ps1
 	EndProjectSection
@@ -72,11 +73,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildVersionsApi", "BuildVersionsApi\BuildVersionsApi.csproj", "{F9B4D77D-9393-4A61-86BD-B7A68968323A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi", "BuildVersionsApi\BuildVersionsApi.csproj", "{F9B4D77D-9393-4A61-86BD-B7A68968323A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{372FF357-AD65-445C-A406-44486F345162}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildVersionsApi.Features", "BuildVersionsApi.Features\BuildVersionsApi.Features.csproj", "{4014652D-A863-44FA-8B81-21FB9E75F34E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Features", "BuildVersionsApi.Features\BuildVersionsApi.Features.csproj", "{4014652D-A863-44FA-8B81-21FB9E75F34E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

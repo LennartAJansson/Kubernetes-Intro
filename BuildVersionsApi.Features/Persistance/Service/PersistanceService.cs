@@ -84,4 +84,12 @@ public sealed class PersistanceService(BuildVersionsDbContext context) : IPersis
   public Task<IEnumerable<BuildVersion>> GetAll() 
     => Task.FromResult(context.BuildVersions.AsEnumerable());
   
+  public async Task<BuildVersion?> Delete(int id)
+  {
+    BuildVersion? model = await context.BuildVersions.SingleOrDefaultAsync(b => b.Id == id);
+    context.Remove(model);
+    _ = await context.SaveChangesAsync();
+
+    return model;
+  }
 }

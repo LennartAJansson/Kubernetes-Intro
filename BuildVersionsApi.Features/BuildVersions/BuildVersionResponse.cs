@@ -1,5 +1,11 @@
-﻿namespace BuildVersionsApi.Features.BuildVersions.Read;
-public class ReadBuildVersionResponse
+﻿namespace BuildVersionsApi.Features.BuildVersions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+public class BuildVersionResponse
 {
   //BuildVersion values:
   public required string ProjectName { get; set; }

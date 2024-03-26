@@ -8,7 +8,7 @@ public class ReadAllBuildVersionMapper : Profile
 {
   public ReadAllBuildVersionMapper()
   {
-    _ = CreateMap<ReadAllBuildVersionRequest, BuildVersion>();
+    //TODO Mapping for IEnumerable<BuildVersion> to IEnumerable<ReadAllBuildVersionResponse>
     _ = CreateMap<BuildVersion, ReadAllBuildVersionResponse>();
   }
 }

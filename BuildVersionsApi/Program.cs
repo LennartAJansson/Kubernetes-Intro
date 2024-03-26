@@ -1,24 +1,35 @@
 using Microsoft.Extensions.DependencyInjection;
+using BuildVersionsApi.Features;
+using FastEndpoints;
+using System.Reflection;
+using FastEndpoints.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-  .AddFeatures(builder.Configuration.GetConnectionString("BuildVersionsDb"));
+  .AddBuildVersionsFeatures(builder.Configuration.GetConnectionString("DefaultConnection"));
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+      .AddFastEndpoints(o => {
+        o.Assemblies =
+        [
+          Assembly.GetAssembly(typeof(FeaturesExtension))!
+        ];
+      })
+    .SwaggerDocument()
+    .AddResponseCaching();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-  app.UseSwagger();
-  app.UseSwaggerUI();
-}
+app.ConfigurePersistance();
 
 app.UseHttpsRedirection();
+
+app
+.UseResponseCaching()
+.UseDefaultExceptionHandler()
+.UseFastEndpoints()
+.UseSwaggerGen(); 
 
 app.Run();

@@ -15,6 +15,7 @@ public sealed class CreateBuildVersionMediator(IPersistanceService service, IMap
   {
     BuildVersion? person = mapper.Map<BuildVersion>(request);
     person = await service.AddProject(person);
+
     return mapper.Map<CreateBuildVersionResponse>(person);
   }
 }

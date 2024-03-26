@@ -1,19 +1,17 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace BuildVersionsApi.Features;
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+﻿namespace BuildVersionsApi.Features;
 using System.Reflection;
+
 using BuildVersionsApi.Features.Persistance.Context;
 using BuildVersionsApi.Features.Persistance.Service;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 public static class FeaturesExtension
 {
-  public static IServiceCollection AddFeatures(IServiceCollection services, Func<string> connectionStringFunc = null)
+  public static IServiceCollection AddBuildVersionsFeatures(this IServiceCollection services, string? connectionString)
   {
-    var connectionString = connectionStringFunc?.Invoke()
-      ?? throw new ArgumentNullException("ConnectionString not provided!");
     ServerVersion serverVersion = ServerVersion.AutoDetect(connectionString);
     Assembly assembly = Assembly.GetExecutingAssembly();
 
