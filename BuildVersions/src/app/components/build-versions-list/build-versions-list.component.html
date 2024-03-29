@@ -1,1 +1,74 @@
-<p>build-versions-list works!</p>
+<h1 id="tableLabel">{{ title }}</h1>
+
+@if (!buildVersions) { Loading... }
+
+<button mat-icon-button color="primary" class="btn-add" (click)="openDialog()">
+  <mat-icon>add</mat-icon>
+</button>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>Id</th>
+    <td mat-cell *matCellDef="let buildVersion">{{ buildVersion.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="projectName">
+    <th mat-header-cell *matHeaderCellDef>Projectname</th>
+    <td mat-cell *matCellDef="let buildVersion">
+      {{ buildVersion.projectName }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="version">
+    <th mat-header-cell *matHeaderCellDef>Version</th>
+    <td mat-cell *matCellDef="let buildVersion">{{ buildVersion.version }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="release">
+    <th mat-header-cell *matHeaderCellDef>Release</th>
+    <td mat-cell *matCellDef="let buildVersion">{{ buildVersion.release }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="semanticVersion">
+    <th mat-header-cell *matHeaderCellDef>SemanticVersion</th>
+    <td mat-cell *matCellDef="let buildVersion">
+      {{ buildVersion.semanticVersion }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="semanticRelease">
+    <th mat-header-cell *matHeaderCellDef>SemanticRelease</th>
+    <td mat-cell *matCellDef="let buildVersion">
+      {{ buildVersion.semanticRelease }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let buildVersion">
+      <button
+        mat-icon-button
+        color="primary"
+        [routerLink]="['/buildversion', buildVersion.id]"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="remove(buildVersion.id)"
+        [routerLink]="['/buildversions']"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr
+    mat-row
+    (click)="setActive(row, row.id)"
+    *matRowDef="let row; columns: columns"
+  ></tr>
+</table>

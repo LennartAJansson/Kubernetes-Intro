@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>ProjectName</mat-label>
+    <input matInput [(ngModel)]="data.projectName" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Major</mat-label>
+    <input matInput [(ngModel)]="data.major" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Minor</mat-label>
+    <input matInput [(ngModel)]="data.minor" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Build</mat-label>
+    <input matInput [(ngModel)]="data.build" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Revision</mat-label>
+    <input matInput [(ngModel)]="data.revision" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Semantic</mat-label>
+    <input matInput [(ngModel)]="data.semanticVersionText" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</div>

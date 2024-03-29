@@ -7,12 +7,14 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public sealed class ReadAllBuildVersionEndpoint(ISender sender)
   : EndpointWithoutRequest<IEnumerable<ReadAllBuildVersionResponse>>
 {
   public override void Configure()
   {
+    Logger.LogInformation("Running configure on ReadAll");
     //Version(1);
     Get("BuildVersion/ReadAll");
     AllowAnonymous();
@@ -27,6 +29,7 @@ public sealed class ReadAllBuildVersionEndpoint(ISender sender)
 
   public override async Task HandleAsync(CancellationToken cancellationToken)
   {
+    Logger.LogInformation("Running pipe on ReadAll");
     Response = await sender.Send(new ReadAllBuildVersionRequest(), cancellationToken);
   }
 }

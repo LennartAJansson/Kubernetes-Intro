@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using BuildVersionsApi.Features;
 using FastEndpoints;
 using System.Reflection;
@@ -8,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-  .AddBuildVersionsFeatures(builder.Configuration.GetConnectionString("DefaultConnection"));
+  .AddBuildVersionsFeatures(builder.Configuration.GetConnectionString("BuildVersionsDb"));
 
 builder.Services
       .AddFastEndpoints(o => {
@@ -20,9 +19,21 @@ builder.Services
     .SwaggerDocument()
     .AddResponseCaching();
 
+builder.Services.AddCors(options =>
+{
+  options.AddDefaultPolicy(policy =>
+  {
+    policy.AllowAnyOrigin()
+      .AllowAnyHeader()
+      .AllowAnyMethod();
+  });
+});
+
 var app = builder.Build();
 
 app.ConfigurePersistance();
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 

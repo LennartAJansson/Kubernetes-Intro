@@ -8,7 +8,7 @@ export class BuildVersion {
   build?: number;
   revision?: number;
   semanticVersionText?: string;
-  version?: Version;
+  version?: string;// Version;
   release?: string;
   semanticVersion?: string;
   semanticRelease?: string;
