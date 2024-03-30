@@ -19,7 +19,7 @@ public sealed class ReadAllBuildVersionEndpoint(ISender sender)
     Get("BuildVersion/ReadAll");
     AllowAnonymous();
     Description(b => b
-      .WithGroupName("BuildVersion")
+      //.WithGroupName("BuildVersion")
       .WithName("ReadAll")
       .Produces<IEnumerable<ReadAllBuildVersionResponse>>(200, "application/json")
       .ProducesProblemDetails(400, "application/json+problem") //if using RFC errors

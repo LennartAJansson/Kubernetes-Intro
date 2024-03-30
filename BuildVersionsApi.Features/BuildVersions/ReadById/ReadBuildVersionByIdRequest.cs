@@ -4,5 +4,5 @@ using MediatR;
 
 public class ReadBuildVersionByIdRequest : IRequest<ReadBuildVersionByIdResponse>
 {
-    public int Id { get; set; }
+  public int Id { get; set; }
 }

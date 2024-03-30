@@ -29,10 +29,10 @@ namespace Persistance.Migrations
                     Revision = table.Column<int>(type: "int", nullable: false),
                     SemanticVersionText = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Username = table.Column<string>(type: "longtext", nullable: false)
+                    Username = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Created = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Changed = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    Created = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Changed = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {

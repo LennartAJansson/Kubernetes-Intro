@@ -2,12 +2,9 @@
 
 using AutoMapper;
 
-using BuildVersionsApi.Features.Model;
+using BuildVersionsApi.Features.Domain.Model;
 
 public class IncrementBuildVersionMapper : Profile
 {
-  public IncrementBuildVersionMapper()
-  {
-    _ = CreateMap<BuildVersion, IncrementBuildVersionResponse>();
-  }
+  public IncrementBuildVersionMapper() => _ = CreateMap<BuildVersion, IncrementBuildVersionResponse>();
 }

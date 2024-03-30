@@ -1,4 +1,4 @@
-﻿namespace BuildVersionsApi.Features.Model;
+﻿namespace BuildVersionsApi.Features.Domain.Model;
 
 public sealed class BuildVersion : BaseLoggedEntity
 {
@@ -9,16 +9,18 @@ public sealed class BuildVersion : BaseLoggedEntity
   public int Minor { get; set; }
   public int Build { get; set; }
   public int Revision { get; set; }
-  public string SemanticVersionText { get; set; } = "";
+  public required string SemanticVersionText { get; set; } = "";
 
   //Calculated values
   public Version Version => new(Major, Minor, Build, Revision);
+
   public string Release => $"{Major}.{Minor}";
+
   public string SemanticVersion => SemanticVersionText == string.Empty
     ? $"{Major}.{Minor}.{Build}"
     : $"{Major}.{Minor}.{Build}-{SemanticVersionText}.{Revision}";
+
   public string SemanticRelease => SemanticVersionText == string.Empty
     ? $"{Major}.{Minor}"
     : $"{Major}.{Minor}-{SemanticVersionText}.{Build}.{Revision}";
 }
-

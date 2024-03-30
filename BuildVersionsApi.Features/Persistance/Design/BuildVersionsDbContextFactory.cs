@@ -16,9 +16,10 @@ It requires following User Secrets to be set on this assembly:
 }
 
 From Package Manager Console execute:
-Add-Migration -Name your-migration-name -Context BuildVersionsDbContext -Project BuildVersionsApi.Features -StartupProject BuildVersionsApi.Features -Namespace Persistance.Migrations 
+Add-Migration -Name your-migration-name -Context BuildVersionsDbContext -Project BuildVersionsApi.Features -StartupProject BuildVersionsApi.Features -Namespace Persistance.Migrations
 Update-Database -Context BuildVersionsDbContext -Project BuildVersionsApi.Features -StartupProject BuildVersionsApi.Features
 */
+
 public sealed class BuildVersionsDbContextFactory
   : IDesignTimeDbContextFactory<BuildVersionsDbContext>
 {

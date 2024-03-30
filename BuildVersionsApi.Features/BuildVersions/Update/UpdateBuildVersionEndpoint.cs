@@ -17,7 +17,7 @@ public sealed class UpdateBuildVersionEndpoint(ISender sender)
     Put("BuildVersion/Update");
     AllowAnonymous();
     Description(b => b
-      .WithGroupName("BuildVersion")
+      //.WithGroupName("BuildVersion")
       .WithName("Update")
       .Accepts<UpdateBuildVersionRequest>("application/json")
       .Produces<UpdateBuildVersionResponse>(200, "application/json")
@@ -26,8 +26,5 @@ public sealed class UpdateBuildVersionEndpoint(ISender sender)
     Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
   }
 
-  public override async Task HandleAsync(UpdateBuildVersionRequest request, CancellationToken cancellationToken)
-  {
-    Response = await sender.Send(request, cancellationToken);
-  }
+  public override async Task HandleAsync(UpdateBuildVersionRequest request, CancellationToken cancellationToken) => Response = await sender.Send(request, cancellationToken);
 }

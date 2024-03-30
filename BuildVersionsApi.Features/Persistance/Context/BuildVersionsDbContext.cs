@@ -1,23 +1,23 @@
 ﻿namespace BuildVersionsApi.Features.Persistance.Context;
 
-using BuildVersionsApi.Features.Model;
+using System.Reflection;
+
+using BuildVersionsApi.Features.Domain.Model;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 
-public sealed class BuildVersionsDbContext : DbContext
+public sealed class BuildVersionsDbContext(DbContextOptions<BuildVersionsDbContext> options)
+  : DbContext(options)
 {
   public DbSet<BuildVersion> BuildVersions => Set<BuildVersion>();
 
   public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
   private ILogger<BuildVersionsDbContext>? logger;
 
-  public BuildVersionsDbContext(DbContextOptions<BuildVersionsDbContext> options)
-  : base(options)
-  { }
-
-  protected override void OnModelCreating(ModelBuilder modelBuilder) => _ = modelBuilder.Entity<BuildVersion>().HasIndex("ProjectName");
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+    => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
@@ -39,6 +39,8 @@ public sealed class BuildVersionsDbContext : DbContext
 
     return Task.CompletedTask;
   }
+
+  #region SaveChanges overrides
 
   public override int SaveChanges()
   {
@@ -76,12 +78,12 @@ public sealed class BuildVersionsDbContext : DbContext
         .Select(e => e.Entity as BaseLoggedEntity))
     {
       history!.Changed = DateTime.Now;
-      history.Username = "";
       if (history.Created == DateTime.MinValue)
       {
         history.Created = DateTime.Now;
       }
     }
   }
-}
 
+  #endregion SaveChanges overrides
+}

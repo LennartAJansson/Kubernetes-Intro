@@ -17,7 +17,7 @@ public sealed class ReadBuildVersionByNameEndpoint(ISender sender)
     Get("BuildVersion/ReadByName/{name}");
     AllowAnonymous();
     Description(b => b
-      .WithGroupName("BuildVersion")
+      //.WithGroupName("BuildVersion")
       .WithName("ReadByName")
       .Produces<ReadBuildVersionByNameResponse>(200, "application/json")
       .ProducesProblemDetails(400, "application/json+problem") //if using RFC errors
@@ -28,6 +28,6 @@ public sealed class ReadBuildVersionByNameEndpoint(ISender sender)
   public override async Task HandleAsync(CancellationToken cancellationToken)
   {
     string? name = Route<string>("name");
-    Response = await sender.Send(new ReadBuildVersionByNameRequest { ProjectName=name!}, cancellationToken);
+    Response = await sender.Send(new ReadBuildVersionByNameRequest { ProjectName = name! }, cancellationToken);
   }
 }

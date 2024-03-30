@@ -70,6 +70,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sealedsecrets", "sealedsecr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F53FD7D3-8D9E-44AF-BC8F-3EE6EF61E894}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
@@ -80,6 +81,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Features", "BuildVersionsApi.Features\BuildVersionsApi.Features.csproj", "{4014652D-A863-44FA-8B81-21FB9E75F34E}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "BuildVersions", "BuildVersions\BuildVersions.esproj", "{D86A98F7-6D06-4DCD-A62E-D0F2C2A9F3ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{E5376EEA-F9F3-44BC-9F7E-558626AFE2DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{2F5ACD27-C22B-46BB-ABF6-6179DFEB1452}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{76FDBBC7-5CC9-4061-B3C7-6DBD670C1187}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +122,8 @@ Global
 		{F9B4D77D-9393-4A61-86BD-B7A68968323A} = {372FF357-AD65-445C-A406-44486F345162}
 		{4014652D-A863-44FA-8B81-21FB9E75F34E} = {372FF357-AD65-445C-A406-44486F345162}
 		{D86A98F7-6D06-4DCD-A62E-D0F2C2A9F3ED} = {372FF357-AD65-445C-A406-44486F345162}
+		{2F5ACD27-C22B-46BB-ABF6-6179DFEB1452} = {E5376EEA-F9F3-44BC-9F7E-558626AFE2DC}
+		{76FDBBC7-5CC9-4061-B3C7-6DBD670C1187} = {E5376EEA-F9F3-44BC-9F7E-558626AFE2DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E98CD0B2-F671-442D-B4E9-238E4474AC80}

@@ -4,5 +4,5 @@ using MediatR;
 
 public class DeleteBuildVersionRequest : IRequest<DeleteBuildVersionResponse>
 {
-    public int Id { get; set; }
+  public int Id { get; set; }
 }

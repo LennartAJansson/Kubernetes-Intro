@@ -17,7 +17,7 @@ public sealed class DeleteBuildVersionEndpoint(ISender sender)
     Delete("BuildVersion/Delete/{id}");
     AllowAnonymous();
     Description(b => b
-      .WithGroupName("BuildVersion")
+      //.WithGroupName("BuildVersion")
       .WithName("Delete")
       .Produces<DeleteBuildVersionResponse>(200, "application/json")
       .ProducesProblemDetails(400, "application/json+problem") //if using RFC errors

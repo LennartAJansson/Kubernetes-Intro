@@ -1,9 +1,5 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadAll;
 
-using FastEndpoints;
-
-using FluentValidation;
-
 //public sealed class ReadAllBuildVersionValidator : Validator<ReadAllBuildVersionRequest>
 //{
 //  public ReadAllBuildVersionValidator() => RuleFor(x => x.ProjectName)

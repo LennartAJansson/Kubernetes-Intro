@@ -7,5 +7,5 @@ using MediatR;
 public class IncrementBuildVersionRequest : IRequest<IncrementBuildVersionResponse>
 {
   public required string ProjectName { get; set; }
-  public VersionElements VersionElement { get; set; }
+  public VersionNumber VersionElement { get; set; }
 }

@@ -17,7 +17,7 @@ public sealed class ReadBuildVersionByIdEndpoint(ISender sender)
     Get("BuildVersion/ReadById/{id}");
     AllowAnonymous();
     Description(b => b
-      .WithGroupName("BuildVersion")
+      //.WithGroupName("BuildVersion")
       .WithName("ReadById")
       .Produces<ReadBuildVersionByIdResponse>(200, "application/json")
       .ProducesProblemDetails(400, "application/json+problem") //if using RFC errors

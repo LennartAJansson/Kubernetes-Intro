@@ -2,12 +2,9 @@
 
 using AutoMapper;
 
-using BuildVersionsApi.Features.Model;
+using BuildVersionsApi.Features.Domain.Model;
 
 public class DeleteBuildVersionMapper : Profile
 {
-  public DeleteBuildVersionMapper()
-  {
-    _ = CreateMap<BuildVersion, DeleteBuildVersionResponse>();
-  }
+  public DeleteBuildVersionMapper() => _ = CreateMap<BuildVersion, DeleteBuildVersionResponse>();
 }

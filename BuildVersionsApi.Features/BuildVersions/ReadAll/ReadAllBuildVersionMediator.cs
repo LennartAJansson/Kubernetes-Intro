@@ -1,18 +1,17 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadAll;
 
 using AutoMapper;
-
-using BuildVersionsApi.Features.Model;
-using BuildVersionsApi.Features.Persistance.Service;
+using BuildVersionsApi.Features.Domain.Abstract;
+using BuildVersionsApi.Features.Domain.Model;
 
 using MediatR;
 
-public sealed class ReadAllBuildVersionMediator(IPersistanceService service, IMapper mapper)
+public sealed class ReadAllBuildVersionMediator(IDomainService service, IMapper mapper)
   : IRequestHandler<ReadAllBuildVersionRequest, IEnumerable<ReadAllBuildVersionResponse>>
 {
   public async Task<IEnumerable<ReadAllBuildVersionResponse>> Handle(ReadAllBuildVersionRequest request, CancellationToken cancellationToken)
   {
-    IEnumerable<BuildVersion> people = await service.GetAll();
+    IEnumerable<BuildVersion> people = await service.HandleGetAll();
 
     return mapper.Map<IEnumerable<ReadAllBuildVersionResponse>>(people);
   }

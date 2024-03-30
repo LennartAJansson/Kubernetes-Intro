@@ -1,16 +1,31 @@
-using BuildVersionsApi.Features;
-using FastEndpoints;
+global using FastEndpoints;
+
 using System.Reflection;
+using System.Text.Json;
+
+using BuildVersionsApi.Features;
+using BuildVersionsApi.Features.Types;
+
 using FastEndpoints.Swagger;
 
-var builder = WebApplication.CreateBuilder(args);
+using Serilog;
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Host.UseSerilog((context, services, configuration) => configuration
+                .ReadFrom.Configuration(context.Configuration)
+                .ReadFrom.Services(services)
+                .Enrich.FromLogContext());
+
+ApplicationInfo appInfo = new(typeof(Program));
+
 builder.Services
   .AddBuildVersionsFeatures(builder.Configuration.GetConnectionString("BuildVersionsDb"));
 
 builder.Services
-      .AddFastEndpoints(o => {
+      .AddFastEndpoints(o =>
+      {
         o.Assemblies =
         [
           Assembly.GetAssembly(typeof(FeaturesExtension))!
@@ -23,13 +38,13 @@ builder.Services.AddCors(options =>
 {
   options.AddDefaultPolicy(policy =>
   {
-    policy.AllowAnyOrigin()
+    _ = policy.AllowAnyOrigin()
       .AllowAnyHeader()
       .AllowAnyMethod();
   });
 });
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 app.ConfigurePersistance();
 
@@ -40,7 +55,11 @@ app.UseHttpsRedirection();
 app
 .UseResponseCaching()
 .UseDefaultExceptionHandler()
-.UseFastEndpoints()
-.UseSwaggerGen(); 
+.UseFastEndpoints(c =>
+{
+  c.Endpoints.RoutePrefix = "api";
+  c.Serializer.Options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+})
+.UseSwaggerGen();
 
 app.Run();

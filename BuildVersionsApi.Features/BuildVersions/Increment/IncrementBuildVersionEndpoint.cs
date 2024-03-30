@@ -17,7 +17,7 @@ public sealed class IncrementBuildVersionEndpoint(ISender sender)
     Put("BuildVersion/Increment");
     AllowAnonymous();
     Description(b => b
-      .WithGroupName("BuildVersion")
+      //.WithGroupName("BuildVersion")
       .WithName("Increment")
       .Accepts<IncrementBuildVersionRequest>("application/json")
       .Produces<IncrementBuildVersionResponse>(200, "application/json")
@@ -26,8 +26,5 @@ public sealed class IncrementBuildVersionEndpoint(ISender sender)
     Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
   }
 
-  public override async Task HandleAsync(IncrementBuildVersionRequest request, CancellationToken cancellationToken)
-  {
-    Response = await sender.Send(request, cancellationToken);
-  }
+  public override async Task HandleAsync(IncrementBuildVersionRequest request, CancellationToken cancellationToken) => Response = await sender.Send(request, cancellationToken);
 }
