@@ -1,5 +1,4 @@
 ﻿namespace BuildVersionsApi.Features.Domain.Services;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,31 +10,37 @@ public class DomainService(IPersistanceService service) : IDomainService
 {
   public async Task<BuildVersion?> HandleCreateProject(BuildVersion buildVersion)
   {
+    //TODO Add business logic here:
     return await service.CreateProject(buildVersion);
   }
 
   public async Task<BuildVersion?> HandleDelete(int id)
   {
+    //TODO Add business logic here:
     return await service.Delete(id);
   }
 
   public async Task<IEnumerable<BuildVersion>> HandleGetAll()
   {
+    //TODO Add business logic here:
     return await service.GetAll();
   }
 
   public async Task<BuildVersion?> HandleGetById(int id)
   {
+    //TODO Add business logic here:
     return await service.GetById(id);
   }
 
   public async Task<BuildVersion?> HandleGetByName(string projectName)
   {
+    //TODO Add business logic here:
     return await service.GetByName(projectName);
   }
 
   public async Task<BuildVersion?> HandleIncreaseVersion(string projectName, VersionNumber version)
   {
+    //TODO Add business logic here:
     BuildVersion? model = await service.GetByName(projectName);
     if (model is null)
     {
@@ -71,7 +76,8 @@ public class DomainService(IPersistanceService service) : IDomainService
   }
 
   public async Task<BuildVersion?> HandleUpdateProject(BuildVersion buildVersion)
-  {
+  { 
+    //TODO Add business logic here:
     return await service.UpdateProject(buildVersion);
   }
 }

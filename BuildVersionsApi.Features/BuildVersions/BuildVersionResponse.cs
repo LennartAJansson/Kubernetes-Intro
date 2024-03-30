@@ -4,6 +4,13 @@ using System;
 
 public class BuildVersionResponse
 {
+  //Base class values:
+  public int Id { get; set; }
+  //public string? Username { get; set; }
+  //public DateTime? Created { get; set; }
+  //public DateTime? Changed { get; set; }
+  //public bool IsDeleted { get; set; } = false;
+
   //BuildVersion values:
   public required string ProjectName { get; set; }
 
@@ -15,15 +22,8 @@ public class BuildVersionResponse
 
   //Calculated values:
   public required Version Version { get; set; }
-
   public required string Release { get; set; }
   public required string SemanticVersion { get; set; }
   public required string SemanticRelease { get; set; }
 
-  //Base class values:
-  public int Id { get; set; }
-
-  public string? Username { get; set; }
-  public DateTime? Created { get; set; }
-  public DateTime? Changed { get; set; }
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-public sealed class CreateBuildVersionEndpoint(/*ISender sender, */IPersistanceService service)
+public sealed class CreateBuildVersionEndpoint(IPersistanceService service)
   : Endpoint<CreateBuildVersionRequest, CreateBuildVersionResponse,
     CreateBuildVersionMapper>
 {
@@ -36,6 +36,8 @@ public sealed class CreateBuildVersionEndpoint(/*ISender sender, */IPersistanceS
       if (entity is not null)
       {
         entity.Username = User.Identity is not null && User.Identity.Name is not null ? User.Identity.Name : string.Empty;
+        entity.Created = DateTime.UtcNow;
+        entity.Changed = DateTime.UtcNow;
         entity = await service.CreateProject(entity);
       }
       if (entity is null)
@@ -49,7 +51,5 @@ public sealed class CreateBuildVersionEndpoint(/*ISender sender, */IPersistanceS
     {
       throw;
     }
-    //Skip the mediator and use a domain service directly
-    //Response = await sender.Send(request, cancellationToken);
   }
 }
