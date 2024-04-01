@@ -31,7 +31,26 @@ builder.Services
           Assembly.GetAssembly(typeof(FeaturesExtension))!
         ];
       })
-    .SwaggerDocument()
+      .SwaggerDocument(o =>
+      {
+        o.MaxEndpointVersion = 1;
+        o.DocumentSettings = s =>
+        {
+          s.DocumentName = "Release 1.0";
+          s.Title = "BuildVersions";
+          s.Version = "v1.0";
+        };
+      })
+     .SwaggerDocument(o =>
+     {
+       o.MaxEndpointVersion = 2;
+       o.DocumentSettings = s =>
+       {
+         s.DocumentName = "Release 2.0";
+         s.Title = "BuildVersions";
+         s.Version = "v2.0";
+       };
+     })
     .AddResponseCaching();
 
 builder.Services.AddCors(options =>
@@ -57,6 +76,7 @@ app
 .UseDefaultExceptionHandler()
 .UseFastEndpoints(c =>
 {
+  c.Versioning.Prefix = "v";
   c.Endpoints.RoutePrefix = "api";
   c.Serializer.Options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
 })

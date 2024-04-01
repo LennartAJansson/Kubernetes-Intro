@@ -11,7 +11,7 @@ public sealed class ReadBuildVersionByIdMediator(IDomainService service, IMapper
 {
   public async Task<ReadBuildVersionByIdResponse> Handle(ReadBuildVersionByIdRequest request, CancellationToken cancellationToken)
   {
-    BuildVersion? version = await service.HandleGetById(request.Id);
+    BuildVersion? version = await service.HandleGetById(request.Id, cancellationToken);
 
     return mapper.Map<ReadBuildVersionByIdResponse>(version);
   }

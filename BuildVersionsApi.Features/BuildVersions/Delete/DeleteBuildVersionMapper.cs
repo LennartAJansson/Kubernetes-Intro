@@ -1,10 +1,21 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Delete;
 
+using System.Threading;
+using System.Threading.Tasks;
+
 using AutoMapper;
 
+using BuildVersionsApi.Features.BuildVersions.Create;
 using BuildVersionsApi.Features.Domain.Model;
 
-public class DeleteBuildVersionMapper : Profile
+using FastEndpoints;
+
+public sealed class DeleteBuildVersionMapper 
+  : ResponseMapper<DeleteBuildVersionResponse, BuildVersion>
 {
-  public DeleteBuildVersionMapper() => _ = CreateMap<BuildVersion, DeleteBuildVersionResponse>();
+  public override DeleteBuildVersionResponse FromEntity(BuildVersion e) 
+    => base.FromEntity(e);
+  
+  public override Task<DeleteBuildVersionResponse> FromEntityAsync(BuildVersion e, CancellationToken ct = default) 
+    => base.FromEntityAsync(e, ct);
 }

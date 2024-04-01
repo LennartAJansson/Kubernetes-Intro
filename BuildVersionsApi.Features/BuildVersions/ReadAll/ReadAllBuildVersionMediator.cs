@@ -11,7 +11,7 @@ public sealed class ReadAllBuildVersionMediator(IDomainService service, IMapper 
 {
   public async Task<IEnumerable<ReadAllBuildVersionResponse>> Handle(ReadAllBuildVersionRequest request, CancellationToken cancellationToken)
   {
-    IEnumerable<BuildVersion> people = await service.HandleGetAll();
+    IEnumerable<BuildVersion> people = await service.HandleGetAll(cancellationToken);
 
     return mapper.Map<IEnumerable<ReadAllBuildVersionResponse>>(people);
   }

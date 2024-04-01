@@ -6,7 +6,7 @@ using BuildVersionsApi.Features.Domain.Model;
 
 public class ReadAllBuildVersionMapper : Profile
 {
+  //TODO Mapping for IEnumerable<BuildVersion> to IEnumerable<ReadAllBuildVersionResponse>
   public ReadAllBuildVersionMapper() =>
-    //TODO Mapping for IEnumerable<BuildVersion> to IEnumerable<ReadAllBuildVersionResponse>
     _ = CreateMap<BuildVersion, ReadAllBuildVersionResponse>();
 }

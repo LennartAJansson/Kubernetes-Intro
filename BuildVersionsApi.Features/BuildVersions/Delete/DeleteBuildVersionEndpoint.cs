@@ -1,5 +1,8 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Delete;
 
+using BuildVersionsApi.Features.BuildVersions.Create;
+using BuildVersionsApi.Features.Domain.Abstract;
+
 using FastEndpoints;
 
 using MediatR;
@@ -8,12 +11,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-public sealed class DeleteBuildVersionEndpoint(ISender sender)
-  : EndpointWithoutRequest<DeleteBuildVersionResponse>
+public sealed class DeleteBuildVersionEndpoint(IDomainService service)
+  : EndpointWithoutRequest<DeleteBuildVersionResponse,
+    DeleteBuildVersionMapper>
 {
   public override void Configure()
   {
-    //Version(1);
+    Version(2, deprecateAt: 4);
     Delete("BuildVersion/Delete/{id}");
     AllowAnonymous();
     Description(b => b
@@ -28,6 +32,19 @@ public sealed class DeleteBuildVersionEndpoint(ISender sender)
   public override async Task HandleAsync(CancellationToken cancellationToken)
   {
     int id = Route<int>("id");
-    Response = await sender.Send(new DeleteBuildVersionRequest { Id = id }, cancellationToken);
+    var username = User.Identity is not null && User.Identity.Name is not null
+      ? User.Identity.Name
+      : string.Empty;
+
+    var entity = await service.HandleDelete(id, username, cancellationToken);
+
+    if (entity is null)
+    {
+      await SendNotFoundAsync(cancellation: cancellationToken);
+    }
+    else
+    {
+      await SendOkAsync(Map.FromEntity(entity), cancellationToken);
+    }
   }
 }

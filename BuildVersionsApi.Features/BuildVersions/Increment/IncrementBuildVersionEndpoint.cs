@@ -1,19 +1,21 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Increment;
 
-using FastEndpoints;
+using BuildVersionsApi.Features.Domain.Abstract;
 
-using MediatR;
+using FastEndpoints;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-public sealed class IncrementBuildVersionEndpoint(ISender sender)
-  : Endpoint<IncrementBuildVersionRequest, IncrementBuildVersionResponse>
+public sealed class IncrementBuildVersionEndpoint(IDomainService service)
+  : Endpoint<IncrementBuildVersionRequest, IncrementBuildVersionResponse, 
+    IncrementBuildVersionMapper>
 {
   public override void Configure()
   {
-    //Version(1);
+    Version(1, deprecateAt: 4);
     Put("BuildVersion/Increment");
     AllowAnonymous();
     Description(b => b
@@ -26,5 +28,22 @@ public sealed class IncrementBuildVersionEndpoint(ISender sender)
     Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
   }
 
-  public override async Task HandleAsync(IncrementBuildVersionRequest request, CancellationToken cancellationToken) => Response = await sender.Send(request, cancellationToken);
+  public override async Task HandleAsync(IncrementBuildVersionRequest request, CancellationToken cancellationToken)
+  {
+    Logger.LogInformation("Running pipe on Increment");
+    string username = User.Identity is not null && User.Identity.Name is not null
+      ? User.Identity.Name
+      : string.Empty;
+
+    var entity = await service.HandleIncreaseVersion(request.ProjectName, request.VersionElement, username, cancellationToken);
+    
+    if (entity is null)
+    {
+      await SendErrorsAsync(cancellation: cancellationToken);
+    }
+    else
+    {
+      await SendOkAsync(Map.FromEntity(entity), cancellationToken);
+    }
+  }
 }

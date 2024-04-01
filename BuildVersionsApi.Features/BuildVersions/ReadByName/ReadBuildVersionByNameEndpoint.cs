@@ -1,5 +1,7 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadByName;
 
+using BuildVersionsApi.Features.Domain.Abstract;
+
 using FastEndpoints;
 
 using MediatR;
@@ -7,13 +9,14 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-public sealed class ReadBuildVersionByNameEndpoint(ISender sender)
+public sealed class ReadBuildVersionByNameEndpoint(IDomainService service, ISender sender)
   : EndpointWithoutRequest<ReadBuildVersionByNameResponse>
 {
   public override void Configure()
   {
-    //Version(1);
+    Version(1, deprecateAt: 4);
     Get("BuildVersion/ReadByName/{name}");
     AllowAnonymous();
     Description(b => b
@@ -27,7 +30,18 @@ public sealed class ReadBuildVersionByNameEndpoint(ISender sender)
 
   public override async Task HandleAsync(CancellationToken cancellationToken)
   {
+    Logger.LogInformation("Running pipe on ReadByName");
     string? name = Route<string>("name");
+
     Response = await sender.Send(new ReadBuildVersionByNameRequest { ProjectName = name! }, cancellationToken);
+
+    if (Response is null)
+    {
+      await SendNotFoundAsync(cancellationToken);
+    }
+    else
+    {
+      await SendOkAsync(Response, cancellation: cancellationToken);
+    }
   }
 }

@@ -8,14 +8,15 @@ using FastEndpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-public sealed class CreateBuildVersionEndpoint(IPersistanceService service)
+public sealed class CreateBuildVersionEndpoint(IDomainService service)
   : Endpoint<CreateBuildVersionRequest, CreateBuildVersionResponse,
     CreateBuildVersionMapper>
 {
   public override void Configure()
   {
-    //Version(1);
+    Version(1, deprecateAt: 4);
     Post("BuildVersion/Create");
     AllowAnonymous();
     Description(b => b
@@ -30,26 +31,27 @@ public sealed class CreateBuildVersionEndpoint(IPersistanceService service)
 
   public override async Task HandleAsync(CreateBuildVersionRequest request, CancellationToken cancellationToken)
   {
+    Logger.LogInformation("Running pipe on Create");
+    string username = User.Identity is not null && User.Identity.Name is not null
+      ? User.Identity.Name
+      : string.Empty;
+
     BuildVersion? entity = Map.ToEntity(request);
-    try
+    if (entity is not null)
     {
-      if (entity is not null)
-      {
-        entity.Username = User.Identity is not null && User.Identity.Name is not null ? User.Identity.Name : string.Empty;
-        entity.Created = DateTime.UtcNow;
-        entity.Changed = DateTime.UtcNow;
-        entity = await service.CreateProject(entity);
-      }
-      if (entity is null)
-      {
-        await SendErrorsAsync(cancellation: cancellationToken);
-        return;
-      }
-      await SendMappedAsync(entity!, ct: cancellationToken);
+      entity.Username = username;
+      entity.Created = DateTime.UtcNow;
+      entity.Changed = DateTime.UtcNow;
+      entity = await service.HandleCreateProject(entity, cancellationToken);
     }
-    catch (Exception)
+
+    if (entity is null)
     {
-      throw;
+      await SendErrorsAsync(cancellation: cancellationToken);
+    }
+    else
+    {
+      await SendCreatedAtAsync("ReadById", new { id = entity.Id }, Map.FromEntity(entity), true, cancellationToken);
     }
   }
 }

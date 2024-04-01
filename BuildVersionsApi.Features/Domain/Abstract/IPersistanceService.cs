@@ -1,19 +1,18 @@
 ﻿namespace BuildVersionsApi.Features.Domain.Abstract;
 
 using BuildVersionsApi.Features.Domain.Model;
-using BuildVersionsApi.Features.Types;
 
 public interface IPersistanceService
 {
-    Task<BuildVersion?> CreateProject(BuildVersion buildVersion);
+  Task<BuildVersion?> CreateProject(BuildVersion buildVersion, CancellationToken cancellationToken);
 
-    Task<BuildVersion?> UpdateProject(BuildVersion buildVersion);
+  Task<BuildVersion?> UpdateProject(BuildVersion buildVersion, CancellationToken cancellationToken);
 
-    Task<BuildVersion?> GetById(int id);
+  Task<BuildVersion?> GetById(int id, CancellationToken cancellationToken);
 
-    Task<BuildVersion?> GetByName(string projectName);
+  Task<BuildVersion?> GetByName(string projectName, CancellationToken cancellationToken);
 
-    Task<IEnumerable<BuildVersion>> GetAll();
+  Task<IEnumerable<BuildVersion>> GetAll(CancellationToken cancellationToken);
 
-    Task<BuildVersion?> Delete(int id);
+  Task<BuildVersion?> Delete(BuildVersion buildVersion, CancellationToken cancellationToken);
 }

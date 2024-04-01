@@ -7,7 +7,8 @@ using BuildVersionsApi.Features.Domain.Model;
 
 using FastEndpoints;
 
-public sealed class CreateBuildVersionMapper : Mapper<CreateBuildVersionRequest, CreateBuildVersionResponse, BuildVersion>
+public sealed class CreateBuildVersionMapper 
+  : Mapper<CreateBuildVersionRequest, CreateBuildVersionResponse, BuildVersion>
 {
   public override Task<BuildVersion> ToEntityAsync(CreateBuildVersionRequest r, CancellationToken ct = default)
     => Task.FromResult<BuildVersion>(new()

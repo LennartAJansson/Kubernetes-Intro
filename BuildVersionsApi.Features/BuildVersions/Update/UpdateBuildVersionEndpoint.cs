@@ -1,5 +1,7 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Update;
 
+using BuildVersionsApi.Features.Domain.Abstract;
+
 using FastEndpoints;
 
 using MediatR;
@@ -7,13 +9,14 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-public sealed class UpdateBuildVersionEndpoint(ISender sender)
-  : Endpoint<UpdateBuildVersionRequest, UpdateBuildVersionResponse>
+public sealed class UpdateBuildVersionEndpoint(IDomainService service)
+  : Endpoint<UpdateBuildVersionRequest, UpdateBuildVersionResponse, UpdateBuildVersionMapper>
 {
   public override void Configure()
   {
-    //Version(1);
+    Version(1, deprecateAt: 4);
     Put("BuildVersion/Update");
     AllowAnonymous();
     Description(b => b
@@ -26,5 +29,23 @@ public sealed class UpdateBuildVersionEndpoint(ISender sender)
     Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
   }
 
-  public override async Task HandleAsync(UpdateBuildVersionRequest request, CancellationToken cancellationToken) => Response = await sender.Send(request, cancellationToken);
+  public override async Task HandleAsync(UpdateBuildVersionRequest request, CancellationToken cancellationToken)
+  {
+    Logger.LogInformation("Running pipe on Update");
+    string username = User.Identity is not null && User.Identity.Name is not null
+      ? User.Identity.Name
+      : string.Empty;
+
+    var entity = await service.HandleUpdateProject(Map.ToEntity(request), cancellationToken);
+
+    if (entity is null)
+    {
+      await SendNotFoundAsync(cancellationToken);
+    }
+    else
+    {
+      await SendOkAsync(Map.FromEntity(entity), cancellation: cancellationToken);
+    }
+
+  }
 }

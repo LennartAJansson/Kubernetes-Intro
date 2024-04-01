@@ -1,5 +1,7 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadAll;
 
+using BuildVersionsApi.Features.Domain.Abstract;
+
 using FastEndpoints;
 
 using MediatR;
@@ -9,13 +11,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public sealed class ReadAllBuildVersionEndpoint(ISender sender)
+public sealed class ReadAllBuildVersionEndpoint(IDomainService service, ISender sender)
   : EndpointWithoutRequest<IEnumerable<ReadAllBuildVersionResponse>>
 {
   public override void Configure()
   {
     Logger.LogInformation("Running configure on ReadAll");
-    //Version(1);
+    Version(1, deprecateAt: 4);
     Get("BuildVersion/ReadAll");
     AllowAnonymous();
     Description(b => b
@@ -30,6 +32,16 @@ public sealed class ReadAllBuildVersionEndpoint(ISender sender)
   public override async Task HandleAsync(CancellationToken cancellationToken)
   {
     Logger.LogInformation("Running pipe on ReadAll");
+
     Response = await sender.Send(new ReadAllBuildVersionRequest(), cancellationToken);
+
+    if (Response is null || !Response.Any())
+    {
+      await SendNotFoundAsync(cancellationToken);
+    }
+    else
+    {
+      await SendOkAsync(Response, cancellation: cancellationToken);
+    }
   }
 }
