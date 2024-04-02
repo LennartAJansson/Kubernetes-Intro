@@ -1,6 +1,6 @@
-﻿namespace BuildVersionsApi.Features.Persistance.Design;
+﻿namespace BuildVersionsApi.Persistance.Design;
 
-using BuildVersionsApi.Features.Persistance.Context;
+using BuildVersionsApi.Persistance.Context;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;

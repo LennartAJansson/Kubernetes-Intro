@@ -1,6 +1,6 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadById;
 
-using BuildVersionsApi.Features.Domain.Abstract;
+using BuildVersionsApi.Domain.Abstract;
 
 using FastEndpoints;
 
@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public sealed class ReadBuildVersionByIdEndpoint(IDomainService service, ISender sender)
+public sealed class ReadBuildVersionByIdEndpoint(IEndpointsService service, ISender sender)
   : EndpointWithoutRequest<ReadBuildVersionByIdResponse>
 {
   public override void Configure()

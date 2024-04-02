@@ -1,6 +1,6 @@
-﻿namespace BuildVersionsApi.Features.Persistance.Configuration;
+﻿namespace BuildVersionsApi.Persistance.Configuration;
 
-using BuildVersionsApi.Features.Domain.Model;
+using BuildVersionsApi.Domain.Model;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

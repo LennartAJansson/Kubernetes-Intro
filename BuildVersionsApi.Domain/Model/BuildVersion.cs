@@ -1,4 +1,4 @@
-﻿namespace BuildVersionsApi.Features.Domain.Model;
+﻿namespace BuildVersionsApi.Domain.Model;
 
 using System.Text.RegularExpressions;
 

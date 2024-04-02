@@ -1,7 +1,7 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Increment;
 
+using BuildVersionsApi.Domain.Model;
 using BuildVersionsApi.Features.BuildVersions.Delete;
-using BuildVersionsApi.Features.Domain.Model;
 
 using FastEndpoints;
 

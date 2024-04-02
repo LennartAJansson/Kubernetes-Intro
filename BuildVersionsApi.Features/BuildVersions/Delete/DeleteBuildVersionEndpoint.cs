@@ -1,7 +1,7 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Delete;
 
-using BuildVersionsApi.Features.Domain.Abstract;
-using BuildVersionsApi.Features.Domain.Model;
+using BuildVersionsApi.Domain.Abstract;
+using BuildVersionsApi.Domain.Model;
 
 using FastEndpoints;
 
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public sealed class DeleteBuildVersionEndpoint(IDomainService service)
+public sealed class DeleteBuildVersionEndpoint(IEndpointsService service)
   : EndpointWithoutRequest<DeleteBuildVersionResponse,
     DeleteBuildVersionMapper>
 {
@@ -36,6 +36,7 @@ public sealed class DeleteBuildVersionEndpoint(IDomainService service)
       ? User.Identity.Name
       : "John Doe";// string.Empty;
 
+    //HINT Don't like the way we expose the entity to the endpoint, mediator is much better that way
     BuildVersion? entity = await service.HandleDelete(name!, username, cancellationToken);
 
     if (entity is null)

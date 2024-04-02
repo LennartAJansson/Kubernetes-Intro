@@ -3,8 +3,8 @@ global using FastEndpoints;
 using System.Reflection;
 using System.Text.Json;
 
-using BuildVersionsApi.Features;
-using BuildVersionsApi.Features.Types;
+using BuildVersionsApi.Domain.Extensions;
+using BuildVersionsApi.Domain.Types;
 
 using FastEndpoints.Swagger;
 
@@ -14,44 +14,46 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Host.UseSerilog((context, services, configuration) => configuration
-                .ReadFrom.Configuration(context.Configuration)
-                .ReadFrom.Services(services)
-                .Enrich.FromLogContext());
+  .ReadFrom.Configuration(context.Configuration)
+  .ReadFrom.Services(services)
+  .Enrich.FromLogContext());
 
 ApplicationInfo appInfo = new(typeof(Program));
 
 builder.Services
-  .AddBuildVersionsFeatures(builder.Configuration.GetConnectionString("BuildVersionsDb"));
+  .AddBuildVersionsApiFeatures()
+  .AddBuildVersionsApiDomain()
+  .AddBuildVersionsApiPersistance(builder.Configuration.GetConnectionString("BuildVersionsDb"));
 
 builder.Services
-      .AddFastEndpoints(o =>
-      {
-        o.Assemblies =
-        [
-          Assembly.GetAssembly(typeof(FeaturesExtension))!
-        ];
-      })
-      .SwaggerDocument(o =>
-      {
-        o.MaxEndpointVersion = 1;
-        o.DocumentSettings = s =>
-        {
-          s.DocumentName = "Release 1.0";
-          s.Title = "BuildVersions";
-          s.Version = "v1.0";
-        };
-      })
-     .SwaggerDocument(o =>
-     {
-       o.MaxEndpointVersion = 2;
-       o.DocumentSettings = s =>
-       {
-         s.DocumentName = "Release 2.0";
-         s.Title = "BuildVersions";
-         s.Version = "v2.0";
-       };
-     })
-    .AddResponseCaching();
+  .AddFastEndpoints(o =>
+  {
+    o.Assemblies =
+    [
+      Assembly.GetAssembly(typeof(FeaturesExtension))!
+    ];
+  })
+  .SwaggerDocument(o =>
+  {
+    o.MaxEndpointVersion = 1;
+    o.DocumentSettings = s =>
+    {
+      s.DocumentName = "Release 1.0";
+      s.Title = "BuildVersions";
+      s.Version = "v1.0";
+    };
+  })
+  .SwaggerDocument(o =>
+  {
+    o.MaxEndpointVersion = 2;
+    o.DocumentSettings = s =>
+    {
+      s.DocumentName = "Release 2.0";
+      s.Title = "BuildVersions";
+      s.Version = "v2.0";
+    };
+  })
+  .AddResponseCaching();
 
 builder.Services.AddCors(options =>
 {

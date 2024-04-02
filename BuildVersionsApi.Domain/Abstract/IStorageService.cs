@@ -1,8 +1,8 @@
-﻿namespace BuildVersionsApi.Features.Domain.Abstract;
+﻿namespace BuildVersionsApi.Domain.Abstract;
 
-using BuildVersionsApi.Features.Domain.Model;
+using BuildVersionsApi.Domain.Model;
 
-public interface IPersistanceService
+public interface IStorageService
 {
   Task<BuildVersion?> CreateProject(BuildVersion buildVersion, CancellationToken cancellationToken);
 

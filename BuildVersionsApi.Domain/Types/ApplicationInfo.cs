@@ -1,4 +1,4 @@
-﻿namespace BuildVersionsApi.Features.Types;
+﻿namespace BuildVersionsApi.Domain.Types;
 
 using System.Diagnostics;
 using System.Reflection;

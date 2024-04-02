@@ -1,4 +1,4 @@
-﻿namespace BuildVersionsApi.Features.Domain.Model
+﻿namespace BuildVersionsApi.Domain.Model
 {
   public class BaseLoggedEntity
   {
@@ -9,6 +9,6 @@
     public string? Username { get; set; }
     public DateTime? Created { get; set; }
     public DateTime? Changed { get; set; }
-    public bool IsDeleted { get; set; }=false;
+    public bool IsDeleted { get; set; } = false;
   }
 }

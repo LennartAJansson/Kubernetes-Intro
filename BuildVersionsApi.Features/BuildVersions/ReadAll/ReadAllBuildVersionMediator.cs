@@ -1,12 +1,13 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadAll;
 
 using AutoMapper;
-using BuildVersionsApi.Features.Domain.Abstract;
-using BuildVersionsApi.Features.Domain.Model;
+
+using BuildVersionsApi.Domain.Abstract;
+using BuildVersionsApi.Domain.Model;
 
 using MediatR;
 
-public sealed class ReadAllBuildVersionMediator(IDomainService service, IMapper mapper)
+public sealed class ReadAllBuildVersionMediator(IEndpointsService service, IMapper mapper)
   : IRequestHandler<ReadAllBuildVersionRequest, IEnumerable<ReadAllBuildVersionResponse>>
 {
   public async Task<IEnumerable<ReadAllBuildVersionResponse>> Handle(ReadAllBuildVersionRequest request, CancellationToken cancellationToken)

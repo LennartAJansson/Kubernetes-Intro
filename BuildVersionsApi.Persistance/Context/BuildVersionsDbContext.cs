@@ -1,8 +1,8 @@
-﻿namespace BuildVersionsApi.Features.Persistance.Context;
+﻿namespace BuildVersionsApi.Persistance.Context;
 
 using System.Reflection;
 
-using BuildVersionsApi.Features.Domain.Model;
+using BuildVersionsApi.Domain.Model;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;

@@ -2,7 +2,7 @@
 
 using AutoMapper;
 
-using BuildVersionsApi.Features.Domain.Model;
+using BuildVersionsApi.Domain.Model;
 
 public class ReadBuildVersionByNameMapper : Profile
 {

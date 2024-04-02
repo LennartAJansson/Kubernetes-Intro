@@ -1,7 +1,6 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadAll;
 
-using BuildVersionsApi.Features.Domain.Abstract;
-using BuildVersionsApi.Features.Domain.Model;
+using BuildVersionsApi.Domain.Abstract;
 
 using FastEndpoints;
 
@@ -12,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public sealed class ReadAllBuildVersionEndpoint(IDomainService service, ISender sender)
+public sealed class ReadAllBuildVersionEndpoint(IEndpointsService service, ISender sender)
   : EndpointWithoutRequest<IEnumerable<ReadAllBuildVersionResponse>>
 {
   public override void Configure()

@@ -1,8 +1,7 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Update;
 
-using BuildVersionsApi.Features.Domain.Abstract;
-using BuildVersionsApi.Features.Domain.Model;
-
+using BuildVersionsApi.Domain.Abstract;
+using BuildVersionsApi.Domain.Model;
 using FastEndpoints;
 
 using Microsoft.AspNetCore.Builder;
@@ -10,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public sealed class UpdateBuildVersionEndpoint(IDomainService service)
+public sealed class UpdateBuildVersionEndpoint(IEndpointsService service)
   : Endpoint<UpdateBuildVersionRequest, UpdateBuildVersionResponse, UpdateBuildVersionMapper>
 {
   public override void Configure()
@@ -35,6 +34,7 @@ public sealed class UpdateBuildVersionEndpoint(IDomainService service)
       ? User.Identity.Name
       : "John Doe";// string.Empty;
 
+    //HINT Don't like the way we expose the entity to the endpoint, mediator is much better that way
     BuildVersion? entity = Map.ToEntity(request);
     if (entity is not null)
     {

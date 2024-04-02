@@ -1,11 +1,11 @@
-﻿namespace BuildVersionsApi.Features.Domain.Abstract;
+﻿namespace BuildVersionsApi.Domain.Abstract;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using BuildVersionsApi.Features.Domain.Model;
-using BuildVersionsApi.Features.Types;
+using BuildVersionsApi.Domain.Model;
+using BuildVersionsApi.Domain.Types;
 
-public interface IDomainService
+public interface IEndpointsService
 {
   Task<BuildVersion?> HandleCreateProject(BuildVersion buildVersion, string username, CancellationToken cancellationToken);
   Task<BuildVersion?> HandleDelete(string projectName, string username, CancellationToken cancellationToken);

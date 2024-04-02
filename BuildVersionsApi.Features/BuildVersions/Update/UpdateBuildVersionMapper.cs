@@ -3,10 +3,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using AutoMapper;
-
-using BuildVersionsApi.Features.BuildVersions.Delete;
-using BuildVersionsApi.Features.Domain.Model;
+using BuildVersionsApi.Domain.Model;
 
 using FastEndpoints;
 

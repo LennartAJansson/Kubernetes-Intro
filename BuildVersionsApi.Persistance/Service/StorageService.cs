@@ -1,13 +1,13 @@
-﻿namespace BuildVersionsApi.Features.Persistance.Service;
+﻿namespace BuildVersionsApi.Persistance.Service;
 
-using BuildVersionsApi.Features.Domain.Abstract;
-using BuildVersionsApi.Features.Domain.Model;
-using BuildVersionsApi.Features.Persistance.Context;
+using BuildVersionsApi.Domain.Abstract;
+using BuildVersionsApi.Domain.Model;
+using BuildVersionsApi.Persistance.Context;
 
 using Microsoft.EntityFrameworkCore;
 
-public sealed class PersistanceService(BuildVersionsDbContext context)
-  : IPersistanceService
+public sealed class StorageService(BuildVersionsDbContext context)
+  : IStorageService
 {
   public async Task<BuildVersion?> CreateProject(BuildVersion buildVersion, CancellationToken cancellationToken)
   {
@@ -36,24 +36,29 @@ public sealed class PersistanceService(BuildVersionsDbContext context)
 
   public async Task<BuildVersion?> GetById(int id, CancellationToken cancellationToken)
   {
-    BuildVersion? model = await context.BuildVersions.SingleOrDefaultAsync(b => b.Id == id && !b.IsDeleted, cancellationToken);
+    //HINT Handle soft delete by property IsDeleted in the entity class
+    BuildVersion? model = await context.BuildVersions.SingleOrDefaultAsync(b =>
+    b.Id == id && !b.IsDeleted, cancellationToken);
 
     return model;
   }
 
   public async Task<BuildVersion?> GetByName(string projectName, CancellationToken cancellationToken)
   {
-    BuildVersion? model = await context.BuildVersions.SingleOrDefaultAsync(b => b.ProjectName.Equals(projectName) && !b.IsDeleted, cancellationToken);
+    //HINT Handle soft delete by property IsDeleted in the entity class
+    BuildVersion? model = await context.BuildVersions.SingleOrDefaultAsync(b
+      => b.ProjectName.Equals(projectName) && !b.IsDeleted, cancellationToken);
 
     return model;
   }
 
   public Task<IEnumerable<BuildVersion>> GetAll(CancellationToken cancellationToken)
+    //HINT Handle soft delete by property IsDeleted in the entity class
     => Task.FromResult(context.BuildVersions.Where(b => !b.IsDeleted).AsEnumerable());
 
   public async Task<BuildVersion?> Delete(BuildVersion buildVersion, CancellationToken cancellationToken)
   {
-    //HINT Handle soft delete
+    //HINT Handle soft delete by property IsDeleted in the entity class
     //_ = context.Remove(buildVersion!);
 
     _ = await context.SaveChangesAsync(cancellationToken);

@@ -1,13 +1,13 @@
-﻿namespace BuildVersionsApi.Features.Domain.Services;
+﻿namespace BuildVersionsApi.Domain.Services;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-using BuildVersionsApi.Features.Domain.Abstract;
-using BuildVersionsApi.Features.Domain.Model;
-using BuildVersionsApi.Features.Types;
+using BuildVersionsApi.Domain.Abstract;
+using BuildVersionsApi.Domain.Model;
+using BuildVersionsApi.Domain.Types;
 
-public class DomainService(IPersistanceService service) : IDomainService
+public class EndpointsService(IStorageService service) : IEndpointsService
 {
   public async Task<BuildVersion?> HandleCreateProject(BuildVersion buildVersion, string username, CancellationToken cancellationToken)
   {
@@ -34,7 +34,6 @@ public class DomainService(IPersistanceService service) : IDomainService
     return await service.Delete(buildVersion, cancellationToken);
   }
 
-  
   public async Task<IEnumerable<BuildVersion>> HandleGetAll(CancellationToken cancellationToken) =>
     //HINT Add business logic here: Returns all that are not soft deleted
     await service.GetAll(cancellationToken);

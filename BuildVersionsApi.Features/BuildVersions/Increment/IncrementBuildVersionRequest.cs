@@ -1,6 +1,6 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Increment;
 
-using BuildVersionsApi.Features.Types;
+using BuildVersionsApi.Domain.Types;
 
 using MediatR;
 

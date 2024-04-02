@@ -3,7 +3,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using BuildVersionsApi.Features.Domain.Model;
+using BuildVersionsApi.Domain.Model;
 
 using FastEndpoints;
 
