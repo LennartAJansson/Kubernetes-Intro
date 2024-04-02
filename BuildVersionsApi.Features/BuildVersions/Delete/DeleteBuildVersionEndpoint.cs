@@ -1,15 +1,14 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Delete;
 
-using BuildVersionsApi.Features.BuildVersions.Create;
 using BuildVersionsApi.Features.Domain.Abstract;
+using BuildVersionsApi.Features.Domain.Model;
 
 using FastEndpoints;
-
-using MediatR;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public sealed class DeleteBuildVersionEndpoint(IDomainService service)
   : EndpointWithoutRequest<DeleteBuildVersionResponse,
@@ -31,12 +30,13 @@ public sealed class DeleteBuildVersionEndpoint(IDomainService service)
 
   public override async Task HandleAsync(CancellationToken cancellationToken)
   {
+    Logger.LogInformation("Running pipe on Delete");
     int id = Route<int>("id");
-    var username = User.Identity is not null && User.Identity.Name is not null
+    string username = User.Identity is not null && User.Identity.Name is not null
       ? User.Identity.Name
-      : string.Empty;
+      : "Nisse";// string.Empty;
 
-    var entity = await service.HandleDelete(id, username, cancellationToken);
+    BuildVersion? entity = await service.HandleDelete(id, username, cancellationToken);
 
     if (entity is null)
     {

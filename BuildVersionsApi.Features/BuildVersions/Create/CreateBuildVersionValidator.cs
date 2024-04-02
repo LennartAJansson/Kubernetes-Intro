@@ -13,10 +13,10 @@ public sealed class CreateBuildVersionValidator : Validator<CreateBuildVersionRe
       .WithMessage("Projectname is required!")
       .MinimumLength(5)
       .WithMessage("Projectname is too short!");
-    RuleFor(x=>x.SemanticVersionText)
+    RuleFor(x => x.SemanticVersionText)
       .NotEmpty()
-      .WithMessage("SemanticVersionText is required!")
-      .MaximumLength(5)
-      .WithMessage("SemanticVersionText is too long!");
+      .WithMessage("SemanticVersionText is required!");
+      //.MaximumLength(5)
+      //.WithMessage("SemanticVersionText is too long!");
   }
 }

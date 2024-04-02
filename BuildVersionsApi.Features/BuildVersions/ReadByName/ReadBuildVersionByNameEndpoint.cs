@@ -33,15 +33,16 @@ public sealed class ReadBuildVersionByNameEndpoint(IDomainService service, ISend
     Logger.LogInformation("Running pipe on ReadByName");
     string? name = Route<string>("name");
 
-    Response = await sender.Send(new ReadBuildVersionByNameRequest { ProjectName = name! }, cancellationToken);
+    //HINT Do not use Response since that will trigger validator
+    var response = await sender.Send(new ReadBuildVersionByNameRequest { ProjectName = name! }, cancellationToken);
 
-    if (Response is null)
+    if (response is null)
     {
       await SendNotFoundAsync(cancellationToken);
     }
     else
     {
-      await SendOkAsync(Response, cancellation: cancellationToken);
+      await SendOkAsync(response, cancellation: cancellationToken);
     }
   }
 }

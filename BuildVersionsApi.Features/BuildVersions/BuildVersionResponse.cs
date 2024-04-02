@@ -24,6 +24,5 @@ public class BuildVersionResponse
   public required Version Version { get; set; }
   public required string Release { get; set; }
   public required string SemanticVersion { get; set; }
-  public required string SemanticRelease { get; set; }
-
+//  public required string SemanticRelease { get; set; }
 }

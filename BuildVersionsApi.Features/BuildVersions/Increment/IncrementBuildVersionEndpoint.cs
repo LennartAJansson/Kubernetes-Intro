@@ -1,6 +1,7 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Increment;
 
 using BuildVersionsApi.Features.Domain.Abstract;
+using BuildVersionsApi.Features.Domain.Model;
 
 using FastEndpoints;
 
@@ -10,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 public sealed class IncrementBuildVersionEndpoint(IDomainService service)
-  : Endpoint<IncrementBuildVersionRequest, IncrementBuildVersionResponse, 
+  : Endpoint<IncrementBuildVersionRequest, IncrementBuildVersionResponse,
     IncrementBuildVersionMapper>
 {
   public override void Configure()
@@ -33,10 +34,10 @@ public sealed class IncrementBuildVersionEndpoint(IDomainService service)
     Logger.LogInformation("Running pipe on Increment");
     string username = User.Identity is not null && User.Identity.Name is not null
       ? User.Identity.Name
-      : string.Empty;
+      : "Nisse";// string.Empty;
 
-    var entity = await service.HandleIncreaseVersion(request.ProjectName, request.VersionElement, username, cancellationToken);
-    
+    BuildVersion? entity = await service.HandleIncreaseVersion(request.ProjectName, request.VersionElement, username, cancellationToken);
+
     if (entity is null)
     {
       await SendErrorsAsync(cancellation: cancellationToken);

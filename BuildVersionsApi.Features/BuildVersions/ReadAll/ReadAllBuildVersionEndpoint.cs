@@ -1,6 +1,7 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadAll;
 
 using BuildVersionsApi.Features.Domain.Abstract;
+using BuildVersionsApi.Features.Domain.Model;
 
 using FastEndpoints;
 
@@ -33,15 +34,18 @@ public sealed class ReadAllBuildVersionEndpoint(IDomainService service, ISender 
   {
     Logger.LogInformation("Running pipe on ReadAll");
 
-    Response = await sender.Send(new ReadAllBuildVersionRequest(), cancellationToken);
+    //HINT Do not use Response since that will trigger validator
+    IEnumerable<ReadAllBuildVersionResponse> response = await sender.Send(new ReadAllBuildVersionRequest(), cancellationToken);
 
-    if (Response is null || !Response.Any())
+    if (response is null || !response.Any())
     {
-      await SendNotFoundAsync(cancellationToken);
+      //HINT Should I return empty collection or not found?
+      await SendOkAsync([], cancellationToken);
+      //await SendNotFoundAsync(cancellationToken);
     }
     else
     {
-      await SendOkAsync(Response, cancellation: cancellationToken);
+      await SendOkAsync(response, cancellation: cancellationToken);
     }
   }
 }

@@ -9,24 +9,29 @@ using BuildVersionsApi.Features.Types;
 
 public class DomainService(IPersistanceService service) : IDomainService
 {
-  public async Task<BuildVersion?> HandleCreateProject(BuildVersion buildVersion, CancellationToken cancellationToken) =>
+  public async Task<BuildVersion?> HandleCreateProject(BuildVersion buildVersion, string username, CancellationToken cancellationToken)
+  {
     //HINT Add business logic here: Should handle the created, changed and username
-    await service.CreateProject(buildVersion, cancellationToken);
+    buildVersion.Created = DateTime.Now;
+    buildVersion.Changed = DateTime.Now;
+    buildVersion.Username = username;
+    return await service.CreateProject(buildVersion, cancellationToken);
+  }
 
   public async Task<BuildVersion?> HandleDelete(string projectName, string username, CancellationToken cancellationToken)
   {
     //HINT Add business logic here: Using a soft delete on the object and register the changed and username
-    BuildVersion? model = await service.GetByName(projectName, cancellationToken);
-    if (model is null)
+    BuildVersion? buildVersion = await service.GetByName(projectName, cancellationToken);
+    if (buildVersion is null)
     {
       return null;
     }
 
-    model.Changed = DateTime.Now;
-    model.Username = username;
-    model.IsDeleted = true;
+    buildVersion.Changed = DateTime.Now;
+    buildVersion.Username = username;
+    buildVersion.IsDeleted = true;
 
-    return await service.Delete(model, cancellationToken);
+    return await service.Delete(buildVersion, cancellationToken);
   }
 
   public Task<BuildVersion?> HandleDelete(int id, string username, CancellationToken cancellationToken) => throw new NotImplementedException();
@@ -46,8 +51,8 @@ public class DomainService(IPersistanceService service) : IDomainService
   public async Task<BuildVersion?> HandleIncreaseVersion(string projectName, VersionNumber version, string username, CancellationToken cancellationToken)
   {
     //HINT Add business logic here: Increase Version and register the changed and username
-    BuildVersion? model = await service.GetByName(projectName, cancellationToken);
-    if (model is null)
+    BuildVersion? buildVersion = await service.GetByName(projectName, cancellationToken);
+    if (buildVersion is null)
     {
       return null;
     }
@@ -55,47 +60,48 @@ public class DomainService(IPersistanceService service) : IDomainService
     switch (version)
     {
       case VersionNumber.Major:
-        model.Major++;
-        model.Minor = model.Build = model.Revision = 0;
+        buildVersion.Major++;
+        buildVersion.Minor = buildVersion.Build = buildVersion.Revision = 0;
         break;
 
       case VersionNumber.Minor:
-        model.Minor++;
-        model.Build = model.Revision = 0;
+        buildVersion.Minor++;
+        buildVersion.Build = buildVersion.Revision = 0;
         break;
 
       case VersionNumber.Build:
-        model.Build++;
-        model.Revision = 0;
+        buildVersion.Build++;
+        buildVersion.Revision = 0;
         break;
 
       case VersionNumber.Revision:
-        model.Revision++;
+        buildVersion.Revision++;
         break;
     }
-    model.Changed = DateTime.Now;
-    model.Username = username;
+    buildVersion.Changed = DateTime.Now;
+    buildVersion.Username = username;
 
-    return await service.UpdateProject(model, cancellationToken);
+    return await service.UpdateProject(buildVersion, cancellationToken);
   }
 
-  public async Task<BuildVersion?> HandleUpdateProject(BuildVersion buildVersion, CancellationToken cancellationToken)
+  public async Task<BuildVersion?> HandleUpdateProject(BuildVersion newBuildVersion, string username, CancellationToken cancellationToken)
   {
     //HINT Add business logic here: Update the object and register the changed and username
-    BuildVersion? model = await service.GetByName(buildVersion.ProjectName, cancellationToken);
-    if (model is null)
+    BuildVersion? buildVersion = await service.GetByName(newBuildVersion.ProjectName, cancellationToken);
+    if (buildVersion is null)
     {
       return null;
     }
-    model.ProjectName = buildVersion.ProjectName;
-    model.Major = buildVersion.Major;
-    model.Minor = buildVersion.Minor;
-    model.Build = buildVersion.Build;
-    model.Revision = buildVersion.Revision;
-    model.SemanticVersionText = buildVersion.SemanticVersionText;
-    model.Changed = DateTime.Now;
-    model.Username = buildVersion.Username;
 
-    return await service.UpdateProject(model, cancellationToken);
+    buildVersion.ProjectName = buildVersion.ProjectName;
+    buildVersion.Major = buildVersion.Major;
+    buildVersion.Minor = buildVersion.Minor;
+    buildVersion.Build = buildVersion.Build;
+    buildVersion.Revision = buildVersion.Revision;
+    buildVersion.SemanticVersionText = buildVersion.SemanticVersionText;
+    buildVersion.Changed = DateTime.Now;
+    buildVersion.Username = username;
+
+    return await service.UpdateProject(buildVersion, cancellationToken);
   }
 }

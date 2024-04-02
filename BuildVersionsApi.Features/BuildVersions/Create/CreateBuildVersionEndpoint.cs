@@ -34,15 +34,12 @@ public sealed class CreateBuildVersionEndpoint(IDomainService service)
     Logger.LogInformation("Running pipe on Create");
     string username = User.Identity is not null && User.Identity.Name is not null
       ? User.Identity.Name
-      : string.Empty;
+      : "Nisse";// string.Empty;
 
     BuildVersion? entity = Map.ToEntity(request);
     if (entity is not null)
     {
-      entity.Username = username;
-      entity.Created = DateTime.UtcNow;
-      entity.Changed = DateTime.UtcNow;
-      entity = await service.HandleCreateProject(entity, cancellationToken);
+      entity = await service.HandleCreateProject(entity, username, cancellationToken);
     }
 
     if (entity is null)

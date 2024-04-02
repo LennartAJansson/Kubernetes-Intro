@@ -1,10 +1,9 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Update;
 
 using BuildVersionsApi.Features.Domain.Abstract;
+using BuildVersionsApi.Features.Domain.Model;
 
 using FastEndpoints;
-
-using MediatR;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -34,9 +33,13 @@ public sealed class UpdateBuildVersionEndpoint(IDomainService service)
     Logger.LogInformation("Running pipe on Update");
     string username = User.Identity is not null && User.Identity.Name is not null
       ? User.Identity.Name
-      : string.Empty;
+      : "Nisse";// string.Empty;
 
-    var entity = await service.HandleUpdateProject(Map.ToEntity(request), cancellationToken);
+    BuildVersion? entity = Map.ToEntity(request);
+    if (entity is not null)
+    {
+      entity = await service.HandleUpdateProject(entity, username, cancellationToken);
+    }
 
     if (entity is null)
     {

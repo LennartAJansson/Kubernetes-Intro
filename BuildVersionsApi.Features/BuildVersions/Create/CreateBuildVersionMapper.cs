@@ -44,11 +44,7 @@ public sealed class CreateBuildVersionMapper
       SemanticVersionText = e.SemanticVersionText,
       Version = e.Version,
       Release = e.Release,
-      SemanticVersion = e.SemanticVersion,
-      SemanticRelease = e.SemanticRelease,
-      //Username = e.Username,
-      //Created = e.Created,
-      //Changed = e.Changed
+      SemanticVersion = e.SemanticVersion
     });
 
   public override CreateBuildVersionResponse FromEntity(BuildVersion e)
@@ -63,10 +59,6 @@ public sealed class CreateBuildVersionMapper
       SemanticVersionText = e.SemanticVersionText,
       Version = e.Version,
       Release = e.Release,
-      SemanticVersion = e.SemanticVersion,
-      SemanticRelease = e.SemanticRelease,
-      //Username = e.Username,
-      //Created = e.Created,
-      //Changed = e.Changed
+      SemanticVersion = e.SemanticVersion
     };
 }
