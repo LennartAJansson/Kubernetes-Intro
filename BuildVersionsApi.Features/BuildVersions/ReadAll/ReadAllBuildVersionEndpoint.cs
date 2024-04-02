@@ -34,12 +34,12 @@ public sealed class ReadAllBuildVersionEndpoint(IDomainService service, ISender 
   {
     Logger.LogInformation("Running pipe on ReadAll");
 
-    //HINT Do not use Response since that will trigger validator
+    //HINT Do not use assignment to Response since that will trigger validator immediately
     IEnumerable<ReadAllBuildVersionResponse> response = await sender.Send(new ReadAllBuildVersionRequest(), cancellationToken);
 
     if (response is null || !response.Any())
     {
-      //HINT Should I return empty collection or not found?
+      //HINT Returns empty collection instead of not found?
       await SendOkAsync([], cancellationToken);
       //await SendNotFoundAsync(cancellationToken);
     }

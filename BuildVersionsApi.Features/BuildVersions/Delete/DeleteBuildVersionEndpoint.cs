@@ -17,7 +17,7 @@ public sealed class DeleteBuildVersionEndpoint(IDomainService service)
   public override void Configure()
   {
     Version(2, deprecateAt: 4);
-    Delete("BuildVersion/Delete/{id}");
+    Delete("BuildVersion/Delete/{name}");
     AllowAnonymous();
     Description(b => b
       //.WithGroupName("BuildVersion")
@@ -31,12 +31,12 @@ public sealed class DeleteBuildVersionEndpoint(IDomainService service)
   public override async Task HandleAsync(CancellationToken cancellationToken)
   {
     Logger.LogInformation("Running pipe on Delete");
-    int id = Route<int>("id");
+    string? name = Route<string>("name");
     string username = User.Identity is not null && User.Identity.Name is not null
       ? User.Identity.Name
-      : "Nisse";// string.Empty;
+      : "John Doe";// string.Empty;
 
-    BuildVersion? entity = await service.HandleDelete(id, username, cancellationToken);
+    BuildVersion? entity = await service.HandleDelete(name!, username, cancellationToken);
 
     if (entity is null)
     {

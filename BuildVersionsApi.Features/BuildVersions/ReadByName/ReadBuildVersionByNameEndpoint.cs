@@ -33,7 +33,7 @@ public sealed class ReadBuildVersionByNameEndpoint(IDomainService service, ISend
     Logger.LogInformation("Running pipe on ReadByName");
     string? name = Route<string>("name");
 
-    //HINT Do not use Response since that will trigger validator
+    //HINT Do not use assignment to Response since that will trigger validator immediately    //HINT Do not use Response since that will trigger validator
     var response = await sender.Send(new ReadBuildVersionByNameRequest { ProjectName = name! }, cancellationToken);
 
     if (response is null)

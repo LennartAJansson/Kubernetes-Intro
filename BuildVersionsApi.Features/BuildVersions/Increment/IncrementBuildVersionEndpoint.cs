@@ -34,7 +34,7 @@ public sealed class IncrementBuildVersionEndpoint(IDomainService service)
     Logger.LogInformation("Running pipe on Increment");
     string username = User.Identity is not null && User.Identity.Name is not null
       ? User.Identity.Name
-      : "Nisse";// string.Empty;
+      : "John Doe";// string.Empty;
 
     BuildVersion? entity = await service.HandleIncreaseVersion(request.ProjectName, request.VersionElement, username, cancellationToken);
 

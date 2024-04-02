@@ -33,7 +33,7 @@ public sealed class UpdateBuildVersionEndpoint(IDomainService service)
     Logger.LogInformation("Running pipe on Update");
     string username = User.Identity is not null && User.Identity.Name is not null
       ? User.Identity.Name
-      : "Nisse";// string.Empty;
+      : "John Doe";// string.Empty;
 
     BuildVersion? entity = Map.ToEntity(request);
     if (entity is not null)

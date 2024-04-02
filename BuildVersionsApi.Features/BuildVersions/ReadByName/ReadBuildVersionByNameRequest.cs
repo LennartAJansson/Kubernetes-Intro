@@ -2,7 +2,7 @@
 
 using MediatR;
 
-public class ReadBuildVersionByNameRequest : IRequest<ReadBuildVersionByNameResponse>
+public class ReadBuildVersionByNameRequest : IRequest<ReadBuildVersionByNameResponse?>
 {
   public required string ProjectName { get; set; }
 }

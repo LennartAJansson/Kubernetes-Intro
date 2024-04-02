@@ -33,7 +33,7 @@ public sealed class ReadBuildVersionByIdEndpoint(IDomainService service, ISender
     Logger.LogInformation("Running pipe on ReadById");
     int id = Route<int>("id");
 
-    //HINT Do not use Response since that will trigger validator
+    //HINT Do not use assignment to Response since that will trigger validator immediately    //HINT Do not use Response since that will trigger validator
     var response = await sender.Send(new ReadBuildVersionByIdRequest { Id = id }, cancellationToken);
 
     if (response is null)

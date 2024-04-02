@@ -11,12 +11,7 @@ public sealed class BuildVersion : BaseLoggedEntity
   public int Minor { get; set; }
   public int Build { get; set; }
   public int Revision { get; set; }
-  //TODO: Make a user defined formatting string for all four numbers
-  //SemanticVersionText = {Major}.{Minor}.{Build}.{Revision} or {Major}.{Minor}.{Build}-{Revision}
-  //Use only SemanticVersion and remove SemanticRelease
-
-  //public required string SemanticVersionText { get; set; } = "";
-  ///<example>{Major}.{Minor}.{Build}-dev.{Revision}</example>
+  //HINT SemanticVersionText = {Major}.{Minor}.{Build}.{Revision} or {Major}.{Minor}.{Build}-{Revision}
   public required string SemanticVersionText { get; set; } = "{Major}.{Minor}.{Build}-dev.{Revision}";
 
   //Calculated values
@@ -24,15 +19,7 @@ public sealed class BuildVersion : BaseLoggedEntity
 
   public string Release => $"{Major}.{Minor}";
 
-  //public string SemanticVersion => SemanticVersionText == string.Empty
-  //  ? $"{Major}.{Minor}.{Build}"
-  //  : $"{Major}.{Minor}.{Build}-{SemanticVersionText}.{Revision}";
-
-  //public string SemanticRelease => SemanticVersionText == string.Empty
-  //  ? $"{Major}.{Minor}"
-  //  : $"{Major}.{Minor}-{SemanticVersionText}.{Build}.{Revision}";
-  public string SemanticVersion =>
-    Regex.Replace(SemanticVersionText, @"\{\w+?\}",
+  public string SemanticVersion => Regex.Replace(SemanticVersionText, @"\{\w+?\}",
     match => GetValue(match.Value));
 
   private string GetValue(string variable)

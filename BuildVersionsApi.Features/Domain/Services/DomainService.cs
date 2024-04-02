@@ -34,7 +34,6 @@ public class DomainService(IPersistanceService service) : IDomainService
     return await service.Delete(buildVersion, cancellationToken);
   }
 
-  public Task<BuildVersion?> HandleDelete(int id, string username, CancellationToken cancellationToken) => throw new NotImplementedException();
   
   public async Task<IEnumerable<BuildVersion>> HandleGetAll(CancellationToken cancellationToken) =>
     //HINT Add business logic here: Returns all that are not soft deleted
@@ -87,18 +86,18 @@ public class DomainService(IPersistanceService service) : IDomainService
   public async Task<BuildVersion?> HandleUpdateProject(BuildVersion newBuildVersion, string username, CancellationToken cancellationToken)
   {
     //HINT Add business logic here: Update the object and register the changed and username
-    BuildVersion? buildVersion = await service.GetByName(newBuildVersion.ProjectName, cancellationToken);
+    BuildVersion? buildVersion = await service.GetById(newBuildVersion.Id, cancellationToken);
     if (buildVersion is null)
     {
       return null;
     }
 
-    buildVersion.ProjectName = buildVersion.ProjectName;
-    buildVersion.Major = buildVersion.Major;
-    buildVersion.Minor = buildVersion.Minor;
-    buildVersion.Build = buildVersion.Build;
-    buildVersion.Revision = buildVersion.Revision;
-    buildVersion.SemanticVersionText = buildVersion.SemanticVersionText;
+    buildVersion.ProjectName = newBuildVersion.ProjectName;
+    buildVersion.Major = newBuildVersion.Major;
+    buildVersion.Minor = newBuildVersion.Minor;
+    buildVersion.Build = newBuildVersion.Build;
+    buildVersion.Revision = newBuildVersion.Revision;
+    buildVersion.SemanticVersionText = newBuildVersion.SemanticVersionText;
     buildVersion.Changed = DateTime.Now;
     buildVersion.Username = username;
 
