@@ -22,7 +22,8 @@ foreach($name in @(
 	$commit = git log -1 --pretty=format:"%H"
 	$description = "${branch}: ${commit}"
 	$buildVersion = $null
-	$buildVersion = &${curl} -s "${url}/buildversions/NewRevisionVersion/$name" | ConvertFrom-Json
+	#https://localhost:7087/api/BuildVersion/ReadByName/BuildVersionsApi/v1
+	$buildVersion = &${curl} -s "${url}/api/BuildVersion/ReadByName/$name/v1" | ConvertFrom-Json
 	$semanticVersion = $buildVersion.semanticVersion
 	
 	if([string]::IsNullOrEmpty($semanticVersion) -or [string]::IsNullOrEmpty($description)) 
