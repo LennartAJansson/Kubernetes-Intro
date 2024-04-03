@@ -9,7 +9,7 @@ public sealed class IncrementBuildVersionEndpointSummary : Summary<IncrementBuil
   public IncrementBuildVersionEndpointSummary()
   {
     Summary = "Increment the VersionNumber of a BuildVersion object";
-    Description = "Increment the VersionNumber of a BuildVersion object for a Project. A VersionNumber of 0 means Major, 1 means Minor, 2 meand Build and 3 means Revision";
+    Description = "Increment the VersionNumber of a BuildVersion object for a Project. A VersionNumber is either Major, Minor, Build or Revision";
     ExampleRequest = new IncrementBuildVersionRequest
     {
       ProjectName = "NissesTaxi",

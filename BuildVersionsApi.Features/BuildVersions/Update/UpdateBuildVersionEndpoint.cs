@@ -47,6 +47,5 @@ public sealed class UpdateBuildVersionEndpoint(IEndpointsService service)
     {
       await SendOkAsync(Map.FromEntity(entity), cancellation: cancellationToken);
     }
-
   }
 }

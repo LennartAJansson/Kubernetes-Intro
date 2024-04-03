@@ -2,6 +2,7 @@ global using FastEndpoints;
 
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using BuildVersionsApi.Domain.Extensions;
 using BuildVersionsApi.Domain.Types;
@@ -81,6 +82,8 @@ app
   c.Versioning.Prefix = "v";
   c.Endpoints.RoutePrefix = "api";
   c.Serializer.Options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+  c.Serializer.Options.PropertyNameCaseInsensitive = true;
+  c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
 })
 .UseSwaggerGen();
 

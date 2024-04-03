@@ -83,14 +83,19 @@ EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "BuildVersions", "BuildVersions\BuildVersions.esproj", "{D86A98F7-6D06-4DCD-A62E-D0F2C2A9F3ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{E5376EEA-F9F3-44BC-9F7E-558626AFE2DC}"
+	ProjectSection(SolutionItems) = preProject
+		BuildWithVersioning.ps1 = BuildWithVersioning.ps1
+		DeployWithVersioning.ps1 = DeployWithVersioning.ps1
+		InitBuild.ps1 = InitBuild.ps1
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{2F5ACD27-C22B-46BB-ABF6-6179DFEB1452}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{76FDBBC7-5CC9-4061-B3C7-6DBD670C1187}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildVersionsApi.Domain", "BuildVersionsApi.Domain\BuildVersionsApi.Domain.csproj", "{82D07563-8AEB-4F83-9AD9-4D5CA3BA988F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Domain", "BuildVersionsApi.Domain\BuildVersionsApi.Domain.csproj", "{82D07563-8AEB-4F83-9AD9-4D5CA3BA988F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildVersionsApi.Persistance", "BuildVersionsApi.Persistance\BuildVersionsApi.Persistance.csproj", "{962ACF42-C22B-454E-80B5-420405C8CED4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Persistance", "BuildVersionsApi.Persistance\BuildVersionsApi.Persistance.csproj", "{962ACF42-C22B-454E-80B5-420405C8CED4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

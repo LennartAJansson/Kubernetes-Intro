@@ -24,19 +24,15 @@ public sealed class BuildVersion : BaseLoggedEntity
 
   private string GetValue(string variable)
   {
-    switch (variable)
+    switch (variable.ToLower())
     {
       case "{major}":
-      case "{Major}":
         return $"{Major}";
       case "{minor}":
-      case "{Minor}":
         return $"{Minor}";
       case "{build}":
-      case "{Build}":
         return $"{Build}";
       case "{revision}":
-      case "{Revision}":
         return $"{Revision}";
       default:
         return "";
