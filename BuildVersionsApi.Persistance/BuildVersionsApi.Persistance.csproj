@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>aspnet-BuildVersionsApi-3ff9d775-c79b-49c4-8cd6-a78c834ad7fa</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
