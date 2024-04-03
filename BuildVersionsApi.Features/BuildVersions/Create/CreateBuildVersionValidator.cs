@@ -16,7 +16,5 @@ public sealed class CreateBuildVersionValidator : Validator<CreateBuildVersionRe
     RuleFor(x => x.SemanticVersionText)
       .NotEmpty()
       .WithMessage("SemanticVersionText is required!");
-      //.MaximumLength(5)
-      //.WithMessage("SemanticVersionText is too long!");
   }
 }

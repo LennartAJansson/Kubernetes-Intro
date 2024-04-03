@@ -20,7 +20,6 @@ public sealed class IncrementBuildVersionEndpoint(IEndpointsService service)
     Put("BuildVersion/Increment");
     AllowAnonymous();
     Description(b => b
-      //.WithGroupName("BuildVersion")
       .WithName("Increment")
       .Accepts<IncrementBuildVersionRequest>("application/json")
       .Produces<IncrementBuildVersionResponse>(200, "application/json")
@@ -36,7 +35,6 @@ public sealed class IncrementBuildVersionEndpoint(IEndpointsService service)
       ? User.Identity.Name
       : "John Doe";// string.Empty;
 
-    //HINT Don't like the way we expose the entity to the endpoint, mediator is much better that way
     BuildVersion? entity = await service.HandleIncreaseVersion(request.ProjectName, request.VersionElement, username, cancellationToken);
 
     if (entity is null)

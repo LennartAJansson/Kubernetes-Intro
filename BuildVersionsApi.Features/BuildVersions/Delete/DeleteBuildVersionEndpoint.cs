@@ -20,7 +20,6 @@ public sealed class DeleteBuildVersionEndpoint(IEndpointsService service)
     Delete("BuildVersion/Delete/{name}");
     AllowAnonymous();
     Description(b => b
-      //.WithGroupName("BuildVersion")
       .WithName("Delete")
       .Produces<DeleteBuildVersionResponse>(200, "application/json")
       .ProducesProblemDetails(400, "application/json+problem") //if using RFC errors
@@ -36,7 +35,6 @@ public sealed class DeleteBuildVersionEndpoint(IEndpointsService service)
       ? User.Identity.Name
       : "John Doe";// string.Empty;
 
-    //HINT Don't like the way we expose the entity to the endpoint, mediator is much better that way
     BuildVersion? entity = await service.HandleDelete(name!, username, cancellationToken);
 
     if (entity is null)

@@ -18,7 +18,6 @@ public sealed class UpdateBuildVersionEndpoint(IEndpointsService service)
     Put("BuildVersion/Update");
     AllowAnonymous();
     Description(b => b
-      //.WithGroupName("BuildVersion")
       .WithName("Update")
       .Accepts<UpdateBuildVersionRequest>("application/json")
       .Produces<UpdateBuildVersionResponse>(200, "application/json")
@@ -34,7 +33,6 @@ public sealed class UpdateBuildVersionEndpoint(IEndpointsService service)
       ? User.Identity.Name
       : "John Doe";// string.Empty;
 
-    //HINT Don't like the way we expose the entity to the endpoint, mediator is much better that way
     BuildVersion? entity = Map.ToEntity(request);
     if (entity is not null)
     {
