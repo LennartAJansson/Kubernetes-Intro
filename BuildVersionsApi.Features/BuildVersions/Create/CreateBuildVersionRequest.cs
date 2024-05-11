@@ -1,13 +1,18 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Create;
 
-using MediatR;
+using System.Security.Claims;
 
-public class CreateBuildVersionRequest : IRequest<CreateBuildVersionResponse>
+using FastEndpoints;
+
+public sealed class CreateBuildVersionRequest
 {
-  public required string ProjectName { get; set; }
+  [FromClaim(claimType: ClaimTypes.Email)]
+  public string? Username { get; set; }
+
+  public string ProjectName { get; set; }
   public int Major { get; set; }
   public int Minor { get; set; }
   public int Build { get; set; }
   public int Revision { get; set; }
-  public required string SemanticVersionText { get; set; }
+  public string SemanticVersionText { get; set; }
 }

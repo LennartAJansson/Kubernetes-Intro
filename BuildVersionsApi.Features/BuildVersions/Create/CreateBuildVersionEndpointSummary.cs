@@ -2,7 +2,8 @@
 
 using FastEndpoints;
 
-public sealed class CreateBuildVersionEndpointSummary : Summary<CreateBuildVersionEndpoint>
+public sealed class CreateBuildVersionEndpointSummary
+  : Summary<CreateBuildVersionEndpoint>
 {
   public CreateBuildVersionEndpointSummary()
   {
@@ -35,3 +36,14 @@ public sealed class CreateBuildVersionEndpointSummary : Summary<CreateBuildVersi
     Responses[403] = "When Forbidden it returns 403";
   }
 }
+
+/*
+
+    Description(b => b
+      .ClearDefaultProduces(200)
+      .WithName("Create")
+      .Accepts<CreateBuildVersionRequest>("application/json")
+      .Produces<CreateBuildVersionResponse>(201, "application/json")
+      .ProducesProblemDetails(400, "application/json") //if using RFC errors
+      .ProducesProblemFE<InternalErrorResponse>(500)); //if using FE exception handler
+*/

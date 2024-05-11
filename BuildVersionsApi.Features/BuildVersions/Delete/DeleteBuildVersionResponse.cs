@@ -1,3 +1,4 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Delete;
 
-public class DeleteBuildVersionResponse : BuildVersionResponse;
+public sealed class DeleteBuildVersionResponse
+  : BuildVersionResponse;

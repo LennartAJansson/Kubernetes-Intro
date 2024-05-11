@@ -4,7 +4,8 @@ using FastEndpoints;
 
 using FluentValidation;
 
-public sealed class UpdateBuildVersionValidator : Validator<UpdateBuildVersionRequest>
+public sealed class UpdateBuildVersionValidator
+  : Validator<UpdateBuildVersionRequest>
 {
   public UpdateBuildVersionValidator() => RuleFor(x => x.ProjectName)
           .NotEmpty()

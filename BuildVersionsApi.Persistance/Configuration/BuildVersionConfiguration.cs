@@ -10,10 +10,6 @@ internal sealed class BuildVersionConfiguration
 {
   public void Configure(EntityTypeBuilder<BuildVersion> builder)
   {
-    //Detta är samma som du kan göra i OnModelCreating i DbContext
-    //Skillnaden är att här har man separation mellan entiteterna
-    //En konfigurationsklass per entitet
-
     _ = builder.ToTable("BuildVersions");
 
     _ = builder.HasKey(x => x.Id);

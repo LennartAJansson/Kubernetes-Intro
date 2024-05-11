@@ -1,8 +1,6 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadById;
 
-using MediatR;
-
-public class ReadBuildVersionByIdRequest : IRequest<ReadBuildVersionByIdResponse>
+public sealed class ReadBuildVersionByIdRequest
 {
   public int Id { get; set; }
 }

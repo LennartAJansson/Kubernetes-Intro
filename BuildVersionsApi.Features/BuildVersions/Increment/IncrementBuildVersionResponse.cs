@@ -1,3 +1,4 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Increment;
 
-public class IncrementBuildVersionResponse : BuildVersionResponse;
+public sealed class IncrementBuildVersionResponse
+  : BuildVersionResponse;

@@ -4,7 +4,8 @@ using BuildVersionsApi.Features.BuildVersions.Update;
 
 using FastEndpoints;
 
-public sealed class UpdateBuildVersionEndpointSummary : Summary<UpdateBuildVersionEndpoint>
+public sealed class UpdateBuildVersionEndpointSummary
+  : Summary<UpdateBuildVersionEndpoint>
 {
   public UpdateBuildVersionEndpointSummary()
   {

@@ -1,0 +1,110 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "BuildVersions", "BuildVersions\BuildVersions.esproj", "{4F575C0F-13AD-4CD0-ADB4-1DBF3DB463CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi", "BuildVersionsApi\BuildVersionsApi.csproj", "{6B504611-2928-422E-AC76-1F0E553A5C57}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Domain", "BuildVersionsApi.Domain\BuildVersionsApi.Domain.csproj", "{29CFDCE6-9BAB-41DA-8B94-9398831BDB41}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Features", "BuildVersionsApi.Features\BuildVersionsApi.Features.csproj", "{888CA93B-0C16-48DA-8B2F-601693DE0526}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Persistance", "BuildVersionsApi.Persistance\BuildVersionsApi.Persistance.csproj", "{709496A1-FF23-4C8D-B331-9E06FED4DF35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{5ABCDD52-FC0D-4DAA-8471-B83C84CF193D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8FEB7ED9-397E-458D-81FE-BB75D80D7886}"
+	ProjectSection(SolutionItems) = preProject
+		BuildWithVersioning.ps1 = BuildWithVersioning.ps1
+		DeployWithVersioning.ps1 = DeployWithVersioning.ps1
+		InitBuild.ps1 = InitBuild.ps1
+		InitDeploy.ps1 = InitDeploy.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{0B4ABDDD-675F-4515-941C-5832977BA621}"
+	ProjectSection(SolutionItems) = preProject
+		Setup\config.yaml = Setup\config.yaml
+		Setup\ContainerTools.ps1 = Setup\ContainerTools.ps1
+		Setup\CreateCluster.ps1 = Setup\CreateCluster.ps1
+		Setup\DeleteCluster.ps1 = Setup\DeleteCluster.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{044454A3-91C5-47B2-A534-F21A89930468}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\buildversionsapi\configmap.yaml = Deploy\buildversionsapi\configmap.yaml
+		Deploy\buildversionsapi\create-sealed-secret.ps1 = Deploy\buildversionsapi\create-sealed-secret.ps1
+		Deploy\buildversionsapi\create-sealed-secret.sh = Deploy\buildversionsapi\create-sealed-secret.sh
+		Deploy\buildversionsapi\deployment.yaml = Deploy\buildversionsapi\deployment.yaml
+		Deploy\buildversionsapi\ingress.yaml = Deploy\buildversionsapi\ingress.yaml
+		Deploy\buildversionsapi\kustomization.yaml = Deploy\buildversionsapi\kustomization.yaml
+		Deploy\buildversionsapi\namespace.yaml = Deploy\buildversionsapi\namespace.yaml
+		Deploy\buildversionsapi\persistentvolume.yaml = Deploy\buildversionsapi\persistentvolume.yaml
+		Deploy\buildversionsapi\persistentvolumeclaim.yaml = Deploy\buildversionsapi\persistentvolumeclaim.yaml
+		Deploy\buildversionsapi\secret.yaml = Deploy\buildversionsapi\secret.yaml
+		Deploy\buildversionsapi\service.yaml = Deploy\buildversionsapi\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{5C9CA676-6004-4589-BC6D-2BD9AB1FE978}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\buildversions\deployment.yaml = Deploy\buildversions\deployment.yaml
+		Deploy\buildversions\ingress.yaml = Deploy\buildversions\ingress.yaml
+		Deploy\buildversions\kustomization.yaml = Deploy\buildversions\kustomization.yaml
+		Deploy\buildversions\namespace.yaml = Deploy\buildversions\namespace.yaml
+		Deploy\buildversions\service.yaml = Deploy\buildversions\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{3CF13118-C930-4DA6-9B77-FA2EFE850F87}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\buildversionsapi\secrets\ConnectionStrings__BuildVersionsAuthDb = Deploy\buildversionsapi\secrets\ConnectionStrings__BuildVersionsAuthDb
+		Deploy\buildversionsapi\secrets\ConnectionStrings__BuildVersionsDb = Deploy\buildversionsapi\secrets\ConnectionStrings__BuildVersionsDb
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Module", "Auth.Module\Auth.Module.csproj", "{F18699E5-5221-436A-BF49-D96264FF54EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F575C0F-13AD-4CD0-ADB4-1DBF3DB463CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F575C0F-13AD-4CD0-ADB4-1DBF3DB463CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F575C0F-13AD-4CD0-ADB4-1DBF3DB463CF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4F575C0F-13AD-4CD0-ADB4-1DBF3DB463CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F575C0F-13AD-4CD0-ADB4-1DBF3DB463CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F575C0F-13AD-4CD0-ADB4-1DBF3DB463CF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6B504611-2928-422E-AC76-1F0E553A5C57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B504611-2928-422E-AC76-1F0E553A5C57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B504611-2928-422E-AC76-1F0E553A5C57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B504611-2928-422E-AC76-1F0E553A5C57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CFDCE6-9BAB-41DA-8B94-9398831BDB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CFDCE6-9BAB-41DA-8B94-9398831BDB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CFDCE6-9BAB-41DA-8B94-9398831BDB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CFDCE6-9BAB-41DA-8B94-9398831BDB41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{888CA93B-0C16-48DA-8B2F-601693DE0526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{888CA93B-0C16-48DA-8B2F-601693DE0526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{888CA93B-0C16-48DA-8B2F-601693DE0526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{888CA93B-0C16-48DA-8B2F-601693DE0526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{709496A1-FF23-4C8D-B331-9E06FED4DF35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{709496A1-FF23-4C8D-B331-9E06FED4DF35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{709496A1-FF23-4C8D-B331-9E06FED4DF35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{709496A1-FF23-4C8D-B331-9E06FED4DF35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F18699E5-5221-436A-BF49-D96264FF54EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F18699E5-5221-436A-BF49-D96264FF54EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F18699E5-5221-436A-BF49-D96264FF54EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F18699E5-5221-436A-BF49-D96264FF54EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{044454A3-91C5-47B2-A534-F21A89930468} = {5ABCDD52-FC0D-4DAA-8471-B83C84CF193D}
+		{5C9CA676-6004-4589-BC6D-2BD9AB1FE978} = {5ABCDD52-FC0D-4DAA-8471-B83C84CF193D}
+		{3CF13118-C930-4DA6-9B77-FA2EFE850F87} = {044454A3-91C5-47B2-A534-F21A89930468}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E41000BD-5883-4879-9D85-41E567DFF821}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,17 @@
+﻿{
+  "ConnectionStrings": {
+    "AuthDb": "Server=localhost;Port=3306;User=root;Password=password;Database=AuthDb"
+    //"AuthDb": "Server=mysql.local;Port=3333;User=root;Password=password;Database=AuthDb"
+    //"AuthDb": "Server=mysql.ubk3s;Port=3333;User=root;Password=password;Database=AuthDb"
+  },
+  "JwtSettings": {
+    "Issuer": "https://authapi.local",
+    "Secret": "veryVerySuperSecretveryVerySuperSecretveryVerySuperSecret",
+    "ExpirationInDays": 365,
+    "RequireDigit": false,
+    "RequiredLength": 6,
+    "RequireNonAlphanumeric": false,
+    "RequireUppercase": false,
+    "RequireLowercase": false
+  }
+}

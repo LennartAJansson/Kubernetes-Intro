@@ -2,41 +2,32 @@
 
 using BuildVersionsApi.Domain.Abstract;
 using BuildVersionsApi.Domain.Model;
+
 using FastEndpoints;
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public sealed class UpdateBuildVersionEndpoint(IEndpointsService service)
-  : Endpoint<UpdateBuildVersionRequest, UpdateBuildVersionResponse, UpdateBuildVersionMapper>
+public sealed class UpdateBuildVersionEndpoint
+  (ILogger<UpdateBuildVersionEndpoint> logger, IDomainService service)
+  : Endpoint<UpdateBuildVersionRequest,
+    UpdateBuildVersionResponse,
+    UpdateBuildVersionMapper>
 {
   public override void Configure()
   {
     Version(1, deprecateAt: 4);
     Put("BuildVersion/Update");
-    AllowAnonymous();
-    Description(b => b
-      .WithName("Update")
-      .Accepts<UpdateBuildVersionRequest>("application/json")
-      .Produces<UpdateBuildVersionResponse>(200, "application/json")
-      .ProducesProblemDetails(400, "application/json+problem") //if using RFC errors
-      .ProducesProblemFE<InternalErrorResponse>(500)); //if using FE exception handler
-    Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
+    Policies("AdminPolicy");
   }
 
   public override async Task HandleAsync(UpdateBuildVersionRequest request, CancellationToken cancellationToken)
   {
-    Logger.LogInformation("Running pipe on Update");
-    string username = User.Identity is not null && User.Identity.Name is not null
-      ? User.Identity.Name
-      : "John Doe";// string.Empty;
+    logger.LogInformation("Running pipe on Update");
 
     BuildVersion? entity = Map.ToEntity(request);
     if (entity is not null)
     {
-      entity = await service.HandleUpdateProject(entity, username, cancellationToken);
+      entity = await service.HandleUpdateProject(entity, cancellationToken);
     }
 
     if (entity is null)

@@ -1,8 +1,6 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadByName;
 
-using MediatR;
-
-public class ReadBuildVersionByNameRequest : IRequest<ReadBuildVersionByNameResponse?>
+public sealed class ReadBuildVersionByNameRequest
 {
-  public required string ProjectName { get; set; }
+  public string ProjectName { get; set; }
 }

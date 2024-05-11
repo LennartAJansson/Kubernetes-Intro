@@ -4,7 +4,8 @@ using BuildVersionsApi.Domain.Types;
 
 using FastEndpoints;
 
-public sealed class IncrementBuildVersionEndpointSummary : Summary<IncrementBuildVersionEndpoint>
+public sealed class IncrementBuildVersionEndpointSummary
+  : Summary<IncrementBuildVersionEndpoint>
 {
   public IncrementBuildVersionEndpointSummary()
   {

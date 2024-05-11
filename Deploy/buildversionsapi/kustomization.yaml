@@ -12,4 +12,4 @@ resources:
 - secret.yaml
 images:
 - name: registry:5000/buildversionsapi
-  newTag: 10.0.0.1
+  newTag: 0.0.0-dev.2

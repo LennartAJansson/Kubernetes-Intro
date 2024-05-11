@@ -1,12 +1,24 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadAll;
 
-using AutoMapper;
-
 using BuildVersionsApi.Domain.Model;
 
-public class ReadAllBuildVersionMapper : Profile
+using FastEndpoints;
+
+public sealed class ReadAllBuildVersionMapper
+  : ResponseMapper<ReadAllBuildVersionResponse,
+    BuildVersion>
 {
-  //TODO Mapping for IEnumerable<BuildVersion> to IEnumerable<ReadAllBuildVersionResponse>
-  public ReadAllBuildVersionMapper() =>
-    _ = CreateMap<BuildVersion, ReadAllBuildVersionResponse>();
+  public override ReadAllBuildVersionResponse FromEntity(BuildVersion e) => new()
+  {
+    Id = e.Id,
+    ProjectName = e.ProjectName,
+    Major = e.Major,
+    Minor = e.Minor,
+    Build = e.Build,
+    Revision = e.Revision,
+    SemanticVersionText = e.SemanticVersionText,
+    Version = e.Version,
+    Release = e.Release,
+    SemanticVersion = e.SemanticVersion
+  };
 }

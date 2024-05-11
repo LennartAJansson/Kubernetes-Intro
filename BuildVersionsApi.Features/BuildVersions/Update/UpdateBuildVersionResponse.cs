@@ -1,3 +1,4 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Update;
 
-public class UpdateBuildVersionResponse : BuildVersionResponse;
+public sealed class UpdateBuildVersionResponse
+  : BuildVersionResponse;

@@ -1,14 +1,24 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadByName;
 
-using AutoMapper;
-
 using BuildVersionsApi.Domain.Model;
 
-public class ReadBuildVersionByNameMapper : Profile
+using FastEndpoints;
+
+public sealed class ReadBuildVersionByNameMapper
+  : ResponseMapper<ReadBuildVersionByNameResponse,
+    BuildVersion>
 {
-  public ReadBuildVersionByNameMapper()
+  public override ReadBuildVersionByNameResponse FromEntity(BuildVersion e) => new()
   {
-    _ = CreateMap<ReadBuildVersionByNameRequest, BuildVersion>();
-    _ = CreateMap<BuildVersion, ReadBuildVersionByNameResponse>();
-  }
+    Id = e.Id,
+    ProjectName = e.ProjectName,
+    Major = e.Major,
+    Minor = e.Minor,
+    Build = e.Build,
+    Revision = e.Revision,
+    SemanticVersionText = e.SemanticVersionText,
+    Version = e.Version,
+    Release = e.Release,
+    SemanticVersion = e.SemanticVersion
+  };
 }

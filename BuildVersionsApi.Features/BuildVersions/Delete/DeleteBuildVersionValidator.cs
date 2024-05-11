@@ -4,9 +4,10 @@ using FastEndpoints;
 
 using FluentValidation;
 
-public sealed class DeleteBuildVersionValidator : Validator<DeleteBuildVersionRequest>
+public sealed class DeleteBuildVersionValidator
+  : Validator<DeleteBuildVersionRequest>
 {
-  public DeleteBuildVersionValidator() => RuleFor(x => x.Id)
-          .GreaterThan(0)
-          .WithMessage("Id is required!");
+  public DeleteBuildVersionValidator() => RuleFor(x => x.ProjectName)
+          .NotEmpty()
+          .WithMessage("Projectname is required!");
 }

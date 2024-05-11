@@ -7,7 +7,7 @@ foreach($name in @(
 	$kubeseal = "c:\apps\kubeseal\kubeseal.exe"
 	$curl = "curl.exe"
 	$url = "http://buildversionsapi.local:8080"
-	$semanticVersion = "10.0.0.1"
+	$semanticVersion = "0.0.0-dev.2"
 	"Current deploy: ${registryHost}/${name}:${semanticVersion}"
 
 	cd ./deploy/${name}

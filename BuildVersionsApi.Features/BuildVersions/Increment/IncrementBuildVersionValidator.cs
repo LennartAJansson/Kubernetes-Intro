@@ -4,7 +4,8 @@ using FastEndpoints;
 
 using FluentValidation;
 
-public sealed class IncrementBuildVersionValidator : Validator<IncrementBuildVersionRequest>
+public sealed class IncrementBuildVersionValidator
+  : Validator<IncrementBuildVersionRequest>
 {
   public IncrementBuildVersionValidator() => RuleFor(x => x.ProjectName)
           .NotEmpty()

@@ -1,4 +1,5 @@
 ﻿namespace BuildVersionsApi.Domain.Actions;
+
 using BuildVersionsApi.Domain.Model;
 using BuildVersionsApi.Domain.Types;
 

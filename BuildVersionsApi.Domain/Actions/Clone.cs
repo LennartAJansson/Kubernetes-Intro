@@ -1,14 +1,12 @@
 ﻿namespace BuildVersionsApi.Domain.Actions;
+
 using BuildVersionsApi.Domain.Model;
 
 public class Clone
 {
   private readonly BuildVersion target;
 
-  private Clone(BuildVersion target)
-  {
-    this.target = target;
-  }
+  private Clone(BuildVersion target) => this.target = target;
 
   public static Clone Create(BuildVersion target)
     => new(target);
@@ -21,6 +19,9 @@ public class Clone
     target.Build = source.Build;
     target.Revision = source.Revision;
     target.SemanticVersionText = source.SemanticVersionText;
+    target.Username = source.Username;
+    target.Changed = source.Changed;
+    target.Created = source.Created;
 
     return target;
   }

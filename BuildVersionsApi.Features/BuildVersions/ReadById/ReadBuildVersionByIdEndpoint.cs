@@ -4,45 +4,35 @@ using BuildVersionsApi.Domain.Abstract;
 
 using FastEndpoints;
 
-using MediatR;
-
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public sealed class ReadBuildVersionByIdEndpoint(IEndpointsService service, ISender sender)
-  : EndpointWithoutRequest<ReadBuildVersionByIdResponse>
+public sealed class ReadBuildVersionByIdEndpoint
+  (ILogger<ReadBuildVersionByIdEndpoint> logger, IDomainService service)
+  : Endpoint<ReadBuildVersionByIdRequest,
+    ReadBuildVersionByIdResponse,
+    ReadBuildVersionByIdMapper>
 {
   public override void Configure()
   {
     Version(1, deprecateAt: 4);
     Get("BuildVersion/ReadById/{id}");
     AllowAnonymous();
-    Description(b => b
-      //.WithGroupName("BuildVersion")
-      .WithName("ReadById")
-      .Produces<ReadBuildVersionByIdResponse>(200, "application/json")
-      .ProducesProblemDetails(400, "application/json+problem") //if using RFC errors
-      .ProducesProblemFE<InternalErrorResponse>(500)); //if using FE exception handler
     Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
   }
 
-  public override async Task HandleAsync(CancellationToken cancellationToken)
+  public override async Task HandleAsync(ReadBuildVersionByIdRequest request, CancellationToken cancellationToken)
   {
-    Logger.LogInformation("Running pipe on ReadById");
-    int id = Route<int>("id");
+    logger.LogInformation("Running pipe on ReadById");
 
-    //HINT Do not use assignment to Response since that will trigger validator immediately    //HINT Do not use Response since that will trigger validator
-    var response = await sender.Send(new ReadBuildVersionByIdRequest { Id = id }, cancellationToken);
-
-    if (response is null)
+    Domain.Model.BuildVersion? result = await service.HandleGetById(request.Id, cancellationToken);
+    if (result is null)
     {
       await SendNotFoundAsync(cancellationToken);
     }
     else
     {
-      await SendOkAsync(response, cancellation: cancellationToken);
+      await SendOkAsync(Map.FromEntity(result), cancellationToken);
     }
   }
 }

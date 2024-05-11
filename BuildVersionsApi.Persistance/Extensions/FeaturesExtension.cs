@@ -1,9 +1,8 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection;
 
-using System.Reflection;
-
 using BuildVersionsApi.Domain.Abstract;
 using BuildVersionsApi.Persistance.Context;
+using BuildVersionsApi.Persistance.Interceptor;
 using BuildVersionsApi.Persistance.Service;
 
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +15,19 @@ public static class PersistanceExtension
     ArgumentNullException.ThrowIfNull(nameof(connectionString));
 
     ServerVersion serverVersion = ServerVersion.AutoDetect(connectionString);
-    Assembly assembly = Assembly.GetExecutingAssembly();
 
-    _ = services.AddDbContext<BuildVersionsDbContext>(options => options.UseMySql(connectionString, serverVersion));
-    services.AddTransient<IStorageService, StorageService>()
-  .AddMediatR(config => config.RegisterServicesFromAssembly(assembly))
-  .AddAutoMapper(assembly);
+    _ = services.AddSingleton<PerformanceInterceptor>();
+    _ = services.AddSingleton<SetCreatedOrUpdatedInterceptor>();
+    _ = services.AddSingleton<SoftDeleteInterceptor>();
+
+    _ = services.AddDbContext<BuildVersionsDbContext>((sp, options) =>
+      options.UseMySql(connectionString, serverVersion)
+      .AddInterceptors(sp.GetRequiredService<PerformanceInterceptor>())
+      .AddInterceptors(sp.GetRequiredService<SetCreatedOrUpdatedInterceptor>())
+      .AddInterceptors(sp.GetRequiredService<SoftDeleteInterceptor>())
+      );
+
+    _ = services.AddTransient<IStorageService, StorageService>();
 
     return services;
   }
@@ -29,7 +35,9 @@ public static class PersistanceExtension
   public static IHost ConfigurePersistance(this IHost app)
   {
     using IServiceScope scope = app.Services.CreateScope();
-    _ = scope.ServiceProvider.GetRequiredService<BuildVersionsDbContext>().EnsureDbExists();
+    _ = scope.ServiceProvider
+      .GetRequiredService<BuildVersionsDbContext>()
+      .EnsureDbExists();
 
     return app;
   }

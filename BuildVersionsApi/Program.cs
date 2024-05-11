@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using Auth.Module;
+
 using BuildVersionsApi.Domain.Extensions;
 using BuildVersionsApi.Domain.Types;
 
@@ -22,6 +24,7 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
 ApplicationInfo appInfo = new(typeof(Program));
 
 builder.Services
+  .AddAuthModule(builder.Configuration)
   .AddBuildVersionsApiFeatures()
   .AddBuildVersionsApiDomain()
   .AddBuildVersionsApiPersistance(builder.Configuration.GetConnectionString("BuildVersionsDb"));
@@ -31,7 +34,8 @@ builder.Services
   {
     o.Assemblies =
     [
-      Assembly.GetAssembly(typeof(FeaturesExtension))!
+      Assembly.GetAssembly(typeof(FeaturesExtension))!,
+      Assembly.GetAssembly(typeof(AuthModuleExtension))!
     ];
   })
   .SwaggerDocument(o =>
@@ -68,23 +72,25 @@ builder.Services.AddCors(options =>
 
 WebApplication app = builder.Build();
 
+app.UpdateIdentityDb();
 app.ConfigurePersistance();
 
 app.UseCors();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app
-.UseResponseCaching()
-.UseDefaultExceptionHandler()
-.UseFastEndpoints(c =>
-{
-  c.Versioning.Prefix = "v";
-  c.Endpoints.RoutePrefix = "api";
-  c.Serializer.Options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-  c.Serializer.Options.PropertyNameCaseInsensitive = true;
-  c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-})
-.UseSwaggerGen();
+  .UseApiAuth()
+  .UseResponseCaching()
+  .UseDefaultExceptionHandler()
+  .UseFastEndpoints(c =>
+  {
+    c.Versioning.Prefix = "v";
+    c.Endpoints.RoutePrefix = "api";
+    c.Serializer.Options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    c.Serializer.Options.PropertyNameCaseInsensitive = true;
+    c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+  })
+  .UseSwaggerGen();
 
 app.Run();

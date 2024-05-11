@@ -1,5 +1,6 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadAll;
 
-public class ReadAllBuildVersionResponse : BuildVersionResponse
+public sealed class ReadAllBuildVersionResponse
+  : BuildVersionResponse
 {
 }

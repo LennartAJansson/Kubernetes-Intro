@@ -2,10 +2,8 @@
 
 using BuildVersionsApi.Domain.Types;
 
-using MediatR;
-
-public class IncrementBuildVersionRequest : IRequest<IncrementBuildVersionResponse>
+public sealed class IncrementBuildVersionRequest
 {
-  public required string ProjectName { get; set; }
+  public string ProjectName { get; set; }
   public VersionNumber VersionElement { get; set; }
 }

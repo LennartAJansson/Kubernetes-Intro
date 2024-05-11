@@ -1,3 +1,4 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Create;
 
-public class CreateBuildVersionResponse : BuildVersionResponse;
+public sealed class CreateBuildVersionResponse
+  : BuildVersionResponse;

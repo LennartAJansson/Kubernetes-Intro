@@ -5,37 +5,26 @@ using BuildVersionsApi.Domain.Model;
 
 using FastEndpoints;
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public sealed class DeleteBuildVersionEndpoint(IEndpointsService service)
-  : EndpointWithoutRequest<DeleteBuildVersionResponse,
+public sealed class DeleteBuildVersionEndpoint
+  (ILogger<DeleteBuildVersionEndpoint> logger, IDomainService service)
+  : Endpoint<DeleteBuildVersionRequest,
+    DeleteBuildVersionResponse,
     DeleteBuildVersionMapper>
 {
   public override void Configure()
   {
     Version(2, deprecateAt: 4);
-    Delete("BuildVersion/Delete/{name}");
-    AllowAnonymous();
-    Description(b => b
-      .WithName("Delete")
-      .Produces<DeleteBuildVersionResponse>(200, "application/json")
-      .ProducesProblemDetails(400, "application/json+problem") //if using RFC errors
-      .ProducesProblemFE<InternalErrorResponse>(500)); //if using FE exception handler
-    Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
+    Delete("BuildVersion/Delete/{projectName}");
+    Policies("AdminPolicy");
   }
 
-  public override async Task HandleAsync(CancellationToken cancellationToken)
+  public override async Task HandleAsync(DeleteBuildVersionRequest request, CancellationToken cancellationToken)
   {
-    Logger.LogInformation("Running pipe on Delete");
-    string? name = Route<string>("name");
-    string username = User.Identity is not null && User.Identity.Name is not null
-      ? User.Identity.Name
-      : "John Doe";// string.Empty;
+    logger.LogInformation("Running pipe on Delete");
 
-    BuildVersion? entity = await service.HandleDelete(name!, username, cancellationToken);
+    BuildVersion? entity = await service.HandleDelete(request.ProjectName, request.Username ?? "John Doe", cancellationToken);
 
     if (entity is null)
     {

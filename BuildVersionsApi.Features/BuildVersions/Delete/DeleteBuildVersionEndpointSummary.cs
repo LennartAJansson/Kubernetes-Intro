@@ -2,7 +2,8 @@
 
 using FastEndpoints;
 
-public sealed class DeleteBuildVersionEndpointSummary : Summary<DeleteBuildVersionEndpoint>
+public sealed class DeleteBuildVersionEndpointSummary
+  : Summary<DeleteBuildVersionEndpoint>
 {
   public DeleteBuildVersionEndpointSummary()
   {

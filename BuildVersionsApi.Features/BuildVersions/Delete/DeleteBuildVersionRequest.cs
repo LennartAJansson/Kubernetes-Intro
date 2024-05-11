@@ -1,8 +1,13 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.Delete;
 
-using MediatR;
+using System.Security.Claims;
 
-public class DeleteBuildVersionRequest : IRequest<DeleteBuildVersionResponse>
+using FastEndpoints;
+
+public sealed class DeleteBuildVersionRequest
 {
-  public int Id { get; set; }
+  [FromClaim(claimType: ClaimTypes.Email)]
+  public string? Username { get; set; }
+
+  public string ProjectName { get; set; }
 }

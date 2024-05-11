@@ -1,3 +1,4 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadByName;
 
-public class ReadBuildVersionByNameResponse : BuildVersionResponse;
+public sealed class ReadBuildVersionByNameResponse
+  : BuildVersionResponse;

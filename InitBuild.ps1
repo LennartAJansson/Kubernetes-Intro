@@ -1,8 +1,7 @@
 $name = "BuildVersionsApi"
 $registryHost = "registry:5000"
-$semanticVersion = "0.0.0-dev.1"
+$semanticVersion = "0.0.0-dev.2"
 $configuration = "Production"
-#https://localhost:7087/api/BuildVersion/Create/v1
 $url = "https://localhost:7087"
 $curl = "curl.exe"
 

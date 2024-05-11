@@ -5,41 +5,29 @@ using BuildVersionsApi.Domain.Model;
 
 using FastEndpoints;
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public sealed class CreateBuildVersionEndpoint(IEndpointsService service)
-  : Endpoint<CreateBuildVersionRequest, CreateBuildVersionResponse,
+public sealed class CreateBuildVersionEndpoint
+  (ILogger<CreateBuildVersionEndpoint> logger, IDomainService service)
+  : Endpoint<CreateBuildVersionRequest,
+    CreateBuildVersionResponse,
     CreateBuildVersionMapper>
 {
   public override void Configure()
   {
-    Version(1, deprecateAt: 4);
+    Version(1);
     Post("BuildVersion/Create");
-    AllowAnonymous();
-    Description(b => b
-      .ClearDefaultProduces(200)
-      .WithName("Create")
-      .Accepts<CreateBuildVersionRequest>("application/json")
-      .Produces<CreateBuildVersionResponse>(201, "application/json")
-      .ProducesProblemDetails(400, "application/json") //if using RFC errors
-      .ProducesProblemFE<InternalErrorResponse>(500)); //if using FE exception handler
-    Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
+    Policies("AdminPolicy");
   }
 
   public override async Task HandleAsync(CreateBuildVersionRequest request, CancellationToken cancellationToken)
   {
-    Logger.LogInformation("Running pipe on Create");
-    string username = User.Identity is not null && User.Identity.Name is not null
-      ? User.Identity.Name
-      : "John Doe";// string.Empty;
+    logger.LogInformation("Running pipe on Create");
 
     BuildVersion? entity = Map.ToEntity(request);
     if (entity is not null)
     {
-      entity = await service.HandleCreateProject(entity, username, cancellationToken);
+      entity = await service.HandleCreateProject(entity, cancellationToken);
     }
 
     if (entity is null)

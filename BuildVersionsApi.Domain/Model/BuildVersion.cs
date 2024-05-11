@@ -11,8 +11,8 @@ public sealed class BuildVersion : BaseLoggedEntity
   public int Minor { get; set; }
   public int Build { get; set; }
   public int Revision { get; set; }
-  //HINT SemanticVersionText = {Major}.{Minor}.{Build}.{Revision} or {Major}.{Minor}.{Build}-{Revision}
-  public required string SemanticVersionText { get; set; } = "{Major}.{Minor}.{Build}-dev.{Revision}";
+
+  public string SemanticVersionText { get; set; } = "{Major}.{Minor}.{Build}-dev.{Revision}";
 
   //Calculated values
   public Version Version => new(Major, Minor, Build, Revision);
@@ -24,18 +24,13 @@ public sealed class BuildVersion : BaseLoggedEntity
 
   private string GetValue(string variable)
   {
-    switch (variable.ToLower())
+    return variable.ToLower() switch
     {
-      case "{major}":
-        return $"{Major}";
-      case "{minor}":
-        return $"{Minor}";
-      case "{build}":
-        return $"{Build}";
-      case "{revision}":
-        return $"{Revision}";
-      default:
-        return "";
-    }
+      "{major}" => $"{Major}",
+      "{minor}" => $"{Minor}",
+      "{build}" => $"{Build}",
+      "{revision}" => $"{Revision}",
+      _ => "",
+    };
   }
 }
