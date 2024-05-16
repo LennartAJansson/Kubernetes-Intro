@@ -13,6 +13,8 @@ COPY ["BuildVersionsApi/BuildVersionsApi.csproj", "BuildVersionsApi/"]
 COPY ["BuildVersionsApi.Domain/BuildVersionsApi.Domain.csproj", "BuildVersionsApi.Domain/"]
 COPY ["BuildVersionsApi.Features/BuildVersionsApi.Features.csproj", "BuildVersionsApi.Features/"]
 COPY ["BuildVersionsApi.Persistance/BuildVersionsApi.Persistance.csproj", "BuildVersionsApi.Persistance/"]
+COPY ["BuildVersionsApi.Diagnostics/BuildVersionsApi.Diagnostics.csproj", "BuildVersionsApi.Diagnostics/"]
+COPY ["Auth.Module/Auth.Module.csproj", "Auth.Module/"]
 RUN dotnet restore "./BuildVersionsApi/BuildVersionsApi.csproj"
 COPY . .
 WORKDIR "/src/BuildVersionsApi"

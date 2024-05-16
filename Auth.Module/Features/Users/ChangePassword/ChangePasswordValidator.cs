@@ -2,7 +2,7 @@
 
 using FastEndpoints;
 
-internal sealed class ChangePasswordValidator 
+internal sealed class ChangePasswordValidator
   : Validator<ChangePasswordRequest>
 {
   public ChangePasswordValidator()

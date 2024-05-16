@@ -8,13 +8,17 @@ using Auth.Module;
 
 using BuildVersionsApi.Domain.Extensions;
 using BuildVersionsApi.Domain.Types;
+using BuildVersionsApi.Diagnostics;
 
 using FastEndpoints.Swagger;
 
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
+builder.WebHost.UseKestrel((context, options) => 
+{
+  options.ListenAnyIP(5016);
+});
 // Add services to the container.
 builder.Host.UseSerilog((context, services, configuration) => configuration
   .ReadFrom.Configuration(context.Configuration)
@@ -27,7 +31,8 @@ builder.Services
   .AddAuthModule(builder.Configuration)
   .AddBuildVersionsApiFeatures()
   .AddBuildVersionsApiDomain()
-  .AddBuildVersionsApiPersistance(builder.Configuration.GetConnectionString("BuildVersionsDb"));
+  .AddBuildVersionsApiPersistance(builder.Configuration.GetConnectionString("BuildVersionsDb"))
+  .AddBuildVersionsApiDiagnostics(builder.Configuration);
 
 builder.Services
   .AddFastEndpoints(o =>
@@ -92,5 +97,7 @@ app
     c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
   })
   .UseSwaggerGen();
+
+app.MapBuildVersionsApiDiagnostics();
 
 app.Run();

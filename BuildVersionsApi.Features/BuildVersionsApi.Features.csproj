@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BuildVersionsApi.Diagnostics\BuildVersionsApi.Diagnostics.csproj" />
     <ProjectReference Include="..\BuildVersionsApi.Domain\BuildVersionsApi.Domain.csproj" />
   </ItemGroup>
 

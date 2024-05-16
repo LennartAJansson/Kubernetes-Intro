@@ -6,7 +6,7 @@ public sealed class BuildVersion : BaseLoggedEntity
 {
   //https://devopsnet.com/2011/06/09/build-versioning-strategy/
 
-  public required string ProjectName { get; set; }
+  public string ProjectName { get; set; }
   public int Major { get; set; }
   public int Minor { get; set; }
   public int Build { get; set; }
@@ -22,15 +22,12 @@ public sealed class BuildVersion : BaseLoggedEntity
   public string SemanticVersion => Regex.Replace(SemanticVersionText, @"\{\w+?\}",
     match => GetValue(match.Value));
 
-  private string GetValue(string variable)
+  private string GetValue(string variable) => variable.ToLower() switch
   {
-    return variable.ToLower() switch
-    {
-      "{major}" => $"{Major}",
-      "{minor}" => $"{Minor}",
-      "{build}" => $"{Build}",
-      "{revision}" => $"{Revision}",
-      _ => "",
-    };
-  }
+    "{major}" => $"{Major}",
+    "{minor}" => $"{Minor}",
+    "{build}" => $"{Build}",
+    "{revision}" => $"{Revision}",
+    _ => "",
+  };
 }

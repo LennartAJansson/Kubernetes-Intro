@@ -2,5 +2,6 @@
 
 public static class FeaturesExtension
 {
-  public static IServiceCollection AddBuildVersionsApiFeatures(this IServiceCollection services) => services;
+  public static IServiceCollection AddBuildVersionsApiFeatures(this IServiceCollection services)
+    => services;
 }

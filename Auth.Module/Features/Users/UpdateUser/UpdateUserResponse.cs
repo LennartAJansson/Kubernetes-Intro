@@ -1,4 +1,5 @@
 ﻿namespace Auth.Module.Features.Users.UpdateUser;
+
 public sealed class UpdateUserResponse
 {
   public string Email { get; set; }

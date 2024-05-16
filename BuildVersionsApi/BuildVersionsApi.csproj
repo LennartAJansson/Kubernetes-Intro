@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Auth.Module\Auth.Module.csproj" />
+    <ProjectReference Include="..\BuildVersionsApi.Diagnostics\BuildVersionsApi.Diagnostics.csproj" />
     <ProjectReference Include="..\BuildVersionsApi.Domain\BuildVersionsApi.Domain.csproj" />
     <ProjectReference Include="..\BuildVersionsApi.Features\BuildVersionsApi.Features.csproj" />
     <ProjectReference Include="..\BuildVersionsApi.Persistance\BuildVersionsApi.Persistance.csproj" />

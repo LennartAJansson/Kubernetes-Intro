@@ -1,5 +1,6 @@
 ﻿namespace BuildVersionsApi.Features.BuildVersions.ReadByName;
 
+using BuildVersionsApi.Diagnostics;
 using BuildVersionsApi.Domain.Abstract;
 using BuildVersionsApi.Domain.Model;
 
@@ -9,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 public sealed class ReadBuildVersionByNameEndpoint
-  (ILogger<ReadBuildVersionByNameEndpoint> logger, IDomainService service)
+  (ILogger<ReadBuildVersionByNameEndpoint> logger, IDomainService service, ReadAllBuildVersionMetrics metrics)
   : Endpoint<ReadBuildVersionByNameRequest,
     ReadBuildVersionByNameResponse,
     ReadBuildVersionByNameMapper>
@@ -33,6 +34,7 @@ public sealed class ReadBuildVersionByNameEndpoint
     }
     else
     {
+      metrics.CountReadById("ReadByName", 1);
       await SendOkAsync(Map.FromEntity(response), cancellationToken);
     }
   }

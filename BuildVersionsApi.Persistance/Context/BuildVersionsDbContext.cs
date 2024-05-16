@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 public sealed class BuildVersionsDbContext(DbContextOptions<BuildVersionsDbContext> options)
   : DbContext(options)
 {
+  //SavingChanges calls interceptors
   public DbSet<BuildVersion> BuildVersions => Set<BuildVersion>();
 
   public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
