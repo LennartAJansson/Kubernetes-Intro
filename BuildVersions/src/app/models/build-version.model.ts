@@ -11,9 +11,4 @@ export class BuildVersion {
   version?: string;// Version;
   release?: string;
   semanticVersion?: string;
-  semanticRelease?: string;
-
-  username?: string;
-  created?: Date;
-  changed?: Date;
 }

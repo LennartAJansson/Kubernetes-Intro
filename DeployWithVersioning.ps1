@@ -1,35 +1,24 @@
 #Assumes you have the project buildversionsapi running on your localhost on port 9000
 #
 
-$hostname = [System.Net.Dns]::GetHostName()
 $namespace = "buildversions"
+$hostname=""
+$url = "http://buildversionsapi.local:8080"
+$curl = "curl.exe"
+$configuration = "production"
+$deploy = "Deploy"
+$kubeseal = "C:/Apps/kubeseal/kubeseal"
 
-if($hostname -eq "ubk3s")
-{
-	$hostname=".${hostname}"
-	$url = "http://buildversionsapi.ubk3s"
-	$curl = "curl"
-	$configuration="ubk3s"
-	$deploy = "ubk3s"
-	$kubeseal = "kubeseal"
-}
-else
-{
-	$hostname=""
-	$url = "http://buildversionsapi.local:8080"
-	$curl = "curl.exe"
-	$configuration = "production"
-	$deploy = "deploy"
-	$kubeseal = "C:/Apps/kubeseal/kubeseal"
-}
 
-$alive = &${curl} -s "${url}/Ping" -H "accept: text/plain"
-if($alive -ne "pong")
+$alive = &${curl} -s "${url}/api/Ping/v1" -H "accept: text/plain"
+if($alive -ne """pong""")
 {
 	"You need to do an initial deploy of BuildVersionsApi"
 	"Please run InitBuildVersion.ps1"
 	return
 }
+
+kubectl apply -f ./deploy/namespace.yaml
 
 foreach($name in @(
 	"buildversions", 
@@ -37,7 +26,7 @@ foreach($name in @(
 ))
 {
 	$buildVersion = $null
-	$buildVersion = &${curl} -s "${url}/buildversions/GetVersionByName/${name}" | ConvertFrom-Json
+	$buildVersion = &${curl} -s "${url}/api/BuildVersion/ReadByName/${name}/v1" | ConvertFrom-Json
 	$semanticVersion = $buildVersion.semanticVersion
 
 	if([string]::IsNullOrEmpty($semanticVersion)) 
@@ -66,22 +55,12 @@ foreach($name in @(
 	
 	#Restore secret.yaml and kustomization.yaml since this script alters them temporary
 	#if([string]::IsNullOrEmpty($env:AGENT_NAME) -and [string]::IsNullOrEmpty($hostname))
-	if([string]::IsNullOrEmpty($env:AGENT_NAME))
-	{
-		if(Test-Path -Path ${deploy}/${name}/secret.yaml)
-		{
-			git checkout ${deploy}/${name}/secret.yaml
-		}
-		git checkout ${deploy}/${name}/kustomization.yaml
-	}
+	#if([string]::IsNullOrEmpty($env:AGENT_NAME))
+	#{
+#		if(Test-Path -Path ${deploy}/${name}/secret.yaml)
+#		{
+#			git checkout ${deploy}/${name}/secret.yaml
+#		}
+	#}
 }
 
-#EXAMPLE OF PROMETHEUS QUERIES:
-#container_last_seen{pod="nats-0"}
-#http_request_duration_seconds_sum{method="GET",controller="Query"}
-#workloadsapi_controllers_executiontime{path="/api/Query/GetAssignments"}
-#workloadsapi_controllers_executiontime{path="/api/Query/GetPeople"}
-#workloadsapi_controllers_executiontime{path="/api/Query/GetWorkloads"}
-#http_request_duration_seconds_sum{method=~"GET|POST|PUT|DELETE",controller=~"Query|Command"}
-#workloadsapi_controllers_executiontime{path=~"/api/Query/GetAssignments|/api/Query/GetPeople|/api/Query/GetWorkloads|/api/Command/CreatePerson|/api/Command/CreateAssignment|/api/Command/CreateWorkload|/api/Command/UpdateWorkload"}
-#container_memory_usage_bytes{container=~"cronjob|buildversion|workloadsapi|workloadsprojector|countriesapi"}

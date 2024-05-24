@@ -1,10 +1,10 @@
 $hostname=""
 $url = "http://buildversionsapi.local:8080"
 $curl = "curl.exe"
-$configuration = "Production"
+$configuration = "production"
 
-$alive = &${curl} -s "${url}/Ping" -H "accept: text/plain"
-if($alive -ne "pong")
+$alive = &${curl} -s "${url}/api/Ping/v1" -H "accept: text/plain"
+if($alive -ne """pong""")
 {
 	"You need to do an initial deploy of BuildVersionsApi"
 	"Please run InitBuildVersion.ps1"
@@ -21,10 +21,13 @@ foreach($name in @(
 	$branch = git rev-parse --abbrev-ref HEAD
 	$commit = git log -1 --pretty=format:"%H"
 	$description = "${branch}: ${commit}"
+	$json = "{""ProjectName"":""${name}"",""VersionElement"":""Revision""}"
+#	"Sending json: " + $json
 	$buildVersion = $null
-	#https://localhost:7087/api/BuildVersion/ReadByName/BuildVersionsApi/v1
-	$buildVersion = &${curl} -s "${url}/api/BuildVersion/ReadByName/$name/v1" | ConvertFrom-Json
+	$buildVersion = &${curl} -s -X 'PUT' "${url}/api/BuildVersion/Increment/v1" -H 'accept: application/json' -H 'Content-Type: application/json' -d "$json" | ConvertFrom-Json
+#	$buildVersion
 	$semanticVersion = $buildVersion.semanticVersion
+	$version = $buildVersion.version
 	
 	if([string]::IsNullOrEmpty($semanticVersion) -or [string]::IsNullOrEmpty($description)) 
 	{
@@ -38,6 +41,6 @@ foreach($name in @(
 	"Version: ${semanticVersion}"
 	"Description: ${description}"
 
-	docker build -f ./${name}/Dockerfile --force-rm -t ${env:REGISTRYHOST}/${lowerName}:${semanticVersion} --build-arg Version="${semanticVersion}" --build-arg configuration="${configuration}" --build-arg Description="${description}" .
+	docker build -f ./${name}/Dockerfile --force-rm -t ${env:REGISTRYHOST}/${lowerName}:${semanticVersion} --build-arg Version="${version}" --build-arg Configuration="${configuration}" --build-arg Description="${description}" .
 	docker push ${env:REGISTRYHOST}/${lowerName}:${semanticVersion}
 }

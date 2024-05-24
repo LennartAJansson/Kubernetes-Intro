@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
@@ -14,13 +13,17 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Persistance", "BuildVersionsApi.Persistance\BuildVersionsApi.Persistance.csproj", "{709496A1-FF23-4C8D-B331-9E06FED4DF35}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{5ABCDD52-FC0D-4DAA-8471-B83C84CF193D}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\namespace.yaml = Deploy\namespace.yaml
+	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8FEB7ED9-397E-458D-81FE-BB75D80D7886}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build and deploy", "Build and deploy", "{8FEB7ED9-397E-458D-81FE-BB75D80D7886}"
 	ProjectSection(SolutionItems) = preProject
 		BuildWithVersioning.ps1 = BuildWithVersioning.ps1
 		DeployWithVersioning.ps1 = DeployWithVersioning.ps1
 		InitBuild.ps1 = InitBuild.ps1
 		InitDeploy.ps1 = InitDeploy.ps1
+		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{0B4ABDDD-675F-4515-941C-5832977BA621}"
@@ -39,7 +42,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{0444
 		Deploy\buildversionsapi\deployment.yaml = Deploy\buildversionsapi\deployment.yaml
 		Deploy\buildversionsapi\ingress.yaml = Deploy\buildversionsapi\ingress.yaml
 		Deploy\buildversionsapi\kustomization.yaml = Deploy\buildversionsapi\kustomization.yaml
-		Deploy\buildversionsapi\namespace.yaml = Deploy\buildversionsapi\namespace.yaml
 		Deploy\buildversionsapi\persistentvolume.yaml = Deploy\buildversionsapi\persistentvolume.yaml
 		Deploy\buildversionsapi\persistentvolumeclaim.yaml = Deploy\buildversionsapi\persistentvolumeclaim.yaml
 		Deploy\buildversionsapi\secret.yaml = Deploy\buildversionsapi\secret.yaml
@@ -51,19 +53,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{5C
 		Deploy\buildversions\deployment.yaml = Deploy\buildversions\deployment.yaml
 		Deploy\buildversions\ingress.yaml = Deploy\buildversions\ingress.yaml
 		Deploy\buildversions\kustomization.yaml = Deploy\buildversions\kustomization.yaml
-		Deploy\buildversions\namespace.yaml = Deploy\buildversions\namespace.yaml
 		Deploy\buildversions\service.yaml = Deploy\buildversions\service.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{3CF13118-C930-4DA6-9B77-FA2EFE850F87}"
 	ProjectSection(SolutionItems) = preProject
-		Deploy\buildversionsapi\secrets\ConnectionStrings__BuildVersionsAuthDb = Deploy\buildversionsapi\secrets\ConnectionStrings__BuildVersionsAuthDb
+		Deploy\buildversionsapi\secrets\ConnectionStrings__AuthDb = Deploy\buildversionsapi\secrets\ConnectionStrings__AuthDb
 		Deploy\buildversionsapi\secrets\ConnectionStrings__BuildVersionsDb = Deploy\buildversionsapi\secrets\ConnectionStrings__BuildVersionsDb
+		Deploy\buildversionsapi\secrets\JwtSettings__Secret = Deploy\buildversionsapi\secrets\JwtSettings__Secret
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Module", "Auth.Module\Auth.Module.csproj", "{F18699E5-5221-436A-BF49-D96264FF54EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildVersionsApi.Diagnostics", "BuildVersionsApi.Diagnostics\BuildVersionsApi.Diagnostics.csproj", "{E2637E04-811E-4A81-B1F9-23D43740F59C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildVersionsApi.Diagnostics", "BuildVersionsApi.Diagnostics\BuildVersionsApi.Diagnostics.csproj", "{E2637E04-811E-4A81-B1F9-23D43740F59C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,4 +115,6 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E41000BD-5883-4879-9D85-41E567DFF821}
 	EndGlobalSection
+EndGlobal
+obalSection
 EndGlobal

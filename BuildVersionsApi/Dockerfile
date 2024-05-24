@@ -7,7 +7,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
+ARG Configuration
 WORKDIR /src
 COPY ["BuildVersionsApi/BuildVersionsApi.csproj", "BuildVersionsApi/"]
 COPY ["BuildVersionsApi.Domain/BuildVersionsApi.Domain.csproj", "BuildVersionsApi.Domain/"]
@@ -18,13 +18,13 @@ COPY ["Auth.Module/Auth.Module.csproj", "Auth.Module/"]
 RUN dotnet restore "./BuildVersionsApi/BuildVersionsApi.csproj"
 COPY . .
 WORKDIR "/src/BuildVersionsApi"
-RUN dotnet build "./BuildVersionsApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./BuildVersionsApi.csproj" -c "$Configuration" -o /app/build
 
 FROM build AS publish
 ARG Configuration
 ARG Version
 ARG Description
-RUN dotnet publish "./BuildVersionsApi.csproj" -c $Configuration -o /app/publish /p:UseAppHost=false -p:Version="$Version" -p:Description="$Description" 
+RUN dotnet publish "./BuildVersionsApi.csproj" -c "$Configuration" -o /app/publish /p:UseAppHost=false -p:Version="$Version" -p:Description="$Description" 
 
 FROM base AS final
 WORKDIR /app

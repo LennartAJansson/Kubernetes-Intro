@@ -25,7 +25,7 @@ export class BuildVersionsApiService implements IBuildVersionsApiService {
   async add(buildVersion: BuildVersion): Promise<BuildVersion> {
     return await firstValueFrom(this.apiSvc.add(buildVersion));
   }
-  async delete(id: number): Promise<BuildVersion> {
-    return await firstValueFrom(this.apiSvc.delete(id));
+  async delete(name: string): Promise<BuildVersion> {
+    return await firstValueFrom(this.apiSvc.delete(name));
   }
 }

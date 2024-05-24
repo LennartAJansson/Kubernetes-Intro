@@ -68,9 +68,9 @@ export class BuildVersionsListComponent {
     this.currentIndex = index;
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(name: string): Promise<void> {
     try {
-      const res = await this.service.delete(id);
+      const res = await this.service.delete(name);
       console.log(res);
       await this.refresh();
     } catch (e) {

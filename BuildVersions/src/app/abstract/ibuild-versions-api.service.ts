@@ -6,5 +6,5 @@ export interface IBuildVersionsApiService {
   getAll(): Promise<BuildVersion[]>;
   update(buildVersion: BuildVersion): Promise<BuildVersion>;
   add(buildVersion: BuildVersion): Promise<BuildVersion>;
-  delete(id: number): Promise<BuildVersion>;
+  delete(name: string): Promise<BuildVersion>;
 }

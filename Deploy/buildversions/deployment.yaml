@@ -13,9 +13,9 @@ spec:
     metadata:
       labels:
         app: buildversions
-      # annotations:
-      #   prometheus.io/scrape: "true"
-      #   prometheus.io/port: "80"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
     spec:
       containers:
       - name: buildversions

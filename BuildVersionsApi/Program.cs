@@ -15,11 +15,6 @@ using FastEndpoints.Swagger;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseKestrel((context, options) => 
-{
-  options.ListenAnyIP(5016);
-});
-// Add services to the container.
 builder.Host.UseSerilog((context, services, configuration) => configuration
   .ReadFrom.Configuration(context.Configuration)
   .ReadFrom.Services(services)

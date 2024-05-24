@@ -3,13 +3,9 @@ kind: Kustomization
 namespace: buildversions
 resources:
 - configmap.yaml
-- namespace.yaml
 - ingress.yaml
 - service.yaml
 - deployment.yaml
 - persistentvolume.yaml
 - persistentvolumeclaim.yaml
 - secret.yaml
-images:
-- name: registry:5000/buildversionsapi
-  newTag: 0.0.0-dev.2

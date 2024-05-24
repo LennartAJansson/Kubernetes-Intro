@@ -2,8 +2,10 @@ $name = "buildversionsapi"
 $namespace = "buildversions"
 $registryHost = "registry:5000"
 $kubeseal = "c:\apps\kubeseal\kubeseal.exe"
-$semanticVersion = "0.0.0-dev.1"
+$semanticVersion = "0.0.0.dev-1"
 "Current deploy: ${registryHost}/${name}:${semanticVersion}"
+
+kubectl apply -f ./deploy/namespace.yaml
 
 cd ./deploy/${name}
 
