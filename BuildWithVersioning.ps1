@@ -41,6 +41,6 @@ foreach($name in @(
 	"Version: ${semanticVersion}"
 	"Description: ${description}"
 
-	docker build -f ./${name}/Dockerfile --force-rm -t ${env:REGISTRYHOST}/${lowerName}:${semanticVersion} --build-arg Version="${version}" --build-arg Configuration="${configuration}" --build-arg Description="${description}" .
+	docker build --progress=plain --no-cache -f ./${name}/Dockerfile --force-rm -t ${env:REGISTRYHOST}/${lowerName}:${semanticVersion} --build-arg Version="${version}" --build-arg Configuration="${configuration}" --build-arg Description="${description}" .
 	docker push ${env:REGISTRYHOST}/${lowerName}:${semanticVersion}
 }

@@ -5,6 +5,7 @@ COPY ./BuildVersions/. .
 RUN npm install
 ARG Configuration
 RUN npm run build -- --output-path=./dist/out --configuration $Configuration
+RUN ls -l /app/dist/out/*
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:latest
