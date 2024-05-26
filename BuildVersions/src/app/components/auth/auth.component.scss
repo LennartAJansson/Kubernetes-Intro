@@ -1,0 +1,74 @@
+.auth-container {
+  margin-top: 10em;
+}
+
+.signup-container,
+.login-container {
+  margin: auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  max-width: 350px;
+  min-height: 150px;
+  margin-top: 6em;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 25px;
+}
+
+.form-title {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 25px;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px 4px #e9e9ec;
+}
+
+.tab-button {
+  font-size: 16px;
+  padding: 15px;
+  font-size: 20px;
+  width: 50%;
+  text-align: center;
+  transition: .2s ease;
+  border-radius: 15px;
+}
+
+.tab-button.active {
+  background-color: var(--main-color);
+  color: white;
+}
+
+mat-form-field {
+  width: 100%;
+  display: block;
+}
+
+.signup-button,
+.login-button {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.login-text,
+.signup-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
+a {
+  color: var(--main-color);
+  text-decoration: underline;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin: 20px;
+}

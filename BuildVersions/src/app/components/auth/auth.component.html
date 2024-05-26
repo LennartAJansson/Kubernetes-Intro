@@ -1,0 +1,79 @@
+<div class="auth-container">
+  <!-- Login Form fields -->
+  @if(activeForm === 'login'){
+  <form>
+    <div class="login-container">
+      <div class="tab-buttons">
+        <button mat-button class="tab-button" [ngClass]="{'active': activeForm === 'login'}"
+          (click)="toggleForm('login')">Login</button>
+        <button mat-button class="tab-button" (click)="toggleForm('signup')">Sign up</button>
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+        <div *ngIf="loginError" class="error-message">
+          Incorrect email or password. Please try again.
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Email Address</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Enter your email" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" placeholder=" Enter your password" required>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="login-button" type="submit">Login</button>
+      </form>
+      <p class="signup-text">Forgot your password? <a href=""
+          (click)="toggleForm('password/reset'); $event.preventDefault();">Reset it here</a></p>
+      <p class="signup-text">Don't have an account? <a href=""
+          (click)="toggleForm('signup'); $event.preventDefault();">Sign up here</a></p>
+    </div>
+  </form>
+  }
+
+  <!-- Signup form fields -->
+  @if( activeForm === 'signup'){
+  <form>
+    <div class="signup-container">
+      <div class="tab-buttons">
+        <button mat-button class="tab-button" (click)="toggleForm('login')">Login</button>
+        <button mat-button class="tab-button" (click)="toggleForm('signup')"
+          [ngClass]="{'active': activeForm === 'signup'}">Sign up</button>
+      </div>
+      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+        <div *ngIf="signupError" class="error-message">
+          Form is not valid or passwords do not match.
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="firstname" type="text" placeholder="Enter your first name" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Last name </mat-label>
+          <input matInput formControlName="lastname" type="text" placeholder="Enter your last name" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email address</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Enter your email" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Phonenumber</mat-label>
+          <input matInput formControlName="phonenumber" type="text" placeholder="Enter your phonenumber" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Enter your password" required
+            minlength="6">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Confirm password</mat-label>
+          <input matInput formControlName="confirmPassword" type="password" placeholder="Confirm Password" required
+            minlength="8">
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="signup-button" type="submit">Sign Up</button>
+      </form>
+      <p class="signup-text">Already have an account? <a href="#"
+          (click)="toggleForm('login'); $event.preventDefault();">Login here</a></p>
+    </div>
+  </form>
+  }
+</div>

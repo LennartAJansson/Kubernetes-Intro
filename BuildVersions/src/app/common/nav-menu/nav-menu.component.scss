@@ -1,0 +1,32 @@
+.sticky-toolbar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 2000
+}
+
+.button,
+.link {
+  font-size: 20px;
+  margin: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover-color);
+  }
+}
+
+.image-container img {
+  display: flex;
+  margin: 0 auto;
+  max-width: 120px;
+}
+
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.username {
+  margin: 10px;
+}
