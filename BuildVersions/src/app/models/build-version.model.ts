@@ -1,4 +1,4 @@
-import { Version } from "@angular/core";
+import { Version } from '@angular/core';
 
 export class BuildVersion {
   id?: number;
@@ -8,7 +8,7 @@ export class BuildVersion {
   build?: number;
   revision?: number;
   semanticVersionText?: string;
-  version?: string;// Version;
+  version?: string; // Version;
   release?: string;
   semanticVersion?: string;
 }

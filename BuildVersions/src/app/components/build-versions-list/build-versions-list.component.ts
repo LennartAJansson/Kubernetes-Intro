@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { IBuildVersionsApiService } from '../../abstract/ibuild-versions-api.service';
 import { BuildVersionsApiService } from '../../services/build-versions-api.service';
 import { BuildVersion } from '../../models/build-version.model';
-import { AngularMaterialComponent } from '../../common/angular-material.component';
+import { AngularMaterialComponent } from '../../common/angular-material/angular-material.component';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';

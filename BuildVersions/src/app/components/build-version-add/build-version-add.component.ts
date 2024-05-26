@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AngularMaterialComponent } from '../../common/angular-material.component';
+import { AngularMaterialComponent } from '../../common/angular-material/angular-material.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {
   MAT_DIALOG_DATA,
