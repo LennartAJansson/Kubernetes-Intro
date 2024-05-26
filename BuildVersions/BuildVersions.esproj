@@ -7,4 +7,7 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\BuildVersions\</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="dist\build-versions\3rdpartylicenses.txt" />
+  </ItemGroup>
 </Project>

@@ -81,7 +81,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/app/services/environments/environment.ts",
-                  "with": "src/app/services/environments/environment.local.ts"
+                  "with": "src/app/services/environments/environment.development.ts"
                 }
               ]
             }

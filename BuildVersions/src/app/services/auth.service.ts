@@ -18,17 +18,13 @@ import { firstValueFrom, BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  //#region properties
   public currentUserSubject = new BehaviorSubject<LoginResponse | null>(null);
   public currentUser = this.currentUserSubject.asObservable();
-  //#endregion
 
-  //#region constructor
   private apiSvc = inject(AuthApiService);
   constructor() {
     this.loadInitailUser();
   }
-  //#endregion
 
   loadInitailUser() {
     const userData = localStorage.getItem('currentUser');
@@ -39,9 +35,14 @@ export class AuthService {
     }
   }
 
+  getUserName(): string | null {
+    const user = this.currentUserSubject.value;
+    return user != null ? user!.firstname + ' ' + user!.lastname : null;
+  }
+
   getAuthToken(): string | null {
     const token = localStorage.getItem('access_token');
-    console.log('Retrieved token');
+    console.log('Retrieved token' + token);
     return token;
   }
 
@@ -63,8 +64,6 @@ export class AuthService {
     if (response && response.jwtToken) {
       localStorage.setItem('access_token', response.jwtToken);
       localStorage.setItem('currentUser', JSON.stringify(response));
-      // console.log('Token saved:', response.jwtToken);
-      // console.log('logged in as:', response.username);
       this.currentUserSubject.next(response);
     } else {
       console.log('No token received:', response);

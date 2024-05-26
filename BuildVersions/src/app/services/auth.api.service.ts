@@ -19,7 +19,7 @@ import {
 })
 export class AuthApiService {
   private http = inject(HttpClient);
-  private authUrl: string = environment.baseUrl + 'auth';
+  private authUrl: string = environment.baseUrl + '/api/auth';
 
   login(login: LoginRequest): Observable<LoginResponse> {
     const url = `${this.authUrl}/users/login`;

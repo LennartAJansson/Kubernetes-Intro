@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  baseUrl: 'https://localhost:7087',
+  production: true,
+  baseUrl: 'http://buildversionsapi:8080',
 };

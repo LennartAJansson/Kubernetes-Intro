@@ -1,22 +1,38 @@
 <header>
   <mat-toolbar class="sticky-toolbar" color="primary">
-    <a class="link" [routerLink]="['/']">
+    <!-- <a class="link" [routerLink]="['/']">
       <a class="image-container">
         <img src="assets/SarasvatiLogo.png" alt="SarasvatiLogo">
       </a>
+    </a> -->
+    <a
+      class="link"
+      mat-flat-button
+      color="primary"
+      [routerLink]="['/buildversions']"
+    >
+      BuildVersions
     </a>
-    <a class="link" mat-flat-button color="primary" [routerLink]="['/categories']"> Categories </a>
 
     <span class="spacer"></span>
     @if(isAuthenticated){
 
     <button class="link" mat-flat-button color="primary" (click)="logout()">
-      Log out</button>
-    <button class="link" mat-flat-button color="primary" [routerLink]="['/user']">{{username}}</button>
-    }
-    @else {
+      Log out
+    </button>
+    <button
+      class="link"
+      mat-flat-button
+      color="primary"
+      [routerLink]="['/user']"
+    >
+      {{ username }}
+    </button>
+    } @else {
 
-    <button class="link" mat-flat-button color="primary" (click)="login()"> Log in </button>
+    <button class="link" mat-flat-button color="primary" (click)="login()">
+      Log in
+    </button>
     }
 
     <!-- [routerLink]="isAuthenticated ? ['/auth/logout'] :

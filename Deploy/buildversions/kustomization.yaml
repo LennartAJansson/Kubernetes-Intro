@@ -7,4 +7,4 @@ resources:
 - deployment.yaml
 images:
 - name: registry:5000/buildversions
-  newTag: 0.0.0.dev-3
+  newTag: 0.0.0.dev-5

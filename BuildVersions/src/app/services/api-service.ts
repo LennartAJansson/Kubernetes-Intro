@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { environment } from './environments/environment.local';
+import { environment } from './environments/environment';
 import { BuildVersion } from '../models/build-version.model';
 import { Observable } from 'rxjs';
 
@@ -12,11 +12,11 @@ export class ApiService {
   private baseUrl: string = environment.baseUrl;
 
   getById(id: number): Observable<BuildVersion> {
-    const url = this.baseUrl + '/api/BuildVersion/ReadById/' + id +'/v1'; 
+    const url = this.baseUrl + '/api/BuildVersion/ReadById/' + id + '/v1';
     return this.http.get<BuildVersion>(url);
   }
   getByName(name: string): Observable<BuildVersion> {
-    const url = this.baseUrl + '/api/BuildVersion/ReadByName/' + name+'/v1';
+    const url = this.baseUrl + '/api/BuildVersion/ReadByName/' + name + '/v1';
     return this.http.get<BuildVersion>(url);
   }
   getAll(): Observable<BuildVersion[]> {

@@ -19,6 +19,7 @@ public sealed class ReadAllBuildVersionEndpoint
     Version(1, deprecateAt: 4);
     Get("BuildVersion/ReadAll");
     AllowAnonymous();
+    //Policies("AdminPolicy");
     Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(60))));
   }
 
