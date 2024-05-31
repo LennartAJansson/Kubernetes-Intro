@@ -73,10 +73,11 @@ foreach($name in @(
 	#if([string]::IsNullOrEmpty($env:AGENT_NAME) -and [string]::IsNullOrEmpty($hostname))
 	#if([string]::IsNullOrEmpty($env:AGENT_NAME))
 	#{
-#		if(Test-Path -Path ${deploy}/${name}/secret.yaml)
-#		{
-#			git checkout ${deploy}/${name}/secret.yaml
-#		}
 	#}
+		git checkout ./${deploy}/${target}/${name}/kustomize.yaml
+		if(Test-Path -Path ./${deploy}/${target}/${name}/secret.yaml)
+		{
+			git checkout ./${deploy}/${target}/${name}/secret.yaml
+		}
 }
 

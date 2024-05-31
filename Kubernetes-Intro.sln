@@ -64,6 +64,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{269E
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{7724D1C3-1560-4F4E-9A1D-E14FE040A396}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\local\buildversions\deployment.yaml = Deploy\local\buildversions\deployment.yaml
+		Deploy\local\buildversions\ingress.yaml = Deploy\local\buildversions\ingress.yaml
+		Deploy\local\buildversions\kustomization.yaml = Deploy\local\buildversions\kustomization.yaml
+		Deploy\local\buildversions\service.yaml = Deploy\local\buildversions\service.yaml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{A65E5312-5291-4C4D-A5C2-B123CE9ABDB7}"
 	ProjectSection(SolutionItems) = preProject
