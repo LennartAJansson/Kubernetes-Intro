@@ -1,5 +1,11 @@
+param (
+   [string]$target = "local"
+)
+
 $name = "BuildVersionsApi"
-$registryHost = "registry:5000"
+$registryHost = "registry.${target}:5000"
+$registryHost
+
 $semanticVersion = "0.0.0.dev-1"
 $version = "0.0.0.1"
 $configuration = "Production"

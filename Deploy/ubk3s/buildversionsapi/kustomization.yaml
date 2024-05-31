@@ -2,9 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: buildversions
 resources:
+- configmap.yaml
 - ingress.yaml
 - service.yaml
 - deployment.yaml
+- persistentvolume.yaml
+- persistentvolumeclaim.yaml
+- secret.yaml
 images:
-- name: registry:5000/buildversions
-  newTag: 0.0.0.dev-5
+- name: registry.ubk3s:5000/buildversionsapi
+  newTag: 0.0.0.dev-1

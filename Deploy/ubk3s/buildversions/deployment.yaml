@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buildversions
+  labels:
+    app: buildversions
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: buildversions
+  template:
+    metadata:
+      labels:
+        app: buildversions
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
+    spec:
+      containers:
+      - name: buildversions
+        image: registry:5000/buildversions:v1
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: buildversions-configmap
+        ports:
+        - containerPort: 80
+          name: http
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: buildversions-configmap
+data:
+  DOTNET_ENVIRONMENT: "Production"
+  ASPNETCORE_ENVIRONMENT: "Production"
+  ASPNETCORE_HTTP_PORTS: "80"

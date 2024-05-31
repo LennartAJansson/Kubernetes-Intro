@@ -9,6 +9,3 @@ resources:
 - persistentvolume.yaml
 - persistentvolumeclaim.yaml
 - secret.yaml
-images:
-- name: registry:5000/buildversionsapi
-  newTag: 0.0.0.dev-5

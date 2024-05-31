@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buildversionsapi
+  labels:
+    app: buildversionsapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: buildversionsapi
+  template:
+    metadata:
+      labels:
+        app: buildversionsapi
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
+    spec:
+      volumes:
+        - name: buildversionsapi-storage
+          persistentVolumeClaim:
+            claimName: buildversionsapi-claim
+      containers:
+      - name: buildversionsapi
+        image: registry:5000/buildversionsapi:latest
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef: 
+            name: buildversionsapi-secret
+        - configMapRef:
+            name: buildversionsapi-configmap
+        ports:
+        - containerPort: 80
+          name: http
+        # livenessProbe:
+        #   httpGet:
+        #     path: /healthz
+        #     port: http
+        #   initialDelaySeconds: 30
+        #   timeoutSeconds: 30
+        # readinessProbe:
+        #   httpGet:
+        #     path: /healthz
+        #     port: http
+        #   initialDelaySeconds: 30
+        #   timeoutSeconds: 30
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "16m"
+          limits:
+            memory: "256Mi"
+            cpu: "512m"
+        volumeMounts:
+          - mountPath: "/data"
+            name: buildversionsapi-storage
+---

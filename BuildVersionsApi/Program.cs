@@ -15,12 +15,21 @@ using FastEndpoints.Swagger;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
 builder.Host.UseSerilog((context, services, configuration) => configuration
   .ReadFrom.Configuration(context.Configuration)
   .ReadFrom.Services(services)
   .Enrich.FromLogContext());
 
 ApplicationInfo appInfo = new(typeof(Program));
+
+builder.Services.ConfigureHttpJsonOptions(options => {
+  options.SerializerOptions.PropertyNameCaseInsensitive = true;
+  options.SerializerOptions.WriteIndented = true;
+  options.SerializerOptions.AllowTrailingCommas = true;
+  options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+  options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 builder.Services
   .AddAuthModule(builder.Configuration)

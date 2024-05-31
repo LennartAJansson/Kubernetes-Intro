@@ -1,23 +1,36 @@
+param (
+   [string]$target = "local"
+)
+
 $name = "buildversionsapi"
 $namespace = "buildversions"
 $registryHost = "registry:5000"
 $kubeseal = "c:\apps\kubeseal\kubeseal.exe"
+if($target -eq "local")
+{
+	$kubeconfig = $env:KUBECONFIG
+}
+else
+{
+	$kubeconfig = $env:KUBECONFIGX
+}
+
 $semanticVersion = "0.0.0.dev-1"
 "Current deploy: ${registryHost}/${name}:${semanticVersion}"
 
-kubectl apply -f ./deploy/namespace.yaml
+kubectl apply -f ./deploy/${target}/namespace.yaml --kubeconfig $kubeconfig
 
-cd ./deploy/${name}
+cd ./deploy/${target}/${name}
 
 kustomize edit set image "${registryHost}/${name}:${semanticVersion}"
 
 if(Test-Path -Path ./secrets/*)
 {
 	"Creating secrets"
-	kubectl create secret generic ${name}-secret --output json --dry-run=client --from-file=./secrets |
-		&${kubeseal} -n $namespace --controller-namespace kube-system --format yaml > "secret.yaml"
+	kubectl create secret generic ${name}-secret --output json --dry-run=client --from-file=./secrets --kubeconfig $kubeconfig |
+		&${kubeseal} -n $namespace --controller-namespace kube-system --format yaml --kubeconfig $kubeconfig > "secret.yaml"
 }
 
-cd ../..
+cd ../../..
 
-kubectl apply -k ./deploy/${name}
+kubectl apply -k ./deploy/${target}/${name} --kubeconfig $kubeconfig

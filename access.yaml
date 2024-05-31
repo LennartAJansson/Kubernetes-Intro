@@ -1,0 +1,159 @@
+#https://docs.portworx.com/portworx-backup-on-prem/configure/namespace-access
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+   name: user1
+   namespace: ns1
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+   name: user1-clusterrole
+rules:
+- apiGroups: ["*"]
+  resources: ["namespaces", "clusterrolebindings", "persistentvolumes", "clusterroles", "nodes", "storageclasses"]
+  verbs: ["get", "list", "watch", "create"]
+- apiGroups: ["stork.libopenstorage.org"]
+  resources: ["schedulepolicies"]
+  verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+- apiGroups: ["stork.libopenstorage.org"] # for controller support
+  resources: ["*"]
+  verbs: ["list", "get", "watch"]
+- apiGroups: ["snapshot.storage.k8s.io"]
+  resources: ["volumesnapshotclasses"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+   name: user1-clusterrolebinding
+subjects:
+- kind: ServiceAccount
+  name: user1
+  namespace: ns1
+roleRef:
+   apiGroup: rbac.authorization.k8s.io
+   kind: ClusterRole
+   name: user1-clusterrole
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+   name: ns1-role
+   namespace: ns1
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["batch"]
+  resources:
+   - jobs
+   - cronjobs
+  verbs: ["*"]
+- apiGroups:
+   - stork.libopenstorage.org
+  resources: ["*"]
+  verbs:
+   - create
+   - delete
+   - deletecollection
+   - get
+   - list
+   - patch
+   - update
+   - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+   name: ns1-rolebinding
+   namespace: ns1
+subjects:
+- kind: ServiceAccount
+  name: user1
+  namespace: ns1
+roleRef:
+   apiGroup: rbac.authorization.k8s.io
+   kind: Role
+   name: ns1-role
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+   name: ks-role
+   namespace: kube-system
+   rules:
+   - apiGroups: [""]
+     resources: ["configmaps"]
+     verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+   name: ks-rolebinding
+   namespace: kube-system
+subjects:
+- kind: ServiceAccount
+  name: user1
+  namespace: ns1
+roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: Role
+      name: ks-role
+---
+apiVersion: v1
+kind: Secret
+metadata:
+   name: user1-token
+   namespace: ns1
+   annotations:
+   kubernetes.io/service-account.name: user1
+type: kubernetes.io/service-account-token
+
+---
+#kubectl get secret user1-token -n ns1 -o "jsonpath={.data.token}" | base64 -d
+#kubectl get secret user1-token -n ns1 -o "jsonpath={.data['ca\.crt']}"
+---
+
+apiVersion: v1
+clusters:
+- cluster:
+   certificate-authority-data: <certificate>
+   server: https://<cluster-IP>:6443
+   name: cluster.local
+contexts:
+- context:
+   cluster: cluster.local
+   namespace: <namespace-name>
+   user: <service-account-name>
+   name: <service-account>@cluster.local
+current-context: <service-account>@cluster.local
+kind: Config
+preferences: {}
+users:
+- name: <service-account>
+  user:
+  token: <service-account-token>
+  client-key-data: <certificate>
+---
+apiVersion: v1
+clusters:
+- cluster:
+   certificate-authority-data: LS0tLSJQ0FURS0tLS0tCTkJnq..................aTXHWlFBYU5aTUZjd0==
+   server: https://x.x.x.x:6443
+   name: cluster.local
+contexts:
+- context:
+   cluster: cluster.local
+   namespace: ns1
+   user: user1
+   name: user1@cluster.local
+current-context: user1@cluster.local
+kind: Config
+preferences: {}
+users:
+- name: user1
+  user:
+  token: ABgHtLSJQ0FURSOpha0tCTkJnq..................aTXHWlFBYU5aTUZjd0
+  client-key-data: LS0tLSJQ0FURS0tLS0tCTkJnq..................aTXHWlFBYU5aTUZjd0==
