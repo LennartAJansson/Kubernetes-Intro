@@ -13,15 +13,17 @@ using BuildVersionsApi.Diagnostics;
 using FastEndpoints.Swagger;
 
 using Serilog;
+using BuildVersionsApi.Diagnostics.Checks;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, services, configuration) => configuration
   .ReadFrom.Configuration(context.Configuration)
-  .ReadFrom.Services(services)
+  //.ReadFrom.Services(services)
   .Enrich.FromLogContext());
 
 ApplicationInfo appInfo = new(typeof(Program));
+builder.Services.AddSingleton(appInfo);
 
 builder.Services.ConfigureHttpJsonOptions(options => {
   options.SerializerOptions.PropertyNameCaseInsensitive = true;
@@ -31,12 +33,15 @@ builder.Services.ConfigureHttpJsonOptions(options => {
   options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
+IEnumerable<HealthCheckParam>? healthChecks = builder.Configuration.GetSection("HealthChecks").Get<IEnumerable<HealthCheckParam>>()
+    ?? [];
+
 builder.Services
   .AddAuthModule(builder.Configuration)
   .AddBuildVersionsApiFeatures()
   .AddBuildVersionsApiDomain()
   .AddBuildVersionsApiPersistance(builder.Configuration.GetConnectionString("BuildVersionsDb"))
-  .AddBuildVersionsApiDiagnostics(builder.Configuration);
+  .AddBuildVersionsApiDiagnostics(builder.Configuration, healthChecks);
 
 builder.Services
   .AddFastEndpoints(o =>
@@ -53,8 +58,9 @@ builder.Services
     o.DocumentSettings = s =>
     {
       s.DocumentName = "Release 1.0";
-      s.Title = "BuildVersions";
-      s.Version = "v1.0";
+      s.Title = "BuildVersionsApi";
+      s.Version = appInfo.SemanticVersion;// "v1.0";
+      s.Description = appInfo.Description;
     };
   })
   .SwaggerDocument(o =>
@@ -64,7 +70,8 @@ builder.Services
     {
       s.DocumentName = "Release 2.0";
       s.Title = "BuildVersions";
-      s.Version = "v2.0";
+      s.Version = appInfo.SemanticVersion;// "v1.0";
+      s.Description = appInfo.Description;
     };
   })
   .AddResponseCaching();
@@ -100,8 +107,7 @@ app
     c.Serializer.Options.PropertyNameCaseInsensitive = true;
     c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
   })
-  .UseSwaggerGen();
-
-app.MapBuildVersionsApiDiagnostics();
+  .UseSwaggerGen()
+  .MapBuildVersionsApiDiagnostics();
 
 app.Run();

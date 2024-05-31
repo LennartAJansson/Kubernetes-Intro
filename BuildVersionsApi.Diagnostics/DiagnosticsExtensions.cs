@@ -1,17 +1,42 @@
 ﻿namespace BuildVersionsApi.Diagnostics;
 
+using BuildVersionsApi.Diagnostics.Checks;
+
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
+using Prometheus;
+
 public static class DiagnosticsExtensions
 {
-  public static IServiceCollection AddBuildVersionsApiDiagnostics(this IServiceCollection services, IConfiguration configuration)
+  public static IServiceCollection AddBuildVersionsApiDiagnostics(this IServiceCollection services, IConfiguration configuration,IEnumerable<HealthCheckParam> checks)
   {
-    _ = services.AddHealthChecks();
+    IHealthChecksBuilder builder = services.AddHealthChecks();
+    foreach (HealthCheckParam check in checks)
+    {
+      if (check.Title is not null)
+      {
+        if (check.Title.StartsWith("http_", StringComparison.CurrentCultureIgnoreCase))
+        {
+          _ = builder.AddCheck(check.Title ?? string.Empty, new HttpHealthCheck(check));
+        }
+        else if (check.Title.StartsWith("icmp_", StringComparison.CurrentCultureIgnoreCase))
+        {
+          _ = builder.AddCheck(check.Title ?? string.Empty, new ICMPHealthCheck(check));
+        }
+        else if (check.Title.StartsWith("db_", StringComparison.CurrentCultureIgnoreCase))
+        {
+          check.Host = configuration.GetConnectionString(check.Host ?? string.Empty);
+          _ = builder.AddCheck(check.Title ?? string.Empty, new DbHealthCheck(check));
+        }
+      }
+    }
+    builder.ForwardToPrometheus();
 
     _ = services.AddSingleton<ReadAllBuildVersionMetrics>();
     _ = services.AddOpenTelemetry()
@@ -34,10 +59,10 @@ public static class DiagnosticsExtensions
         });
     return services;
   }
-  public static WebApplication MapBuildVersionsApiDiagnostics(this WebApplication app)
+  public static IApplicationBuilder MapBuildVersionsApiDiagnostics(this IApplicationBuilder app)
   {
-    _ = app.MapHealthChecks("/healthz");
-    _ = app.MapPrometheusScrapingEndpoint();
+    _ = ((WebApplication)app).MapHealthChecks("/healthz", new CustomHealthCheckOptions());
+    _ = ((WebApplication)app).MapPrometheusScrapingEndpoint();
 
     return app;
   }

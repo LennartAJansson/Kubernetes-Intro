@@ -13,10 +13,14 @@ kubeAPI:
 subnet: "172.28.0.0/16"
 
 volumes:
-  - volume: C:\data\k8s:/tmp/shared 
+  - volume: C:\data\k8s:/tmp/shared #Local folder mapped against the nodes (server:0)
     nodeFilters:
       - server:0
       - agent:*
+  # - volume: c:/data/k8s:/tmp/shared #Local folder mapped against the nodes (server:0)
+  #   nodeFilters:
+  #     - server:0
+  #     - agent:*
 
 ports:
   - port: 8080:80
@@ -35,18 +39,6 @@ ports:
     nodeFilters:
       - server:0
   - port: 6379:6379
-    nodeFilters:
-      - server:0
-  - port: 9092:9092
-    nodeFilters:
-      - server:0
-  - port: 9093:9093
-    nodeFilters:
-      - server:0
-  - port: 9094:9094
-    nodeFilters:
-      - server:0
-  - port: 9095:9095
     nodeFilters:
       - server:0
 

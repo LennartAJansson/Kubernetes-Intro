@@ -5,6 +5,7 @@ metadata:
   name: buildversionsapi-volume
   labels:
     type: local
+    app: buildversionsapi
 spec:
   storageClassName: manual
   capacity:

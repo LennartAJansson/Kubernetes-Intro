@@ -19,7 +19,7 @@ public sealed class UpdateBuildVersionEndpointSummary
       Minor = 0,
       Build = 0,
       Revision = 0,
-      SemanticVersionText = "{Major}.{Minor}.{Build}.dev.{Revision}"
+      SemanticVersionText = "{Major}.{Minor}.{Build}.dev-{Revision}"
     };
     ResponseExamples[200] = new UpdateBuildVersionResponse
     {
@@ -29,10 +29,10 @@ public sealed class UpdateBuildVersionEndpointSummary
       Minor = 0,
       Build = 0,
       Revision = 0,
-      SemanticVersionText = "{Major}.{Minor}.{Build}.dev.{Revision}",
+      SemanticVersionText = "{Major}.{Minor}.{Build}.dev-{Revision}",
       Version = new Version(1, 0, 0, 0),
       Release = "1.0",
-      SemanticVersion = "1.0.0.dev.0",
+      SemanticVersion = "1.0.0.dev-0",
     };
     Responses[200] = "When Ok it returns a UpdateBuildVersionResponse";
     Responses[400] = "When problems occur it returns 400";

@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 #https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 metadata:
   name: buildversionsapi-claim
+  labels:
+    app: buildversionsapi
 spec:
   storageClassName: manual
   accessModes:

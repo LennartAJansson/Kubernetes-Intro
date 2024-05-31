@@ -1,9 +1,25 @@
+param (
+   [string]$target = "local"
+)
+
 #Assumes you have the project buildversionsapi running on your localhost on port 9000
 #
 
 $namespace = "buildversions"
 $hostname=""
-$url = "http://buildversionsapi.local:8080"
+$url = "http://buildversionsapi.${target}"
+$registryHost = "registry:5000"
+
+if($target -eq "local")
+{
+	$url = $url + ":8080"
+	$kubeconfig = $env:KUBECONFIG
+}
+else
+{
+	$kubeconfig = $env:KUBECONFIGX
+}
+
 $curl = "curl.exe"
 $configuration = "production"
 $deploy = "Deploy"
@@ -18,7 +34,7 @@ if($alive -ne """pong""")
 	return
 }
 
-kubectl apply -f ./deploy/namespace.yaml
+kubectl apply -f ./deploy/${target}/namespace.yaml --kubeconfig $kubeconfig
 
 foreach($name in @(
 	"buildversions", 
@@ -36,22 +52,22 @@ foreach($name in @(
 		return
 	}
 
-	"Current deploy: ${env:REGISTRYHOST}/${name}:${semanticVersion}"
+	"Current deploy: ${registryHost}/${name}:${semanticVersion}"
 
-	cd ./${deploy}/${name}
+	cd ./${deploy}/${target}/${name}
 
-	kustomize edit set image "${env:REGISTRYHOST}/${name}:${semanticVersion}"
+	kustomize edit set image "${registryHost}/${name}:${semanticVersion}"
 
 	if(Test-Path -Path ./secrets/*)
 	{
 		"Creating secrets"
-		kubectl create secret generic ${name}-secret --output json --dry-run=client --from-file=./secrets |
-			&${kubeseal} -n "${namespace}" --controller-namespace kube-system --format yaml > "secret.yaml"
+		kubectl create secret generic ${name}-secret --output json --dry-run=client --from-file=./secrets --kubeconfig $kubeconfig|
+			&${kubeseal} -n "${namespace}" --controller-namespace kube-system --format yaml --kubeconfig $kubeconfig > "secret.yaml"
 	}
 
-	cd ../..
+	cd ../../..
 
-	kubectl apply -k ./${deploy}/${name}
+	kubectl apply -k ./${deploy}/${target}/${name} --kubeconfig $kubeconfig
 	
 	#Restore secret.yaml and kustomization.yaml since this script alters them temporary
 	#if([string]::IsNullOrEmpty($env:AGENT_NAME) -and [string]::IsNullOrEmpty($hostname))

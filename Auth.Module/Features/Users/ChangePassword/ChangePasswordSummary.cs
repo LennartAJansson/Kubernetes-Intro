@@ -7,5 +7,8 @@ internal class ChangePasswordSummary
 {
   public ChangePasswordSummary()
   {
+    //TODO: Add Swagger properties here
+    Summary = "Summary text goes here...";
+    Description = "Description text goes here...";
   }
 }
