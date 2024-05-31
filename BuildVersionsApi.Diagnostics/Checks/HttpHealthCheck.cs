@@ -30,6 +30,8 @@ public sealed class HttpHealthCheck : IHealthCheck
   {
     if (!active)
     {
+      //context.Registration.Timeout = TimeSpan.MinValue;
+      //context.Registration.Period = TimeSpan.MinValue;
       return HealthCheckResult.Healthy("Not active!!!");
     }
 
@@ -54,5 +56,6 @@ public sealed class HttpHealthCheck : IHealthCheck
       return HealthCheckResult.Unhealthy(err);
     }
   }
-  public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default) => Task.FromResult(CheckHealth(context, cancellationToken));
+  public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default) 
+    => Task.FromResult(CheckHealth(context, cancellationToken));
 }

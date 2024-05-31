@@ -22,12 +22,17 @@ public sealed class CustomHealthCheckOptions : HealthCheckOptions
       c.Response.StatusCode = StatusCodes.Status200OK;
       string result = JsonSerializer.Serialize(new
       {
-        checks = r.Entries.Select(e => new
+        checks = r.Entries
+        .Where(e => e.Value.Description != "Not active!!!")
+        .Select(e =>
         {
-          name = e.Key,
-          responseTime = e.Value.Duration.TotalMilliseconds,
-          status = e.Value.Status.ToString(),
-          description = e.Value.Description,
+          return new
+          {
+            name = e.Key,
+            responseTime = e.Value.Duration.TotalMilliseconds,
+            status = e.Value.Status.ToString(),
+            description = e.Value.Description,
+          };
         }),
         totalResponseTime = r.TotalDuration.TotalMilliseconds,
       }, jsonSerializerOptions);

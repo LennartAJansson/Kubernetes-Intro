@@ -35,6 +35,8 @@ public sealed class DbHealthCheck : IHealthCheck
   {
     if (!active)
     {
+      //context.Registration.Timeout = TimeSpan.MinValue;
+      //context.Registration.Period = TimeSpan.MinValue;
       return HealthCheckResult.Healthy("Not active!!!");
     }
     if (HostIsMsSql(host!))

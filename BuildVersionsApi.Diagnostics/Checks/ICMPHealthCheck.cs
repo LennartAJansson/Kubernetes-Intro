@@ -30,10 +30,12 @@ public sealed class ICMPHealthCheck : IHealthCheck
     active = param.Active;
   }
 
-  public HealthCheckResult CheckHealth()
+  public HealthCheckResult CheckHealth(HealthCheckContext context, CancellationToken cancellationToken = default)
   {
     if (!active)
     {
+      //context.Registration.Timeout = TimeSpan.MinValue;
+      //context.Registration.Period = TimeSpan.MinValue;
       return HealthCheckResult.Healthy("Not active!!!");
     }
 
@@ -78,6 +80,6 @@ public sealed class ICMPHealthCheck : IHealthCheck
     }
   }
 
-  public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
-      => await Task.FromResult(CheckHealth());
+  public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+      => Task.FromResult(CheckHealth(context, cancellationToken));
 }
