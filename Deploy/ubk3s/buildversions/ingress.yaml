@@ -6,7 +6,7 @@ metadata:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-  - host: "buildversions.local"
+  - host: "buildversions.ubk3s"
     http:
       paths:
       - pathType: Prefix

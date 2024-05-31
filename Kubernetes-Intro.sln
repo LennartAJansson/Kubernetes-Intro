@@ -92,6 +92,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{9D28
 		Deploy\ubk3s\buildversionsapi\secrets\JwtSettings__Secret = Deploy\ubk3s\buildversionsapi\secrets\JwtSettings__Secret
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{05D5EE93-5096-413D-8D69-705A133705A7}"
+	ProjectSection(SolutionItems) = preProject
+		template_config.yaml = template_config.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

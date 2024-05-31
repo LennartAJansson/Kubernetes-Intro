@@ -6,9 +6,5 @@ resources:
 - ingress.yaml
 - service.yaml
 - deployment.yaml
-- persistentvolume.yaml
 - persistentvolumeclaim.yaml
 - secret.yaml
-images:
-- name: registry.ubk3s:5000/buildversionsapi
-  newTag: 0.0.0.dev-1

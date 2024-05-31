@@ -1,14 +1,35 @@
+#https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+#https://docs.k3s.io/storage
+
+---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
-#https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 metadata:
   name: buildversionsapi-claim
-labels:
-  app: buildversionsapi
+  namespace: buildversions
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
+  storageClassName: local-path
   resources:
     requests:
-      storage: 1Gi
+      storage: 2Gi
+
+---
+
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: buildversionsapi-volume
+#   labels:
+#     type: local
+#     app: buildversionsapi
+# spec:
+#   storageClassName: manual
+#   capacity:
+#     storage: 1Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/tmp/shared/buildversionsapi"

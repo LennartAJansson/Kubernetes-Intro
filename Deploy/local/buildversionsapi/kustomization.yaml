@@ -6,6 +6,5 @@ resources:
 - ingress.yaml
 - service.yaml
 - deployment.yaml
-- persistentvolume.yaml
 - persistentvolumeclaim.yaml
 - secret.yaml
