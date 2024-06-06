@@ -39,7 +39,6 @@ spec:
               mountPath: /etc/prometheus/
             - name: prometheus-storage-volume
               mountPath: /prometheus/
-            #Same as MySql
             - name: prometheus-persistent-storage
               mountPath: /var/lib/prometheus
       volumes:
@@ -49,9 +48,9 @@ spec:
             name: prometheus-server-conf
   
         - name: prometheus-storage-volume
-          emptyDir: {}
-
-          #Same as MySql
-        - name: prometheus-persistent-storage
           persistentVolumeClaim:
             claimName: prometheus-pv-claim
+
+        - name: prometheus-persistent-storage
+          persistentVolumeClaim:
+            claimName: prometheus-pv-claim2

@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: buildversionsapi
   name: buildversionsapi
   labels:
     app: buildversionsapi
@@ -17,20 +18,27 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "80"
     spec:
-      #securityContext:
-      # runAsUser: 0
-      #   runAsGroup: 3000
-      #   fsGroup: 2000
+      # The correct way to make sure we tighten security in the container by 
+      # not allowing it to execute in the default context of root user
+
+      # 4. Add a security context for our user app that we created in dockerfile
+      # BE AWARE: Don't know if Microsoft is planning to change the id's frequently'
+      securityContext:
+        runAsGroup: 1654
+        runAsUser: 1654
+        fsGroup: 1654
       containers:
       - name: buildversionsapi
         image: registry:5000/buildversionsapi:latest
         imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+        #   capabilities:
+        #     add: ["NET_ADMIN", "SYS_TIME"]
         volumeMounts:
           - name: buildversionsapi-storage
             mountPath: "/data"
-        # securityContext:
-        #   capabilities:
-        #     add: ["NET_ADMIN", "SYS_TIME"]
+            readOnly: false
         envFrom:
         - secretRef: 
             name: buildversionsapi-secret
@@ -59,7 +67,6 @@ spec:
             memory: "256Mi"
             cpu: "512m"
       volumes:
-        # - name: buildversionsapi-storage
         - name: buildversionsapi-storage
           persistentVolumeClaim:
             claimName: buildversionsapi-claim

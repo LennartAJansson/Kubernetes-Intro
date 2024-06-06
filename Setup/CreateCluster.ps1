@@ -33,3 +33,4 @@ kubectl apply -k ./nats
 kubectl apply -k ./redis
 kubectl apply -k ./prometheus
 kubectl apply -k ./grafana
+

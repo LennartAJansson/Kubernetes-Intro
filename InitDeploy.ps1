@@ -15,7 +15,7 @@ else
 	$kubeconfig = $env:KUBECONFIGX
 }
 
-$semanticVersion = "0.0.0.dev-1"
+$semanticVersion = "0.0.0.dev-9"
 "Current deploy: ${registryHost}/${name}:${semanticVersion}"
 
 kubectl apply -f ./deploy/${target}/namespace.yaml --kubeconfig $kubeconfig
@@ -27,8 +27,8 @@ kustomize edit set image "${registryHost}/${name}:${semanticVersion}"
 if(Test-Path -Path ./secrets/*)
 {
 	"Creating secrets"
-	kubectl create secret generic ${name}-secret --output json --dry-run=client --from-file=./secrets --kubeconfig $kubeconfig |
-		&${kubeseal} -n $namespace --controller-namespace kube-system --format yaml --kubeconfig $kubeconfig > "secret.yaml"
+	kubectl create secret generic ${name}-secret --output json --dry-run=client --from-file=./secrets --validate=false --kubeconfig $kubeconfig |
+		&${kubeseal} -n $namespace --controller-namespace kube-system --format yaml --validate=false --kubeconfig $kubeconfig > "secret.yaml"
 }
 
 cd ../../..

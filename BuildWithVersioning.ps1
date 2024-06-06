@@ -2,6 +2,9 @@ param (
    [string]$target = "local"
 )
 
+#Assumes you have the project buildversionsapi running on your buildversionsapi.local on port 8080
+#
+
 $hostname=""
 $url = "http://buildversionsapi.${target}"
 $registryHost = "registry.${target}:5000"

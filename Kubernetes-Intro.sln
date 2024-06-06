@@ -50,7 +50,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{4852
 		Deploy\local\buildversionsapi\deployment.yaml = Deploy\local\buildversionsapi\deployment.yaml
 		Deploy\local\buildversionsapi\ingress.yaml = Deploy\local\buildversionsapi\ingress.yaml
 		Deploy\local\buildversionsapi\kustomization.yaml = Deploy\local\buildversionsapi\kustomization.yaml
-		Deploy\local\buildversionsapi\persistentvolume.yaml = Deploy\local\buildversionsapi\persistentvolume.yaml
 		Deploy\local\buildversionsapi\persistentvolumeclaim.yaml = Deploy\local\buildversionsapi\persistentvolumeclaim.yaml
 		Deploy\local\buildversionsapi\secret.yaml = Deploy\local\buildversionsapi\secret.yaml
 		Deploy\local\buildversionsapi\service.yaml = Deploy\local\buildversionsapi\service.yaml
@@ -92,9 +91,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{9D28
 		Deploy\ubk3s\buildversionsapi\secrets\JwtSettings__Secret = Deploy\ubk3s\buildversionsapi\secrets\JwtSettings__Secret
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{05D5EE93-5096-413D-8D69-705A133705A7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFAEE3C6-8B9B-4C32-A759-8CDFBD19DF84}"
 	ProjectSection(SolutionItems) = preProject
-		template_config.yaml = template_config.yaml
+		access.yaml = access.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{C49C7535-7E8B-43A5-A58C-6959D186E9D6}"
+	ProjectSection(SolutionItems) = preProject
+		Setup\prometheus\clusterrole.yaml = Setup\prometheus\clusterrole.yaml
+		Setup\prometheus\configmap.yaml = Setup\prometheus\configmap.yaml
+		Setup\prometheus\deployment.yaml = Setup\prometheus\deployment.yaml
+		Setup\prometheus\ingress.yaml = Setup\prometheus\ingress.yaml
+		Setup\prometheus\kustomization.yaml = Setup\prometheus\kustomization.yaml
+		Setup\prometheus\namespace.yaml = Setup\prometheus\namespace.yaml
+		Setup\prometheus\persistentvolume.yaml = Setup\prometheus\persistentvolume.yaml
+		Setup\prometheus\service.yaml = Setup\prometheus\service.yaml
 	EndProjectSection
 EndProject
 Global
@@ -139,6 +150,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AEA600AA-D4F0-4824-A4E6-8FE237D7EED9} = {5ABCDD52-FC0D-4DAA-8471-B83C84CF193D}
+		{C49C7535-7E8B-43A5-A58C-6959D186E9D6} = {0B4ABDDD-675F-4515-941C-5832977BA621}
 		{EC0F7610-A436-4364-B68F-BCB0DDF72247} = {5ABCDD52-FC0D-4DAA-8471-B83C84CF193D}
 		{48520FCC-B577-46CF-8299-35176D5D0BB6} = {AEA600AA-D4F0-4824-A4E6-8FE237D7EED9}
 		{269EBD2F-5B27-42B1-8A88-135384AFFFD3} = {48520FCC-B577-46CF-8299-35176D5D0BB6}

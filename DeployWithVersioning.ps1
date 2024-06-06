@@ -2,7 +2,7 @@ param (
    [string]$target = "local"
 )
 
-#Assumes you have the project buildversionsapi running on your localhost on port 9000
+#Assumes you have the project buildversionsapi running on your buildversionsapi.local on port 8080
 #
 
 $namespace = "buildversions"

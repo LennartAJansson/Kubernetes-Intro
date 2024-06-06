@@ -13,14 +13,11 @@ kubeAPI:
 subnet: "172.28.0.0/16"
 
 volumes:
+  # connect C:\data\k8s to /tmp/shared on k3d-k3s-server-0 container
   - volume: C:\data\k8s:/tmp/shared #Local folder mapped against the nodes (server:0)
     nodeFilters:
       - server:0
       - agent:*
-  # - volume: c:/data/k8s:/tmp/shared #Local folder mapped against the nodes (server:0)
-  #   nodeFilters:
-  #     - server:0
-  #     - agent:*
 
 ports:
   - port: 8080:80
@@ -48,16 +45,24 @@ registries:
     host: "0.0.0.0"
     hostPort: "5000"
     volumes:
+      # connect C:\data\registry to /var/lib/registry on registry container
       - C:\data\registry:/var/lib/registry
   mirrors:
     "registry":
        endpoint:
          - http://registry:5000
-
+hostAliases: 
+#/etc/hosts style entries to be injected into /etc/hosts in the node containers and in the NodeHosts section in CoreDNS
+#  - ip: 127.0.0.1
+#    hostnames: 
+#      - my.host.local
+#      - that.other.local
 options:
-  k3d:
+  k3d: # k3d runtime settings
     wait: true
     timeout: "60s"
+  k3s: # options passed on to k3s itself
   kubeconfig:
     updateDefaultKubeconfig: true
     switchCurrentContext: true
+  runtime: # runtime (docker) specific options
