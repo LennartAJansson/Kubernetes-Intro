@@ -108,6 +108,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", 
 		Setup\prometheus\service.yaml = Setup\prometheus\service.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mysql", "mysql", "{3CDCFEEB-9A54-4B51-B9BA-86AB157F6258}"
+	ProjectSection(SolutionItems) = preProject
+		Setup\mysql\deployment.yaml = Setup\mysql\deployment.yaml
+		Setup\mysql\kustomization.yaml = Setup\mysql\kustomization.yaml
+		Setup\mysql\namespace.yaml = Setup\mysql\namespace.yaml
+		Setup\mysql\persistentvolume.yaml = Setup\mysql\persistentvolume.yaml
+		Setup\mysql\service.yaml = Setup\mysql\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redis", "redis", "{FF9F6357-26CF-4556-B9B6-9140DB06BEFA}"
+	ProjectSection(SolutionItems) = preProject
+		Setup\redis\deployment.yaml = Setup\redis\deployment.yaml
+		Setup\redis\kustomization.yaml = Setup\redis\kustomization.yaml
+		Setup\redis\namespace.yaml = Setup\redis\namespace.yaml
+		Setup\redis\service.yaml = Setup\redis\service.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -150,13 +167,15 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AEA600AA-D4F0-4824-A4E6-8FE237D7EED9} = {5ABCDD52-FC0D-4DAA-8471-B83C84CF193D}
-		{C49C7535-7E8B-43A5-A58C-6959D186E9D6} = {0B4ABDDD-675F-4515-941C-5832977BA621}
 		{EC0F7610-A436-4364-B68F-BCB0DDF72247} = {5ABCDD52-FC0D-4DAA-8471-B83C84CF193D}
 		{48520FCC-B577-46CF-8299-35176D5D0BB6} = {AEA600AA-D4F0-4824-A4E6-8FE237D7EED9}
 		{269EBD2F-5B27-42B1-8A88-135384AFFFD3} = {48520FCC-B577-46CF-8299-35176D5D0BB6}
 		{7724D1C3-1560-4F4E-9A1D-E14FE040A396} = {AEA600AA-D4F0-4824-A4E6-8FE237D7EED9}
 		{A65E5312-5291-4C4D-A5C2-B123CE9ABDB7} = {EC0F7610-A436-4364-B68F-BCB0DDF72247}
 		{9D28528C-BEC2-4854-8E9E-DB34D281BCE9} = {A65E5312-5291-4C4D-A5C2-B123CE9ABDB7}
+		{C49C7535-7E8B-43A5-A58C-6959D186E9D6} = {0B4ABDDD-675F-4515-941C-5832977BA621}
+		{3CDCFEEB-9A54-4B51-B9BA-86AB157F6258} = {0B4ABDDD-675F-4515-941C-5832977BA621}
+		{FF9F6357-26CF-4556-B9B6-9140DB06BEFA} = {0B4ABDDD-675F-4515-941C-5832977BA621}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E41000BD-5883-4879-9D85-41E567DFF821}
