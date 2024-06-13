@@ -10,6 +10,7 @@ if($env:Path -notmatch "chocolatey")
 	choco install -force conemu
 	choco install -force curl
 	choco install -force kubernetes-cli
+	choco install -force kubernetes-helm
 	choco install -force kustomize
 	choco install -force k9s
 	choco install -force k3d

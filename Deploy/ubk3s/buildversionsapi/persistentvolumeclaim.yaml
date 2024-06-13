@@ -18,18 +18,19 @@ spec:
 
 ---
 
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: buildversionsapi-volume
-#   labels:
-#     type: local
-#     app: buildversionsapi
-# spec:
-#   storageClassName: manual
-#   capacity:
-#     storage: 1Gi
-#   accessModes:
-#     - ReadWriteOnce
-#   hostPath:
-#     path: "/tmp/shared/buildversionsapi"
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: buildversionsapi-volume
+  namespace: buildversions
+  labels:
+    type: local
+    app: buildversionsapi
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/shared/buildversionsapi"
