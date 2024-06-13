@@ -19,7 +19,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, services, configuration) => configuration
   .ReadFrom.Configuration(context.Configuration)
-  //.ReadFrom.Services(services)
+  .ReadFrom.Services(services)
   .Enrich.FromLogContext());
 
 ApplicationInfo appInfo = new(typeof(Program));
